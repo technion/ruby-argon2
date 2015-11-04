@@ -1,3 +1,4 @@
 [submodule "ext/phc-winner-argon2"]
 	path = ext/phc-winner-argon2
 	url = https://github.com/p-h-c/phc-winner-argon2
+    ignore = dirty
