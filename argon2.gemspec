@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["technion@lolware.net"]
 
   spec.summary       = %q{Argon2 Password hashing binding}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.description   = %q{Not remotely finished Argon2 binding}
   spec.homepage      = "https://github.com/technion/ruby-argon2"
   spec.license       = "MIT"
 
