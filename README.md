@@ -1,10 +1,13 @@
 # Argon2
 
 An FFI binding for Argon2.
-This gem is unfinished.
+This gem is nowhere near finished.
 
+Until it is, please refer to the test suite for documentation. Currently implemented:
 
-TODO: Delete this and the text above, and describe your gem
+    assert_equal Argon2.hash_argon2i_encode("password",  "somesalt\0\0\0\0\0\0\0
+            \0"), '$argon2i$m=65536,t=2,p=4$c29tZXNhbHQAAAAAAAAAAA$JGFyZ29uMmkkbT02NTUzNix0PTIscD00JGMyOXRaWE4'
+
 
 ## Installation
 
