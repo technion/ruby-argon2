@@ -43,6 +43,10 @@ int main()
      * Hash: b49199e4ecb0f6659e6947f945e391c940b17106e1d0b0a9888006c7f87a789b
      * ./argon2 password somesalt -t 4 -m 16
      * Hash: 72207b3312d79995fbe7b30664837ae1246f9a98e07eac34835ca3498e705f85
+     * ./argon2 differentpassword somesalt -t 2 -m 16 -p 1
+     * Hash: 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
+     * ./argon2 password diffsalt -t 2 -m 16 -p 1
+     * Hash: 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
      */
     hash_argon2i( out, OUT_LEN, pwd, strlen(pwd), salt, SALT_LEN, 2, 1<<16 );
     for(int i=0; i<32; ++i )

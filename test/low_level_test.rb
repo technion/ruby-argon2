@@ -42,6 +42,18 @@ class Argon2Test < Minitest::Test
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "somesalt\0\0\0\0\0\0\0\0", 4, 16),
         '72207b3312d79995fbe7b30664837ae1246f9a98e07eac34835ca3498e705f85'
+
+    #./argon2 differentpassword somesalt -t 2 -m 16 -p 1
+    #Hash: 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
+    assert_equal Argon2::Engine.hash_argon2i(
+        "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16),
+        '8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361'
+
+    #./argon2 password diffsalt -t 2 -m 16 -p 1
+    #Hash: 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
+    assert_equal Argon2::Engine.hash_argon2i(
+        "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16),
+        '8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311'
   end
 
   def test_encoded_hash
@@ -68,6 +80,18 @@ class Argon2Test < Minitest::Test
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password",  "somesalt\0\0\0\0\0\0\0\0", 1, 16), 
         '$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs'
+
+    #./util.rb 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
+    #jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E
+    assert_equal Argon2::Engine.hash_argon2i_encode(
+        "differentpassword",  "somesalt\0\0\0\0\0\0\0\0", 2, 16), 
+        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E'
+
+    #./util.rb 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
+    #j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE
+    assert_equal Argon2::Engine.hash_argon2i_encode(
+        "password",  "diffsalt\0\0\0\0\0\0\0\0", 2, 16), 
+        '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE'
   end
 end
 
