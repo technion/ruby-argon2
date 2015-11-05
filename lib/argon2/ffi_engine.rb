@@ -24,17 +24,19 @@ module Argon2
     # It is generally not advised to directly use this class.
     def self.hash_argon2i(password, salt, t_cost, m_cost)
       result = ''
-      FFI::MemoryPointer.new(:char, 32) do |buffer|
-        ret = Ext.hash_argon2i(buffer, 32, password, password.length, salt, salt.length, t_cost, (1<<m_cost))
+      FFI::MemoryPointer.new(:char, Constants::OUT_LEN) do |buffer|
+        ret = Ext.hash_argon2i(buffer, Constants::OUT_LEN, password, password.length, salt, salt.length, t_cost, (1<<m_cost))
         raise ArgonHashFail.new(ERRORS[ret]) unless ret == 0
-        result = buffer.read_string(32)
+        result = buffer.read_string(Constants::OUT_LEN)
       end
        result.unpack('H*').join
     end
 
     def self.hash_argon2i_encode(password, salt, t_cost, m_cost)
       result = ''
-      raise ArgonHashFail.new("Invalid salt size") unless salt.length == 16
+      if salt.length != Constants::SALT_LEN
+        raise ArgonHashFail.new("Invalid salt size") 
+      end
       FFI::MemoryPointer.new(:char, 300) do |buffer|
         ret = Ext.argon2_wrap(buffer, password, salt, t_cost, (1<<m_cost), 1)
         raise ArgonHashFail.new(ERRORS[ret]) unless ret == 0
