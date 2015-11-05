@@ -31,23 +31,25 @@ module Argon2
 
   end
 
-  def Argon2.hash_argon2i(password, salt)
-    result = ''
-    FFI::MemoryPointer.new(:char, 32) do |buffer|
-      ret = Ext.hash_argon2i(buffer, 32, password, password.length, salt, salt.length, 2, (1<<16))
-      fail "Hash failed" unless ret == 0
-      result = buffer.read_string(32)
+  class Engine
+    def self.hash_argon2i(password, salt, t_cost, m_cost)
+      result = ''
+      FFI::MemoryPointer.new(:char, 32) do |buffer|
+        ret = Ext.hash_argon2i(buffer, 32, password, password.length, salt, salt.length, t_cost, (1<<m_cost))
+        fail "Hash failed" unless ret == 0
+        result = buffer.read_string(32)
+      end
+       result.unpack('H*').join
     end
-     result.unpack('H*').join
-  end
 
-  def Argon2.hash_argon2i_encode(password, salt)
-    result = ''
-    FFI::MemoryPointer.new(:char, 300) do |buffer|
-      ret = Ext.argon2_wrap(buffer, password, salt, 2, (1<<16), 4)
-      fail "Hash failed" unless ret == 0
-      result = buffer.read_string(300)
+    def self.hash_argon2i_encode(password, salt, t_cost, m_cost)
+      result = ''
+      FFI::MemoryPointer.new(:char, 300) do |buffer|
+        ret = Ext.argon2_wrap(buffer, password, salt, t_cost, (1<<m_cost), 1)
+        fail "Hash failed" unless ret == 0
+        result = buffer.read_string(300)
+      end
+      result.gsub("\0", '')
     end
-    result.gsub("\0", '')
   end
 end

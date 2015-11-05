@@ -25,10 +25,11 @@ static void fatal(const char *error) {
     exit(1);
 }
 
-void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
+void argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
                 uint32_t m_cost, uint32_t lanes)
 {
     unsigned pwd_length;
+    uint8_t hash[OUT_LEN];
     argon2_context context;
 
     if (!pwd) {
@@ -42,7 +43,7 @@ void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
 
     pwd_length = strlen(pwd);
 
-    context.out = out;
+    context.out = hash;
     context.outlen = OUT_LEN;
     context.pwd = (uint8_t *)pwd;
     context.pwdlen = pwd_length;
@@ -58,13 +59,12 @@ void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     context.threads = lanes;
     context.allocate_cbk = NULL;
     context.free_cbk = NULL;
-    context.flags = ARGON2_FLAG_CLEAR_PASSWORD;
+    context.flags = 0;
 
-	int result = argon2i(&context);
-	if (result != ARGON2_OK)
-		fatal(error_message(result));
+    int result = argon2i(&context);
+    if (result != ARGON2_OK)
+        fatal(error_message(result));
 
-
-    encode_string((char *)out, 300, &context);
+    encode_string(out, 300, &context);
 }
  
