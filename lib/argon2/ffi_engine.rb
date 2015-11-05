@@ -1,9 +1,11 @@
 require 'ffi'
+require 'ffi-compiler/loader'
 
 module Argon2
   module Ext
     extend FFI::Library
-    ffi_lib './ext/argon2_wrap/libargon_wrap.so'
+   # ffi_lib './ext/argon2_wrap/libargon_wrap.so'
+     ffi_lib FFI::Compiler::Loader.find('argon_wrap')
 #int hash_argon2i(void *out, size_t outlen, const void *in, size_t inlen,
 #                 const void *salt, size_t saltlen, unsigned int t_cost,
 #                 unsigned int m_cost);
@@ -13,11 +15,13 @@ module Argon2
 
 #void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
 #        uint32_t m_cost, uint32_t lanes);
-    attach_function :argon2_wrap, [:pointer, :pointer, :pointer, :uint, :uint, :uint], :int, :blocking => true
+    attach_function :argon2_wrap, [:pointer, :pointer, :pointer, :uint, :uint, :uint], :uint, :blocking => true
 
   end
 
   class Engine
+    # The engine class shields users from the FFI interface.
+    # It is generally not advised to directly use this class.
     def self.hash_argon2i(password, salt, t_cost, m_cost)
       result = ''
       FFI::MemoryPointer.new(:char, 32) do |buffer|
