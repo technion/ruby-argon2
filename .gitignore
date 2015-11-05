@@ -9,3 +9,4 @@
 /tmp/
 /vendor
 /ext/argon2_wrap/libargon_wrap.so
+/ext/argon2_wrap/tests
