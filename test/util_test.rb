@@ -1,4 +1,4 @@
-require 'util'
+require 'util_lib'
 
 class UtilTest < Minitest::Test
   def test_conversion

@@ -20,12 +20,7 @@
 #define OUT_LEN 32
 #define SALT_LEN 16
 
-static void fatal(const char *error) {
-    fprintf(stderr, "Error: %s\n", error);
-    exit(1);
-}
-
-void argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
+unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
                 uint32_t m_cost, uint32_t lanes)
 {
     unsigned pwd_length;
@@ -33,12 +28,11 @@ void argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     argon2_context context;
 
     if (!pwd) {
-        fatal("password missing");
+        return ARGON2_PWD_PTR_MISMATCH;
     }
 
     if (!salt) {
-        secure_wipe_memory(pwd, strlen(pwd));
-        fatal("salt missing");
+        return ARGON2_PWD_PTR_MISMATCH;
     }
 
     pwd_length = strlen(pwd);
@@ -63,8 +57,9 @@ void argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
 
     int result = argon2i(&context);
     if (result != ARGON2_OK)
-        fatal(error_message(result));
+        return result;
 
     encode_string(out, 300, &context);
+    return ARGON2_OK;
 }
  

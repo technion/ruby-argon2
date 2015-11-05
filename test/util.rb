@@ -1,12 +1,10 @@
 #!/usr/bin/env ruby
 #Utility to turn hex reference vectors to base64
 #Used to generate tests, not an actively used test
+require_relative 'util_lib'
 
-def conversion(inhex)
-  hex = inhex
-  binary = hex.scan(/../).map { |x| x.hex.chr }.join
-  b64 = [binary].pack("m0")
-  b64.gsub('=', '') #Trim padding for standard
+if ARGV[0]
+  puts conversion(ARGV[0])
+else
+  fail "Input required"
 end
-
-puts conversion(ARGV[0]) if ARGV[0]

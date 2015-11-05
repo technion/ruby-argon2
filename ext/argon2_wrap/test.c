@@ -9,6 +9,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "../phc-winner-argon2/src/argon2.h"
+
 #define OUT_LEN 32
 #define SALT_LEN 16
 
