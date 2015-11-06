@@ -15,7 +15,7 @@ OBJ = $(SRC:.c=.o)
 
 CFLAGS = -std=c89 -pthread -O3 -Wall -g
 
-#OPT=TRUE
+OPT=TRUE
 ifeq ($(OPT), TRUE)
 	CFLAGS += -march=native
 	SRC += $(DIST_SRC)/opt.c
@@ -54,11 +54,13 @@ ifeq ($(KERNEL_NAME), $(filter $(KERNEL_NAME),OpenBSD FreeBSD))
 endif
 
 LIB_SH := lib$(LIB_NAME).$(LIB_EXT)
-LIB_ST := lib$(LIB_NAME).a
 
 all: libs 
 libs: $(SRC)
-		$(CC) $(CFLAGS) $(LIB_CFLAGS) $^ -Isrc -o libargon2_wrap.so
+		$(CC) $(CFLAGS) $(LIB_CFLAGS) $^ -o libargon2_wrap.so
 
-test:
+#Deliberately avoiding the CFLAGS for our test cases - disable optimise and
+#C89
+test: $(SRC) test.c
+		$(CC) -pthread -O3 -Wall -g $^ -o tests
 		./tests

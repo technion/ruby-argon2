@@ -25,6 +25,7 @@ int main()
     char out2[300];
     char *pwd = NULL;
     uint8_t salt[SALT_LEN];
+    int i;
 
     pwd = strdup("password");
     memset(salt, 0x00, SALT_LEN); /* pad with null bytes */
@@ -49,7 +50,7 @@ int main()
      * Hash: 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
      */
     hash_argon2i( out, OUT_LEN, pwd, strlen(pwd), salt, SALT_LEN, 2, 1<<16 );
-    for(int i=0; i<32; ++i )
+    for(i=0; i<32; ++i )
         printf( "%02x", out[i] );
     printf( "\n" );
 
@@ -59,7 +60,7 @@ int main()
     free(pwd);;
 
 
-
+    return 0;
 
 
 }
