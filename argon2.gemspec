@@ -15,14 +15,20 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+#  submodule_path = 'ext/phc-winner-argon2/src'
+#  `ls #{submodule_path}`.split.each do |filename|
+#    spec.files << "#{submodule_path}/#{filename}"
+#  end
+  spec.files << `find ext`.split
+  
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.add_dependency 'ffi'
-  spec.add_dependency 'ffi-compiler'
+  spec.add_dependency 'ffi', '~> 1.9'
+  spec.add_dependency 'ffi-compiler', '~> 0.1'
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "minitest", '~> 5'
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
 end

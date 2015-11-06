@@ -10,3 +10,4 @@
 /vendor
 /ext/argon2_wrap/libargon2_wrap.so
 /ext/argon2_wrap/tests
+argon2-0.0.2.gem

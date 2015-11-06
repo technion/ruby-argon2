@@ -64,3 +64,9 @@ libs: $(SRC)
 test: $(SRC) test.c
 		$(CC) -pthread -O3 -Wall -g $^ -o tests
 		./tests
+
+clean:
+	rm -rf tests libargon2_wrap.so
+
+install:
+	echo none
