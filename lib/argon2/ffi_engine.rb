@@ -4,8 +4,7 @@ require 'ffi-compiler/loader'
 module Argon2
   module Ext
     extend FFI::Library
-   # ffi_lib './ext/argon2_wrap/libargon_wrap.so'
-     ffi_lib FFI::Compiler::Loader.find('argon_wrap')
+     ffi_lib FFI::Compiler::Loader.find('argon2_wrap')
 #int hash_argon2i(void *out, size_t outlen, const void *in, size_t inlen,
 #                 const void *salt, size_t saltlen, unsigned int t_cost,
 #                 unsigned int m_cost);

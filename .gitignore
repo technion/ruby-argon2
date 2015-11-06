@@ -8,5 +8,5 @@
 /spec/reports/
 /tmp/
 /vendor
-/ext/argon2_wrap/libargon_wrap.so
+/ext/argon2_wrap/libargon2_wrap.so
 /ext/argon2_wrap/tests
