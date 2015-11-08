@@ -11,7 +11,7 @@ This Ruby Gem provides FFI bindings, and a simplified interface, to the Argon2 a
 
 This project has several key tenants to its design:
 
-* The reference Argon2 implementation is to be used "unaltered". To ensure this does not occur, and encourage regular updates from upstream, this is implemented as a git submodule, and is intended to stay that way.
+* The reference Argon2 implementation is to be used "unaltered". To ensure compliance wit this goal, and encourage regular updates from upstream, this is implemented as a git submodule, and is intended to stay that way.
 * The FFI interface is kept as slim as possible, with wrapper classes preferred to implementing context structs in FFI
 * Security and maintainability take top priority. This can have an impact on platform support. A PR that contains platform specific code paths is unlikely to be accepted.
 * Errors from the C interface are raised as Exceptions. There are a lot of exception classes, but they tend to relate to things like very broken input, and code bugs. Calls to this library should generally not require a rescue.
@@ -22,27 +22,37 @@ This project has several key tenants to its design:
 
 Require this in your Gemfile like a typical Ruby gem:
 
-    require 'argon2'
+```ruby
+require 'argon2'
+```
 
 To generate a hash using specific time and memory cost:
 
-    hasher = Argon2::Password.new(t_cost: 2, m_cost: 16)
-    hasher.hash("password")
+```ruby
+hasher = Argon2::Password.new(t_cost: 2, m_cost: 16)
+hasher.hash("password")
      => "$argon2i$m=65536,t=2,p=1$mLa9JT3Y9P2XhB5Mtuj+yQ$rojObVNKe/ehgd9SWQBB+8nJ8L34Aj3Kiz+aNrWvrx4"
+```
 
 To utilise default costs:
 
+```ruby
     hasher = Argon2::Password.new
     hasher.hash("password")
+```
 
 Alternatively, use this shotcut:
 
+```ruby
     Argon2::Password.hash("password")
      => "$argon2i$m=65536,t=2,p=1$AZwVlHIbgRC7yQhkPKa4tA$F5eM2Zzt4GhIVnR8SNOh3ysyMvGxAO6omsw8kzjbcs4"
+```
 
 You can then use this function to verify a password against a given hash. Will return either true or false.
 
+```ruby
     Argon2::Password.verify_password("password", secure_password)
+```
 
 ## FAQ
 ### Don't roll your own crypto!
