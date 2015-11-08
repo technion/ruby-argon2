@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class Argon2ErrorTest < Minitest::Test
-
   def test_ffi_fail
     assert_raises Argon2::ArgonHashFail do
       Argon2::Engine.hash_argon2i("password", "somesalt\0\0\0\0\0\0\0\0", 2, 1)
@@ -27,4 +26,3 @@ class Argon2ErrorTest < Minitest::Test
     end
   end
 end
-

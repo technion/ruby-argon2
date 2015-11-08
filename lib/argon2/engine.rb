@@ -7,4 +7,3 @@ module Argon2
     end
   end
 end
-

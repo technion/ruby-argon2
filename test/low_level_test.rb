@@ -5,12 +5,11 @@ class LowLevelArgon2Test < Minitest::Test
     refute_nil ::Argon2::VERSION
   end
 
-
   def test_ffi_vector
     #./argon2 password somesalt -t 2 -m 16
     #Hash: 894af4ff2e2d26f3ce15f77a7e1c25db45b4e20439e9961772ba199caddb001e
     assert_equal Argon2::Engine.hash_argon2i(
-        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16), 
+        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16),
         '894af4ff2e2d26f3ce15f77a7e1c25db45b4e20439e9961772ba199caddb001e'
 
     #./argon2 password somesalt -t 2 -m 20
@@ -22,7 +21,7 @@ class LowLevelArgon2Test < Minitest::Test
     #./argon2 password somesalt -t 2 -m 18
     #Hash: 55292398cce8fc78685e610d004ca9bda5c325a0a2e6285a0de5f816df139aa6
     assert_equal Argon2::Engine.hash_argon2i(
-        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 18), 
+        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 18),
         '55292398cce8fc78685e610d004ca9bda5c325a0a2e6285a0de5f816df139aa6'
 
     #./argon2 password somesalt -t 2 -m 8
@@ -78,19 +77,19 @@ class LowLevelArgon2Test < Minitest::Test
     #./util.rb b49199e4ecb0f6659e6947f945e391c940b17106e1d0b0a9888006c7f87a789b
     #tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs
     assert_equal Argon2::Engine.hash_argon2i_encode(
-        "password",  "somesalt\0\0\0\0\0\0\0\0", 1, 16), 
+        "password",  "somesalt\0\0\0\0\0\0\0\0", 1, 16),
         '$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs'
 
     #./util.rb 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
     #jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E
     assert_equal Argon2::Engine.hash_argon2i_encode(
-        "differentpassword",  "somesalt\0\0\0\0\0\0\0\0", 2, 16), 
+        "differentpassword",  "somesalt\0\0\0\0\0\0\0\0", 2, 16),
         '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E'
 
     #./util.rb 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
     #j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE
     assert_equal Argon2::Engine.hash_argon2i_encode(
-        "password",  "diffsalt\0\0\0\0\0\0\0\0", 2, 16), 
+        "password",  "diffsalt\0\0\0\0\0\0\0\0", 2, 16),
         '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE'
   end
 
@@ -99,4 +98,3 @@ class LowLevelArgon2Test < Minitest::Test
     refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4")
   end
 end
-

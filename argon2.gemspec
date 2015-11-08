@@ -9,18 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Technion"]
   spec.email         = ["technion@lolware.net"]
 
-  spec.summary       = %q{Argon2 Password hashing binding}
-  spec.description   = %q{Not remotely finished Argon2 binding}
-  spec.homepage      = "https://github.com/technion/ruby-argon2"
-  spec.license       = "MIT"
+  spec.summary       = 'Argon2 Password hashing binding'
+  spec.description   = 'Not remotely finished Argon2 binding'
+  spec.homepage      = 'https://github.com/technion/ruby-argon2'
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-#  submodule_path = 'ext/phc-winner-argon2/src'
-#  `ls #{submodule_path}`.split.each do |filename|
-#    spec.files << "#{submodule_path}/#{filename}"
-#  end
   spec.files << `find ext`.split
-  
+
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
@@ -30,5 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", '~> 5'
+  spec.add_development_dependency "rubocop"
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
 end

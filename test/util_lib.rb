@@ -6,6 +6,5 @@ def conversion(inhex)
   hex = inhex
   binary = hex.scan(/../).map { |x| x.hex.chr }.join
   b64 = [binary].pack("m0")
-  b64.gsub('=', '') #Trim padding for standard
+  b64.delete '=' #Trim padding for standard
 end
-
