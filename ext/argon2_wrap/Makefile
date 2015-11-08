@@ -66,7 +66,7 @@ test: $(SRC) test.c
 		./tests
 
 clean:
-	rm -rf tests libargon2_wrap.so
+	rm -f tests libargon2_wrap.so
 
 install:
 	echo none

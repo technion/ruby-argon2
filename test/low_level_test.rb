@@ -93,5 +93,10 @@ class LowLevelArgon2Test < Minitest::Test
         "password",  "diffsalt\0\0\0\0\0\0\0\0", 2, 16), 
         '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE'
   end
+
+  def test_encode
+    assert Argon2::Engine.argon2i_verify("password", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4")
+    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4")
+  end
 end
 

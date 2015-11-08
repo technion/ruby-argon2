@@ -117,6 +117,14 @@ int main()
      */
     WRAP_TEST(2, 16, "diffpassword", 
             "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$y/IeiuTydN/Sud4UzLqv6Spx8Eqree6FoP088X6WyW4");
+
+    ret = argon2i_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "password", strlen("password"));
+    assert(ret == ARGON2_OK);
+    printf("Verify OK test: PASS\n");
+
+    ret = argon2i_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "notpassword", strlen("notpassword"));
+    assert(ret == ARGON2_DECODING_FAIL);
+    printf("Verify FAIL test: PASS\n");
     return 0;
 
 

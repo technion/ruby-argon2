@@ -3,6 +3,7 @@ require 'ffi-compiler/loader'
 
 module Argon2
   module Ext
+    #Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
     extend FFI::Library
     ffi_lib FFI::Compiler::Loader.find('argon2_wrap')
     #int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
@@ -16,6 +17,9 @@ module Argon2
     #void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     #    uint32_t m_cost, uint32_t lanes);
     attach_function :argon2_wrap, [:pointer, :pointer, :pointer, :uint, :uint, :uint], :uint, :blocking => true
+
+    #int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
+    attach_function :argon2i_verify, [:pointer, :pointer, :size_t], :int, :blocking => true
 
   end
 
@@ -45,5 +49,13 @@ module Argon2
       end
       result.gsub("\0", '')
     end
+
+    def self.argon2i_verify(pwd, hash)
+      ret = Ext.argon2i_verify(hash, pwd, pwd.length)
+      return false if ERRORS[ret] =='ARGON2_DECODING_FAIL'
+      raise ArgonHashFail.new(ERRORS[ret]) unless ret == 0
+      true
+    end
+
   end
 end
