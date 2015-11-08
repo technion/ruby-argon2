@@ -12,6 +12,7 @@
 
 #include "../phc-winner-argon2/src/argon2.h"
 #include "../phc-winner-argon2/src/core.h"
+#include "../phc-winner-argon2/src/encoding.h"
 
 #define T_COST_DEF 3
 #define LOG_M_COST_DEF 12 /* 2^12 = 4 MiB */
@@ -59,7 +60,7 @@ unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     if (result != ARGON2_OK)
         return result;
 
-    encode_string(out, 300, &context);
+    encode_string(out, 300, &context, Argon2_i);
     return ARGON2_OK;
 }
  
