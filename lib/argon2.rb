@@ -17,5 +17,16 @@ module Argon2
       Argon2::Engine.hash_argon2i_encode(
               pass, @salt, @t_cost, @m_cost)
     end
+
+    def self.hash(pass)
+      #Helper class, just creates defaults and calls hash()
+      argon2 = Argon2::Password.new
+      argon2.hash(pass)
+    end
+
+    def self.verify_password(pass, hash)
+      #TODO: Basic verify
+      Argon2::Engine.argon2i_verify(pass, hash)
+    end
   end
 end
