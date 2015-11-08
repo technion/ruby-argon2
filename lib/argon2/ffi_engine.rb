@@ -4,16 +4,17 @@ require 'ffi-compiler/loader'
 module Argon2
   module Ext
     extend FFI::Library
-     ffi_lib FFI::Compiler::Loader.find('argon2_wrap')
-#int hash_argon2i(void *out, size_t outlen, const void *in, size_t inlen,
-#                 const void *salt, size_t saltlen, unsigned int t_cost,
-#                 unsigned int m_cost);
+    ffi_lib FFI::Compiler::Loader.find('argon2_wrap')
+    #int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
+    #   const uint32_t parallelism, const void *pwd,
+    #   const size_t pwdlen, const void *salt,
+    #   const size_t saltlen, void *hash, const size_t hashlen);
 
-   attach_function :hash_argon2i, [:pointer, :size_t, :pointer, :size_t, 
-   :pointer, :size_t, :uint, :uint ], :int, :blocking => true
+   attach_function :argon2i_hash_raw, [:uint, :uint, :uint, :pointer, 
+     :size_t, :pointer, :size_t, :pointer, :size_t ], :int, :blocking => true
 
-#void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
-#        uint32_t m_cost, uint32_t lanes);
+    #void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
+    #    uint32_t m_cost, uint32_t lanes);
     attach_function :argon2_wrap, [:pointer, :pointer, :pointer, :uint, :uint, :uint], :uint, :blocking => true
 
   end
@@ -24,7 +25,8 @@ module Argon2
     def self.hash_argon2i(password, salt, t_cost, m_cost)
       result = ''
       FFI::MemoryPointer.new(:char, Constants::OUT_LEN) do |buffer|
-        ret = Ext.hash_argon2i(buffer, Constants::OUT_LEN, password, password.length, salt, salt.length, t_cost, (1<<m_cost))
+        ret = Ext.argon2i_hash_raw(t_cost, 1<<m_cost, 1, password, password.length, salt, salt.length, 
+            buffer, Constants::OUT_LEN)
         raise ArgonHashFail.new(ERRORS[ret]) unless ret == 0
         result = buffer.read_string(Constants::OUT_LEN)
       end
