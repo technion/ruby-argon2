@@ -42,10 +42,10 @@ module Argon2
       if salt.length != Constants::SALT_LEN
         raise ArgonHashFail.new("Invalid salt size") 
       end
-      FFI::MemoryPointer.new(:char, 300) do |buffer|
+      FFI::MemoryPointer.new(:char, Constants::ENCODE_LEN) do |buffer|
         ret = Ext.argon2_wrap(buffer, password, salt, t_cost, (1<<m_cost), 1)
         raise ArgonHashFail.new(ERRORS[ret]) unless ret == 0
-        result = buffer.read_string(300)
+        result = buffer.read_string(Constants::ENCODE_LEN)
       end
       result.gsub("\0", '')
     end
