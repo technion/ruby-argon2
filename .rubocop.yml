@@ -15,6 +15,7 @@ Style/AlignParameters:
     - 'test/error_test.rb'
     - 'test/low_level_test.rb'
     - 'test/util_test.rb'
+    - 'test/rubycheck_test.rb'
 
 # Configuration parameters: Exclude.
 Style/Documentation:
@@ -56,6 +57,7 @@ Style/LeadingCommentSpace:
 Style/SignalException:
   Exclude:
     - 'lib/argon2/ffi_engine.rb'
+    - 'lib/argon2.rb'
 
 Style/StringLiterals:
   Enabled: false
