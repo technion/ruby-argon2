@@ -5,5 +5,6 @@ rvm:
 before_install: gem install bundler -v 1.10.5
 install: bin/setup
 script:
+  - cd ext/argon2_wrap/ && make test && cd ../..
   - rake test
   - rake rubocop
