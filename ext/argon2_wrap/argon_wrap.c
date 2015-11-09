@@ -22,7 +22,8 @@
 #define SALT_LEN 16
 
 unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
-                uint32_t m_cost, uint32_t lanes)
+                uint32_t m_cost, uint32_t lanes, 
+                uint8_t *secret, size_t secretlen)
 {
     unsigned pwd_length;
     uint8_t hash[OUT_LEN];
@@ -44,8 +45,8 @@ unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     context.pwdlen = pwd_length;
     context.salt = salt;
     context.saltlen = SALT_LEN;
-    context.secret = NULL;
-    context.secretlen = 0;
+    context.secret = secret;
+    context.secretlen = secretlen;
     context.ad = NULL;
     context.adlen = 0;
     context.t_cost = t_cost;

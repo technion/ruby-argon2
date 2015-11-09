@@ -12,6 +12,7 @@ module Argon2
       @t_cost = options[:t_cost] || 2
       @m_cost = options[:m_cost] || 16
       @salt = options[:salt_do_not_supply] || Engine.saltgen
+      @secret = options[:secret]
     end
 
     def hash(pass)
@@ -20,7 +21,7 @@ module Argon2
       # with such a character.
       raise ArgonHashFail, "NULL bytes not permitted" if /\0/.match(pass)
       Argon2::Engine.hash_argon2i_encode(
-              pass, @salt, @t_cost, @m_cost)
+              pass, @salt, @t_cost, @m_cost, @secret)
     end
 
     #Helper class, just creates defaults and calls hash()
