@@ -24,8 +24,8 @@ module Argon2
       :uint, :uint, :pointer, :size_t], :uint, :blocking => true
 
     #int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
-    attach_function :argon2i_verify, [:pointer, :pointer, :size_t],
-      :int, :blocking => true
+    attach_function :wrap_argon2_verify, [:pointer, :pointer, :size_t, 
+      :pointer, :size_t], :int, :blocking => true
   end
 
   # The engine class shields users from the FFI interface.
@@ -58,8 +58,9 @@ module Argon2
       result.delete "\0"
     end
 
-    def self.argon2i_verify(pwd, hash)
-      ret = Ext.argon2i_verify(hash, pwd, pwd.length)
+    def self.argon2i_verify(pwd, hash, secret)
+      secretlen = secret.nil? ? 0 : secret.length
+      ret = Ext.wrap_argon2_verify(hash, pwd, pwd.length, secret, secretlen)
       return false if ERRORS[ret] == 'ARGON2_DECODING_FAIL'
       raise ArgonHashFail, ERRORS[ret] unless ret == 0
       true

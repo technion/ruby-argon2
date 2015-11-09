@@ -15,7 +15,6 @@
 #define OUT_LEN 32
 #define SALT_LEN 16
 
-
 /**
  * Hashes a password with Argon2i, producing a raw hash
  * @param t_cost Number of iterations
@@ -39,6 +38,10 @@ int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
 
 void argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     uint32_t m_cost, uint32_t lanes,
+    uint8_t *secret, size_t secretlen);
+
+int wrap_argon2_verify(const char *encoded, const void *pwd,
+    const size_t pwdlen,
     uint8_t *secret, size_t secretlen);
 
  
@@ -120,11 +123,13 @@ int main()
     WRAP_TEST(2, 16, "diffpassword", 
             "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$y/IeiuTydN/Sud4UzLqv6Spx8Eqree6FoP088X6WyW4");
 
-    ret = argon2i_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "password", strlen("password"));
+    ret = wrap_argon2_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "password",
+            strlen("password"), NULL, 0);
     assert(ret == ARGON2_OK);
     printf("Verify OK test: PASS\n");
 
-    ret = argon2i_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "notpassword", strlen("notpassword"));
+    ret = wrap_argon2_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "notpassword",
+            strlen("notpassword"), NULL, 0);
     assert(ret == ARGON2_DECODING_FAIL);
     printf("Verify FAIL test: PASS\n");
     return 0;

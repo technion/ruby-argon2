@@ -98,7 +98,7 @@ class LowLevelArgon2Test < Minitest::Test
   end
 
   def test_encode
-    assert Argon2::Engine.argon2i_verify("password", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4")
-    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4")
+    assert Argon2::Engine.argon2i_verify("password", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", nil)
+    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", nil)
   end
 end

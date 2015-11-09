@@ -32,7 +32,7 @@ module Argon2
 
     def self.verify_password(pass, hash)
       #TODO: Basic verify
-      Argon2::Engine.argon2i_verify(pass, hash)
+      Argon2::Engine.argon2i_verify(pass, hash, nil)
     end
   end
 end

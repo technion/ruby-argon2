@@ -2,7 +2,7 @@ require 'test_helper'
 
 # This was supposed to use Rubycheck, however the current version doesn't run
 # These property tests identified the NULL hash bug
-class Argon2APITest < Minitest::Test
+class Argon2PropertyTest < Minitest::Test
   def test_success
     hashlist = {}
     100.times do

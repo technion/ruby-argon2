@@ -21,6 +21,8 @@
 #define OUT_LEN 32
 #define SALT_LEN 16
 
+int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len);
+
 unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
                 uint32_t m_cost, uint32_t lanes, 
                 uint8_t *secret, size_t secretlen)
@@ -65,3 +67,61 @@ unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     return ARGON2_OK;
 }
  
+int wrap_argon2_verify(const char *encoded, const void *pwd,
+    const size_t pwdlen,
+    uint8_t *secret, size_t secretlen)
+{
+
+    argon2_context ctx;
+    uint8_t *out;
+    int ret;
+
+    /* max values, to be updated in decode_string */
+    ctx.adlen = 512;
+    ctx.saltlen = 512;
+    ctx.outlen = 512;
+
+    ctx.ad = malloc(ctx.adlen);
+    ctx.salt = malloc(ctx.saltlen);
+    ctx.out = malloc(ctx.outlen);
+    if (!ctx.out || !ctx.salt || !ctx.ad) {
+        free(ctx.ad);
+        free(ctx.salt);
+        free(ctx.out);
+        return ARGON2_MEMORY_ALLOCATION_ERROR;
+    }
+    out = malloc(ctx.outlen);
+    if (!out) {
+        free(ctx.ad);
+        free(ctx.salt);
+        free(ctx.out);
+        return ARGON2_MEMORY_ALLOCATION_ERROR;
+    }
+
+    if(decode_string(&ctx, encoded, Argon2_i) != 1) {
+        free(ctx.ad);
+        free(ctx.salt);
+        free(ctx.out);
+        free(out);
+        return ARGON2_DECODING_FAIL;
+    }
+    ctx.secret = secret;
+    ctx.secretlen = secretlen;
+
+    ret = argon2_hash(ctx.t_cost, ctx.m_cost, ctx.threads, pwd, pwdlen, ctx.salt,
+                ctx.saltlen, out, ctx.outlen, NULL, 0, Argon2_i);
+
+    free(ctx.ad);
+    free(ctx.salt);
+
+    if (ret != ARGON2_OK || argon2_compare(out, ctx.out, ctx.outlen)) {
+        free(out);
+        free(ctx.out);
+        return ARGON2_DECODING_FAIL;
+    }
+    free(out);
+    free(ctx.out);
+
+    return ARGON2_OK;
+}
+
