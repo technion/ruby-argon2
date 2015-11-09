@@ -6,5 +6,5 @@ before_install: gem install bundler -v 1.10.5
 install: bin/setup
 script:
   - cd ext/argon2_wrap/ && make test && cd ../..
-  - rake test
+  - CODECLIMATE_REPO_TOKEN=2b619b81040453ecbcf1cf0869e1238c4bbaab666a42e7dd94d762c747c0f51a rake test
   - rake rubocop
