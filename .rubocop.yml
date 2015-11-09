@@ -4,12 +4,15 @@ Metrics/AbcSize:
   Max: 16
 
 Metrics/LineLength:
-  Max: 147
+  Max: 160
 
 Metrics/MethodLength:
   Max: 24
 
 Style/AlignParameters:
+  Enabled: false
+
+Style/AlignArray:
   Enabled: false
 
 # Configuration parameters: Exclude.

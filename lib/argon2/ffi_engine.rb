@@ -24,7 +24,7 @@ module Argon2
       :uint, :uint, :pointer, :size_t], :uint, :blocking => true
 
     #int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
-    attach_function :wrap_argon2_verify, [:pointer, :pointer, :size_t, 
+    attach_function :wrap_argon2_verify, [:pointer, :pointer, :size_t,
       :pointer, :size_t], :int, :blocking => true
   end
 
