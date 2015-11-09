@@ -5,6 +5,7 @@ require 'argon2/errors'
 require 'argon2/engine.rb'
 
 module Argon2
+  # Front-end API for the Argon2 module.
   class Password
     def initialize(options = {})
       #TODO: Verify inputs
@@ -18,8 +19,8 @@ module Argon2
               pass, @salt, @t_cost, @m_cost)
     end
 
+    #Helper class, just creates defaults and calls hash()
     def self.hash(pass)
-      #Helper class, just creates defaults and calls hash()
       argon2 = Argon2::Password.new
       argon2.hash(pass)
     end

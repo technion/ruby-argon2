@@ -1,3 +1,5 @@
+# Defines an array of errors that matches the enum list of errors from
+# argon2.h. This allows return values to propagate errors through the FFI.
 module Argon2
   class ArgonHashFail < StandardError; end
   ERRORS = [

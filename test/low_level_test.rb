@@ -77,19 +77,19 @@ class LowLevelArgon2Test < Minitest::Test
     #./util.rb b49199e4ecb0f6659e6947f945e391c940b17106e1d0b0a9888006c7f87a789b
     #tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs
     assert_equal Argon2::Engine.hash_argon2i_encode(
-        "password",  "somesalt\0\0\0\0\0\0\0\0", 1, 16),
+        "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16),
         '$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs'
 
     #./util.rb 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
     #jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E
     assert_equal Argon2::Engine.hash_argon2i_encode(
-        "differentpassword",  "somesalt\0\0\0\0\0\0\0\0", 2, 16),
+        "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16),
         '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E'
 
     #./util.rb 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
     #j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE
     assert_equal Argon2::Engine.hash_argon2i_encode(
-        "password",  "diffsalt\0\0\0\0\0\0\0\0", 2, 16),
+        "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16),
         '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE'
   end
 
