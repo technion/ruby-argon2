@@ -2,7 +2,7 @@
 
 This Ruby Gem provides FFI bindings, and a simplified interface, to the Argon2 algorithm. [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the official winner of the Password Hashing Competition, a several year project to identify a successor to bcrypt/PBKDF/scrypt methods of securely storing passwords. This is an independant project and not official from the PHC team.
 
-*This gem is still in early development* and at this point is not recommended for use. The API however is now intended to have stabilised for any early testing.
+*This gem is still in early development* and at this point is not recommended for use. It has however moved on to being feature complete and users are encouraged to test this product.
 
 
 [![Build Status](https://travis-ci.org/technion/ruby-argon2.svg?branch=master)](https://travis-ci.org/technion/ruby-argon2)
@@ -17,8 +17,9 @@ This project has several key tenants to its design:
 * The FFI interface is kept as slim as possible, with wrapper classes preferred to implementing context structs in FFI
 * Security and maintainability take top priority. This can have an impact on platform support. A PR that contains platform specific code paths is unlikely to be accepted.
 * Errors from the C interface are raised as Exceptions. There are a lot of exception classes, but they tend to relate to things like very broken input, and code bugs. Calls to this library should generally not require a rescue.
-* Test suits are aimed to be very comprehensive.
+* Test suits should aim for 100% code coverage.
 * Default work values should not be considered constants. I will increase them from time to time.
+* Not exposing the threads parameter is a design choice. I believe there is significant risk, and minimal gain in using a value other than '1'. Four threads on a four core box completely ties up the entire server to process one user logon. If you want more security, increase m_cost.
 
 ## Usage
 
@@ -39,22 +40,32 @@ hasher.hash("password")
 To utilise default costs:
 
 ```ruby
-    hasher = Argon2::Password.new
-    hasher.hash("password")
+hasher = Argon2::Password.new
+hasher.hash("password")
 ```
 
 Alternatively, use this shotcut:
 
 ```ruby
-    Argon2::Password.hash("password")
+Argon2::Password.hash("password")
      => "$argon2i$m=65536,t=2,p=1$AZwVlHIbgRC7yQhkPKa4tA$F5eM2Zzt4GhIVnR8SNOh3ysyMvGxAO6omsw8kzjbcs4"
 ```
 
 You can then use this function to verify a password against a given hash. Will return either true or false.
 
 ```ruby
-    Argon2::Password.verify_password("password", secure_password)
+Argon2::Password.verify_password("password", secure_password)
 ```
+
+Argon2 supports an optional key value. This should be stored securely on your server, such as alongside your database credentials. Hashes generated with a key will only validate when presented that key.
+
+```ruby
+KEY = "A key"
+argon = Argon2::Password.new(t_cost: 2, m_cost: 16, secret: KEY)
+myhash = argon.hash("A password")
+Argon2::Password.verify_password("A password", KEY)
+```
+
 
 ## FAQ
 ### Don't roll your own crypto!
@@ -75,7 +86,9 @@ If you are providing your own salt, you are probably using it wrong. The design 
 
 ## Contributing
 
-Not yet - the code is in a high state of flux. If you feel you have identified a security issue, please email me directly. For any other bugs, it is too early to review them.
+Any form of contribution is appreciated, however, please note the design goals above and work within them.
+
+If an issue is felt to be a security concern, please contact me privately on: technion@lolware.net. If required, you may encrypt with [my GPG key](https://lolware.net/technion-GPG-KEY).
 
 ## License
 
