@@ -10,12 +10,7 @@ Metrics/MethodLength:
   Max: 24
 
 Style/AlignParameters:
-  Exclude:
-    - 'lib/argon2/ffi_engine.rb'
-    - 'test/error_test.rb'
-    - 'test/low_level_test.rb'
-    - 'test/util_test.rb'
-    - 'test/rubycheck_test.rb'
+  Enabled: false
 
 # Configuration parameters: Exclude.
 Style/Documentation:
@@ -55,9 +50,7 @@ Style/LeadingCommentSpace:
     - 'test/util_lib.rb'
 
 Style/SignalException:
-  Exclude:
-    - 'lib/argon2/ffi_engine.rb'
-    - 'lib/argon2.rb'
+  Enabled: false
 
 Style/StringLiterals:
   Enabled: false
