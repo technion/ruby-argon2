@@ -20,12 +20,13 @@
 #define THREADS_DEF 1
 #define OUT_LEN 32
 #define SALT_LEN 16
+#define ENCODE_LEN 108
 
 int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len);
 
-unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
-                uint32_t m_cost, uint32_t lanes, 
-                uint8_t *secret, size_t secretlen)
+unsigned int argon2_wrap(char *out, const char *pwd, uint8_t *salt, 
+        uint32_t t_cost, uint32_t m_cost, uint32_t lanes, 
+        uint8_t *secret, size_t secretlen)
 {
     unsigned pwd_length;
     uint8_t hash[OUT_LEN];
@@ -63,18 +64,18 @@ unsigned int argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
     if (result != ARGON2_OK)
         return result;
 
-    encode_string(out, 300, &context, Argon2_i);
+    encode_string(out, ENCODE_LEN, &context, Argon2_i);
     return ARGON2_OK;
 }
  
-int wrap_argon2_verify(const char *encoded, const void *pwd,
+int wrap_argon2_verify(const char *encoded, const char *pwd,
     const size_t pwdlen,
     uint8_t *secret, size_t secretlen)
 {
-
     argon2_context ctx;
-    uint8_t *out;
     int ret;
+    char out[ENCODE_LEN];
+    memset(&ctx, 0, sizeof(argon2_context));
 
     /* max values, to be updated in decode_string */
     ctx.adlen = 512;
@@ -90,36 +91,25 @@ int wrap_argon2_verify(const char *encoded, const void *pwd,
         free(ctx.out);
         return ARGON2_MEMORY_ALLOCATION_ERROR;
     }
-    out = malloc(ctx.outlen);
-    if (!out) {
-        free(ctx.ad);
-        free(ctx.salt);
-        free(ctx.out);
-        return ARGON2_MEMORY_ALLOCATION_ERROR;
-    }
 
     if(decode_string(&ctx, encoded, Argon2_i) != 1) {
         free(ctx.ad);
         free(ctx.salt);
         free(ctx.out);
-        free(out);
         return ARGON2_DECODING_FAIL;
-    }
-    ctx.secret = secret;
-    ctx.secretlen = secretlen;
+    } 
 
-    ret = argon2_hash(ctx.t_cost, ctx.m_cost, ctx.threads, pwd, pwdlen, ctx.salt,
-                ctx.saltlen, out, ctx.outlen, NULL, 0, Argon2_i);
+    ret = argon2_wrap(out, pwd, ctx.salt, ctx.t_cost, 
+           ctx.m_cost, ctx.lanes, secret, secretlen);
 
     free(ctx.ad);
     free(ctx.salt);
 
-    if (ret != ARGON2_OK || argon2_compare(out, ctx.out, ctx.outlen)) {
-        free(out);
+    if (ret != ARGON2_OK || argon2_compare((uint8_t*)out, (uint8_t*)encoded, 
+                strlen(encoded))) {
         free(ctx.out);
         return ARGON2_DECODING_FAIL;
     }
-    free(out);
     free(ctx.out);
 
     return ARGON2_OK;

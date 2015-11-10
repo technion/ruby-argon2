@@ -36,11 +36,11 @@ int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
 
 */
 
-void argon2_wrap(char *out, char *pwd, uint8_t *salt, uint32_t t_cost,
+void argon2_wrap(char *out, const char *pwd, uint8_t *salt, uint32_t t_cost,
     uint32_t m_cost, uint32_t lanes,
     uint8_t *secret, size_t secretlen);
 
-int wrap_argon2_verify(const char *encoded, const void *pwd,
+int wrap_argon2_verify(const char *encoded, const char *pwd,
     const size_t pwdlen,
     uint8_t *secret, size_t secretlen);
 
