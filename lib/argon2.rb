@@ -31,10 +31,10 @@ module Argon2
       argon2.hash(pass)
     end
 
-    def self.verify_password(pass, hash)
+    def self.verify_password(pass, hash, secret = nil)
       raise ArgonHashFail, "Invalid hash" unless
         /^\$argon2i\$.{,110}/.match hash
-      Argon2::Engine.argon2i_verify(pass, hash, nil)
+      Argon2::Engine.argon2i_verify(pass, hash, secret)
     end
   end
 end
