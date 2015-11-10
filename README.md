@@ -2,7 +2,7 @@
 
 This Ruby Gem provides FFI bindings, and a simplified interface, to the Argon2 algorithm. [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the official winner of the Password Hashing Competition, a several year project to identify a successor to bcrypt/PBKDF/scrypt methods of securely storing passwords. This is an independant project and not official from the PHC team.
 
-*This gem is still in early development* and at this point is not recommended for use. It has however moved on to being feature complete and users are encouraged to test this product.
+*This gem is now considered a beta release* and at this point is not recommended for production use. It has however moved on to being feature complete and users are encouraged to test this product.
 
 
 [![Build Status](https://travis-ci.org/technion/ruby-argon2.svg?branch=master)](https://travis-ci.org/technion/ruby-argon2)
@@ -63,7 +63,7 @@ Argon2 supports an optional key value. This should be stored securely on your se
 KEY = "A key"
 argon = Argon2::Password.new(t_cost: 2, m_cost: 16, secret: KEY)
 myhash = argon.hash("A password")
-Argon2::Password.verify_password("A password", KEY)
+Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
 
