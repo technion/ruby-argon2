@@ -8,9 +8,10 @@ module Argon2
   # Front-end API for the Argon2 module.
   class Password
     def initialize(options = {})
-      #TODO: Verify inputs
       @t_cost = options[:t_cost] || 2
+      raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 10
       @m_cost = options[:m_cost] || 16
+      raise ArgonHashFail, "Invalid m_cost" if @t_cost < 1 || @t_cost > 31
       @salt = options[:salt_do_not_supply] || Engine.saltgen
       @secret = options[:secret]
     end
@@ -31,7 +32,8 @@ module Argon2
     end
 
     def self.verify_password(pass, hash)
-      #TODO: Basic verify
+      raise ArgonHashFail, "Invalid hash" unless 
+        /^\$argon2i\$.{,110}/.match hash
       Argon2::Engine.argon2i_verify(pass, hash, nil)
     end
   end
