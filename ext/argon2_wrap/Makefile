@@ -62,8 +62,8 @@ libs: $(SRC)
 #Deliberately avoiding the CFLAGS for our test cases - disable optimise and
 #C89
 test: $(SRC) test.c
-		$(CC) -pthread -O3 -Wall -g $^ -o tests
-		./tests
+	clang -pthread -O3 -fsanitize=address -fsanitize=undefined -Wall -g $^ -o tests
+	./tests
 
 clean:
 	rm -f tests libargon2_wrap.so
