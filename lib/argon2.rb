@@ -32,7 +32,7 @@ module Argon2
     end
 
     def self.verify_password(pass, hash)
-      raise ArgonHashFail, "Invalid hash" unless 
+      raise ArgonHashFail, "Invalid hash" unless
         /^\$argon2i\$.{,110}/.match hash
       Argon2::Engine.argon2i_verify(pass, hash, nil)
     end

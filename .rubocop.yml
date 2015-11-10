@@ -2,6 +2,10 @@
 # `rubocop --auto-gen-config`
 Metrics/AbcSize:
   Max: 16
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
 
 Metrics/LineLength:
   Max: 160
