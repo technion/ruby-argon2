@@ -78,6 +78,7 @@ int main()
 
 #define RAWTEST(T, M, P, PWD, REF) \
     pwd = strdup(PWD); \
+    assert(pwd); \
     ret = argon2i_hash_raw(T, 1<<M, P, pwd, strlen(pwd), salt, SALT_LEN, out, OUT_LEN); \
     assert(ret == ARGON2_OK); \
     for(i=0; i<OUT_LEN; ++i ) \
