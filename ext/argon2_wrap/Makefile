@@ -62,7 +62,7 @@ libs: $(SRC)
 #Deliberately avoiding the CFLAGS for our test cases - disable optimise and
 #C89
 test: $(SRC) test.c
-	clang -pthread -O3 -fsanitize=address -fsanitize=undefined -Wall -g $^ -o tests
+	scan-build clang -pthread -O3 -fsanitize=address -fsanitize=undefined -Wall -g $^ -o tests
 	./tests
 
 clean:
