@@ -18,10 +18,12 @@ This project has several key tenants to its design:
 * The reference Argon2 implementation is to be used "unaltered". To ensure compliance wit this goal, and encourage regular updates from upstream, this is implemented as a git submodule, and is intended to stay that way.
 * The FFI interface is kept as slim as possible, with wrapper classes preferred to implementing context structs in FFI
 * Security and maintainability take top priority. This can have an impact on platform support. A PR that contains platform specific code paths is unlikely to be accepted.
+* Tested platforms are MRI Ruby 2.2 and JRuby 9000. No assertions are made on other platforms.
 * Errors from the C interface are raised as Exceptions. There are a lot of exception classes, but they tend to relate to things like very broken input, and code bugs. Calls to this library should generally not require a rescue.
 * Test suits should aim for 100% code coverage.
 * Default work values should not be considered constants. I will increase them from time to time.
 * Not exposing the threads parameter is a design choice. I believe there is significant risk, and minimal gain in using a value other than '1'. Four threads on a four core box completely ties up the entire server to process one user logon. If you want more security, increase m_cost.
+* Many Rubocop errors have been disabled, but any commit should avoid new alerts or demonstrate their necessity.
 
 ## Usage
 
