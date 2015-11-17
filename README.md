@@ -68,6 +68,9 @@ myhash = argon.hash("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
+## RubyDocs documentation
+
+[The usual URL](http://www.rubydoc.info/gems/argon2) will provide detailed documentation.
 
 ## FAQ
 ### Don't roll your own crypto!
