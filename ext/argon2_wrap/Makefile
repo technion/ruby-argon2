@@ -29,34 +29,29 @@ LIB_NAME=argon2_wrap
 ifeq ($(KERNEL_NAME), Linux)
 	LIB_EXT := so
 	LIB_CFLAGS := -shared -fPIC
-	LIB_PATH := -Wl,-rpath=$(BUILD_PATH)
 endif
 ifeq ($(KERNEL_NAME), NetBSD)
 	LIB_EXT := so
 	LIB_CFLAGS := -shared -fPIC
-	LIB_PATH := -Wl,-rpath=$(BUILD_PATH)
 endif
 ifeq ($(KERNEL_NAME), Darwin)
 	LIB_EXT := dylib
 	LIB_CFLAGS := -dynamiclib -install_name @rpath/lib$(LIB_NAME).$(LIB_EXT)
-	LIB_PATH := -Xlinker -rpath -Xlinker $(BUILD_PATH)
 endif
 ifeq ($(findstring MINGW, $(KERNEL_NAME)), MINGW)
 	LIB_EXT := dll
 	LIB_CFLAGS := -shared -Wl,--out-implib,lib$(LIB_NAME).$(LIB_EXT).a
-	LIB_PATH := -Wl,-rpath=$(BUILD_PATH)
 endif
 ifeq ($(KERNEL_NAME), $(filter $(KERNEL_NAME),OpenBSD FreeBSD))
 	LIB_EXT := so
 	LIB_CFLAGS := -shared -fPIC
-	LIB_PATH := -Wl,-rpath=$(BUILD_PATH)
 endif
 
 LIB_SH := lib$(LIB_NAME).$(LIB_EXT)
 
 all: libs 
 libs: $(SRC)
-		$(CC) $(CFLAGS) $(LIB_CFLAGS) $^ -o libargon2_wrap.so
+		$(CC) $(CFLAGS) $(LIB_CFLAGS) $^ -o libargon2_wrap.$(LIB_EXT)
 
 #Deliberately avoiding the CFLAGS for our test cases - disable optimise and
 #C89
@@ -65,7 +60,7 @@ test: $(SRC) test.c
 	./tests
 
 clean:
-	rm -f tests libargon2_wrap.so
+	rm -f tests libargon2_wrap.$(LIB_EXT)
 
 install:
 	echo none
