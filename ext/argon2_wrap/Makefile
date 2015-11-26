@@ -9,7 +9,6 @@
 #
 
 DIST_SRC = ../phc-winner-argon2/src
-CC = gcc
 SRC = $(DIST_SRC)/argon2.c $(DIST_SRC)/core.c $(DIST_SRC)/blake2/blake2b.c $(DIST_SRC)/thread.c $(DIST_SRC)/encoding.c argon_wrap.c
 OBJ = $(SRC:.c=.o)
 
