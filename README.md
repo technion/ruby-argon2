@@ -67,6 +67,10 @@ myhash = argon.hash("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
+## OSX 'El Capitan' Issues
+
+The default installation workflow has caused issues with a number of gems under this update. There is some excellent documentation on the issue and some workarounds in the [Jekyll Documentation](http://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011).
+
 ## RubyDocs documentation
 
 [The usual URL](http://www.rubydoc.info/gems/argon2) will provide detailed documentation.
