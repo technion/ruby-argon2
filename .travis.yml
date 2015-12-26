@@ -1,6 +1,7 @@
 language: ruby
 rvm:
   - 2.2.3
+  - 2.3.0
   - jruby-9000
 before_install: gem install bundler -v 1.10.5
 install: bin/setup
