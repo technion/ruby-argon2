@@ -24,11 +24,10 @@
 
 int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len);
 
-unsigned int argon2_wrap(char *out, const char *pwd, uint8_t *salt, 
-        uint32_t t_cost, uint32_t m_cost, uint32_t lanes, 
+unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
+        uint8_t *salt, uint32_t t_cost, uint32_t m_cost, uint32_t lanes, 
         uint8_t *secret, size_t secretlen)
 {
-    unsigned pwd_length;
     uint8_t hash[OUT_LEN];
     argon2_context context;
 
@@ -99,7 +98,7 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
         return ARGON2_DECODING_FAIL;
     } 
 
-    ret = argon2_wrap(out, pwd, ctx.salt, ctx.t_cost, 
+    ret = argon2_wrap(out, pwd, pwdlen, ctx.salt, ctx.t_cost, 
            ctx.m_cost, ctx.lanes, secret, secretlen);
 
     free(ctx.ad);

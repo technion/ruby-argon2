@@ -16,14 +16,16 @@ module Argon2
       :uint, :uint, :uint, :pointer,
       :size_t, :pointer, :size_t, :pointer, :size_t], :int, :blocking => true
 
-    #void argon2_wrap(uint8_t *out, char *pwd, uint8_t *salt, uint32_t t_cost,
+    #void argon2_wrap(uint8_t *out, char *pwd, size_it pwdlen,
+    #uint8_t *salt, uint32_t t_cost,
     #    uint32_t m_cost, uint32_t lanes,
     #    uint8_t *secret, uint32_t secretlen)
     attach_function :argon2_wrap, [
-      :pointer, :pointer, :pointer, :uint,
+      :pointer, :pointer, :size_t, :pointer, :uint,
       :uint, :uint, :pointer, :size_t], :uint, :blocking => true
 
-    #int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
+    #int argon2i_verify(const char *encoded, const void *pwd,
+    #const size_t pwdlen);
     attach_function :wrap_argon2_verify, [:pointer, :pointer, :size_t,
       :pointer, :size_t], :int, :blocking => true
   end
@@ -46,11 +48,13 @@ module Argon2
     def self.hash_argon2i_encode(password, salt, t_cost, m_cost, secret)
       result = ''
       secretlen = secret.nil? ? 0 : secret.length
+      passwordlen = password.nil? ? 0 : password.length
       if salt.length != Constants::SALT_LEN
         raise ArgonHashFail, "Invalid salt size"
       end
       FFI::MemoryPointer.new(:char, Constants::ENCODE_LEN) do |buffer|
-        ret = Ext.argon2_wrap(buffer, password, salt, t_cost, (1 << m_cost),
+        ret = Ext.argon2_wrap(buffer, password, passwordlen,
+            salt, t_cost, (1 << m_cost),
             1, secret, secretlen)
         raise ArgonHashFail, ERRORS[ret] unless ret == 0
         result = buffer.read_string(Constants::ENCODE_LEN)
