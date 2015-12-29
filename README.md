@@ -98,6 +98,24 @@ Any form of contribution is appreciated, however, please note the design goals a
 
 If an issue is felt to be a security concern, please contact me privately on: technion@lolware.net. If required, you may encrypt with [my GPG key](https://lolware.net/technion-GPG-KEY).
 
+## Building locally/Tests
+
+To build the gem locally, you will need to checkout the submodule and build it manually:
+
+```shell
+git submodule update --init --recursive
+bundle install
+cd ext/argon2_wrap/
+make
+cd ../..
+```
+
+The test harness includes a property based test. To more strenuously perform this test, you can tune the iterations parameter:
+
+```shell
+TEST_CHECKS=10000 bundle exec rake test
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
