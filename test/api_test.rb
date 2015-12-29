@@ -32,8 +32,5 @@ class Argon2APITest < Minitest::Test
   def test_hash
     assert pass = Argon2::Password.new
     assert pass.hash('mypassword')
-    assert_raises Argon2::ArgonHashFail do
-      pass.hash("my\x00null")
-    end
   end
 end

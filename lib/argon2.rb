@@ -17,10 +17,6 @@ module Argon2
     end
 
     def hash(pass)
-      # It is technically possible to include NULL bytes, however our C
-      # uses strlen(). It is not deemed suitable to accept a user password
-      # with such a character.
-      raise ArgonHashFail, "NULL bytes not permitted" if /\0/.match(pass)
       Argon2::Engine.hash_argon2i_encode(
               pass, @salt, @t_cost, @m_cost, @secret)
     end
