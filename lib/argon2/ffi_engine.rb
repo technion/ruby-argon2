@@ -47,8 +47,8 @@ module Argon2
 
     def self.hash_argon2i_encode(password, salt, t_cost, m_cost, secret)
       result = ''
-      secretlen = secret.nil? ? 0 : secret.length
-      passwordlen = password.nil? ? 0 : password.length
+      secretlen = secret.nil? ? 0 : secret.bytesize
+      passwordlen = password.nil? ? 0 : password.bytesize
       if salt.length != Constants::SALT_LEN
         raise ArgonHashFail, "Invalid salt size"
       end
@@ -63,8 +63,10 @@ module Argon2
     end
 
     def self.argon2i_verify(pwd, hash, secret)
-      secretlen = secret.nil? ? 0 : secret.length
-      ret = Ext.wrap_argon2_verify(hash, pwd, pwd.length, secret, secretlen)
+      secretlen = secret.nil? ? 0 : secret.bytesize
+      passwordlen = pwd.nil? ? 0 : pwd.bytesize
+
+      ret = Ext.wrap_argon2_verify(hash, pwd, passwordlen, secret, secretlen)
       return false if ERRORS[ret] == 'ARGON2_DECODING_FAIL'
       raise ArgonHashFail, ERRORS[ret] unless ret == 0
       true
