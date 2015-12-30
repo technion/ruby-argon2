@@ -39,8 +39,6 @@ unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
         return ARGON2_PWD_PTR_MISMATCH;
     }
 
-    pwd_length = strlen(pwd);
-
     context.out = hash;
     context.outlen = OUT_LEN;
     context.pwd = (uint8_t *)pwd;
