@@ -35,8 +35,8 @@ ifeq ($(KERNEL_NAME), NetBSD)
 	LIB_CFLAGS := -shared -fPIC
 endif
 ifeq ($(KERNEL_NAME), Darwin)
-	LIB_EXT := dylib
-	LIB_CFLAGS := -dynamiclib -install_name @rpath/lib$(LIB_NAME).$(LIB_EXT)
+	LIB_EXT := bundle
+	LIB_CFLAGS := -bundle
 endif
 ifeq ($(findstring MINGW, $(KERNEL_NAME)), MINGW)
 	LIB_EXT := dll
