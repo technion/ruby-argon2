@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'argon2/constants'
 require 'argon2/ffi_engine'
 require 'argon2/version'

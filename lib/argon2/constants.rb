@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Argon2
   # Constants utilised in several parts of the Argon2 module
   # SALT_LEN is a standard recommendation from the Argon2 spec.
