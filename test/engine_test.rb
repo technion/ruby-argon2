@@ -1,4 +1,3 @@
-require 'util_lib'
 
 class EngineTest < Minitest::Test
   def test_saltgen

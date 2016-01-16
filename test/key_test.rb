@@ -1,4 +1,5 @@
 require 'test_helper'
+# frozen_string_literal: true
 
 class LowLevelArgon2Test < Minitest::Test
   KEY = "a magic key"
