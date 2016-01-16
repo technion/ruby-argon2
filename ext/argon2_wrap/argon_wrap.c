@@ -22,7 +22,16 @@
 #define SALT_LEN 16
 #define ENCODE_LEN 108
 
-int argon2_compare(const uint8_t *b1, const uint8_t *b2, size_t len);
+/* Workaround for https://github.com/technion/ruby-argon2/issues/8. Hopefully temporary */
+static int wrap_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
+    size_t i;
+    uint8_t d = 0U;
+
+    for (i = 0U; i < len; i++) {
+        d |= b1[i] ^ b2[i];
+    }
+    return (int)((1 & ((d - 1) >> 8)) - 1);
+}
 
 unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
         uint8_t *salt, uint32_t t_cost, uint32_t m_cost, uint32_t lanes, 
@@ -102,7 +111,7 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
     free(ctx.ad);
     free(ctx.salt);
 
-    if (ret != ARGON2_OK || argon2_compare((uint8_t*)out, (uint8_t*)encoded, 
+    if (ret != ARGON2_OK || wrap_compare((uint8_t*)out, (uint8_t*)encoded, 
                 strlen(encoded))) {
         free(ctx.out);
         return ARGON2_DECODING_FAIL;
