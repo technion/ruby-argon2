@@ -66,7 +66,7 @@ unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
     context.free_cbk = NULL;
     context.flags = 0;
 
-    int result = argon2i(&context);
+    int result = argon2i_ctx(&context);
     if (result != ARGON2_OK)
         return result;
 
@@ -82,11 +82,13 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
     int ret;
     char out[ENCODE_LEN];
     memset(&ctx, 0, sizeof(argon2_context));
-
-    /* max values, to be updated in decode_string */
-    ctx.adlen = 512;
-    ctx.saltlen = 512;
-    ctx.outlen = 512;
+    size_t encoded_len;
+    
+    encoded_len = strlen(encoded);
+    /* larger than max possible values */
+    ctx.adlen = encoded_len;
+    ctx.saltlen = encoded_len;
+    ctx.outlen = encoded_len;
 
     ctx.ad = malloc(ctx.adlen);
     ctx.salt = malloc(ctx.saltlen);
@@ -98,7 +100,7 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
         return ARGON2_MEMORY_ALLOCATION_ERROR;
     }
 
-    if(decode_string(&ctx, encoded, Argon2_i) != 1) {
+    if(decode_string(&ctx, encoded, Argon2_i) != ARGON2_OK) {
         free(ctx.ad);
         free(ctx.salt);
         free(ctx.out);
