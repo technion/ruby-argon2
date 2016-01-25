@@ -48,7 +48,7 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
 int main()
 {
     unsigned char out[OUT_LEN];
-    unsigned char hex_out[OUT_LEN*2];
+    unsigned char hex_out[OUT_LEN*2 + 4]; /* Allow space for NULL byute */
     char out2[300];
     char *pwd = NULL;
     uint8_t salt[SALT_LEN];
