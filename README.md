@@ -67,9 +67,11 @@ myhash = argon.hash("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
-## OSX 'El Capitan' Issues
+## Platform Issues
 
-The default installation workflow has caused issues with a number of gems under this update. There is some excellent documentation on the issue and some workarounds in the [Jekyll Documentation](http://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011).
+The default installation workflow has caused issues with a number of gems under this update. There is some excellent documentation on the issue and some workarounds in the [Jekyll Documentation](http://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011). With this in mind, OSX is a fully supported OS.
+
+Windows is not. Nobody anywhere has the resources to support Ruby FFI code on Windows.
 
 ## RubyDocs documentation
 
