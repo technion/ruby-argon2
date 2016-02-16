@@ -31,6 +31,6 @@ class Argon2APITest < Minitest::Test
 
   def test_hash
     assert pass = Argon2::Password.new
-    assert pass.hash('mypassword')
+    assert pass.create('mypassword')
   end
 end

@@ -17,15 +17,15 @@ module Argon2
       @secret = options[:secret]
     end
 
-    def hash(pass)
+    def create(pass)
       Argon2::Engine.hash_argon2i_encode(
               pass, @salt, @t_cost, @m_cost, @secret)
     end
 
     #Helper class, just creates defaults and calls hash()
-    def self.hash(pass)
+    def self.create(pass)
       argon2 = Argon2::Password.new
-      argon2.hash(pass)
+      argon2.create(pass)
     end
 
     def self.verify_password(pass, hash, secret = nil)

@@ -9,7 +9,7 @@ class Argon2PropertyTest < Minitest::Test
     hashlist = {}
     TIMES.times do
       word = Argon2::Engine.saltgen
-      assert hashlist[word] = Argon2::Password.hash(word),
+      assert hashlist[word] = Argon2::Password.create(word),
           word.unpack('H*').join
     end
     hashlist.each do |word, hash|
@@ -22,7 +22,7 @@ class Argon2PropertyTest < Minitest::Test
     hashlist = {}
     TIMES.times do
       word = Argon2::Engine.saltgen
-      assert hashlist[word] = Argon2::Password.hash(word),
+      assert hashlist[word] = Argon2::Password.create(word),
         word.unpack('H*').join
     end
     hashlist.each do |word, hash|

@@ -34,7 +34,7 @@ To generate a hash using specific time and memory cost:
 
 ```ruby
 hasher = Argon2::Password.new(t_cost: 2, m_cost: 16)
-hasher.hash("password")
+hasher.create("password")
      => "$argon2i$m=65536,t=2,p=1$mLa9JT3Y9P2XhB5Mtuj+yQ$rojObVNKe/ehgd9SWQBB+8nJ8L34Aj3Kiz+aNrWvrx4"
 ```
 
@@ -42,13 +42,13 @@ To utilise default costs:
 
 ```ruby
 hasher = Argon2::Password.new
-hasher.hash("password")
+hasher.create("password")
 ```
 
 Alternatively, use this shotcut:
 
 ```ruby
-Argon2::Password.hash("password")
+Argon2::Password.create("password")
      => "$argon2i$m=65536,t=2,p=1$AZwVlHIbgRC7yQhkPKa4tA$F5eM2Zzt4GhIVnR8SNOh3ysyMvGxAO6omsw8kzjbcs4"
 ```
 
@@ -63,7 +63,7 @@ Argon2 supports an optional key value. This should be stored securely on your se
 ```ruby
 KEY = "A key"
 argon = Argon2::Password.new(t_cost: 2, m_cost: 16, secret: KEY)
-myhash = argon.hash("A password")
+myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
