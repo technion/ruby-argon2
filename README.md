@@ -80,7 +80,9 @@ Windows is not. Nobody anywhere has the resources to support Ruby FFI code on Wi
 ## FAQ
 ### Don't roll your own crypto!
 
-This gets its own section because someone will raise it. I did not invent or alter this algorithm, or implement it directly.
+This gets its own section because someone will raise it. I did not invent or alter this algorithm, or implement it directly. These bindings were written following [considerable involvement with the C reference](https://github.com/P-H-C/phc-winner-argon2/commits/master?author=technion), and a strong focus has been made on following the intent of the algorithm.
+
+It is strongly advised to avoid implementations that utilise off-spec methods of introducing salts, invent imaginary parameters, or which use the word "encryption" in describing the password hashing process
 
 ### Secure wipe is useless
 
