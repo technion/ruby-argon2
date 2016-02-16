@@ -10,9 +10,9 @@
 #include <string.h>
 #include <time.h>
 
-#include "../phc-winner-argon2/src/argon2.h"
-#include "../phc-winner-argon2/src/core.h"
-#include "../phc-winner-argon2/src/encoding.h"
+#include "argon2.h"
+#include "core.h"
+#include "encoding.h"
 
 #define T_COST_DEF 3
 #define LOG_M_COST_DEF 12 /* 2^12 = 4 MiB */

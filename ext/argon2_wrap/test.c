@@ -10,7 +10,7 @@
 #include <time.h>
 #include <assert.h>
 
-#include "../phc-winner-argon2/src/argon2.h"
+#include "argon2.h"
 
 #define OUT_LEN 32
 #define SALT_LEN 16

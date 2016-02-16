@@ -12,7 +12,7 @@ DIST_SRC = ../phc-winner-argon2/src
 SRC = $(DIST_SRC)/argon2.c $(DIST_SRC)/core.c $(DIST_SRC)/blake2/blake2b.c $(DIST_SRC)/thread.c $(DIST_SRC)/encoding.c argon_wrap.c
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -std=c89 -pthread -O3 -Wall -g
+CFLAGS = -pthread -O3 -Wall -g -I../phc-winner-argon2/include -I../phc-winner-argon2/src
 
 OPT=TRUE
 ifeq ($(OPT), TRUE)
@@ -56,7 +56,7 @@ libs: $(SRC)
 #Deliberately avoiding the CFLAGS for our test cases - disable optimise and
 #C89
 test: $(SRC) test.c
-	clang -pthread -O3 -fsanitize=address -fsanitize=undefined -Wall -g $^ -o tests
+	clang -pthread -O3 -fsanitize=address -fsanitize=undefined -Wall -g $^ -o tests $(CFLAGS)
 	./tests
 
 clean:
