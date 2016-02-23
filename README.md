@@ -98,9 +98,8 @@ If you are providing your own salt, you are probably using it wrong. The design 
 
 ## Contributing
 
-Any form of contribution is appreciated, however, please note the design goals above and work within them.
+Any form of contribution is appreciated, however, please review [CONTRIBUTING.md](CONTRIBUTING.md).
 
-If an issue is felt to be a security concern, please contact me privately on: technion@lolware.net. If required, you may encrypt with [my GPG key](https://lolware.net/technion-GPG-KEY).
 
 ## Building locally/Tests
 
