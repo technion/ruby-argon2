@@ -4,7 +4,6 @@
 
 This Ruby Gem provides FFI bindings, and a simplified interface, to the Argon2 algorithm. [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the official winner of the Password Hashing Competition, a several year project to identify a successor to bcrypt/PBKDF/scrypt methods of securely storing passwords. This is an independant project and not official from the PHC team.
 
-This project is now considered stable.
 
 [![Build Status](https://travis-ci.org/technion/ruby-argon2.svg?branch=master)](https://travis-ci.org/technion/ruby-argon2)
 [![Code Climate](https://codeclimate.com/github/technion/ruby-argon2/badges/gpa.svg)](https://codeclimate.com/github/technion/ruby-argon2)
@@ -68,6 +67,13 @@ argon = Argon2::Password.new(t_cost: 2, m_cost: 16, secret: KEY)
 myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
+
+## Important notes regarding version 1.0 upgrade
+Version 1.0.0 included a major version bump over 0.1.4 due to several breaking changes. The first of these was an API change, which you can read the background on [here](https://github.com/technion/ruby-argon2/issues/9).
+
+The second of these is that the reference Argon2 implementation introduced an algorithm change, which is not backwards compatible. This is documented on [this PR on the C library](https://github.com/P-H-C/phc-winner-argon2/pull/115).
+
+As the crypt format did not change, there is no simple way to identify an original, or improved hash. To support existing users, I'll be maintaining the 0.1.x branch with patches and bugfixes for the immediate future.
 
 ## Platform Issues
 
