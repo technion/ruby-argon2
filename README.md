@@ -1,5 +1,7 @@
 # Ruby Argon2 Gem
 
+**Note: You are reading the documentation for the master branch, which has diverged from the latest version 0.1.4 currently on Rubygems. Read the docs for the version on Rubygems [here](https://github.com/technion/ruby-argon2/tree/v0.1.4). More info on why the gem is not updated yet is [here](https://github.com/technion/ruby-argon2/issues/11).**
+
 This Ruby Gem provides FFI bindings, and a simplified interface, to the Argon2 algorithm. [Argon2](https://github.com/P-H-C/phc-winner-argon2) is the official winner of the Password Hashing Competition, a several year project to identify a successor to bcrypt/PBKDF/scrypt methods of securely storing passwords. This is an independant project and not official from the PHC team.
 
 This project is now considered stable.
