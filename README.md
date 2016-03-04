@@ -77,7 +77,7 @@ As the crypt format did not change, there is no simple way to identify an origin
 
 ## Platform Issues
 
-The default installation workflow has caused issues with a number of gems under this update. There is some excellent documentation on the issue and some workarounds in the [Jekyll Documentation](http://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011). With this in mind, OSX is a fully supported OS.
+The default installation workflow has caused issues with a number of gems under the latest OSX. There is some excellent documentation on the issue and some workarounds in the [Jekyll Documentation](http://jekyllrb.com/docs/troubleshooting/#jekyll-amp-mac-os-x-1011). With this in mind, OSX is a fully supported OS.
 
 Windows is not. Nobody anywhere has the resources to support Ruby FFI code on Windows.
 
