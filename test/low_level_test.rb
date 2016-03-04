@@ -1,104 +1,70 @@
 require 'test_helper'
 
+# Vectors in this suite taken from test.c in reference
+
 class LowLevelArgon2Test < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::Argon2::VERSION
   end
 
   def test_ffi_vector
-    #./argon2 password somesalt -t 2 -m 16
-    #Hash: 894af4ff2e2d26f3ce15f77a7e1c25db45b4e20439e9961772ba199caddb001e
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16),
-        '894af4ff2e2d26f3ce15f77a7e1c25db45b4e20439e9961772ba199caddb001e'
+        '1c7eeef9e0e969b3024722fc864a1ca9f6ca20da73f9bf3f1731881beae2039e'
 
-    #./argon2 password somesalt -t 2 -m 20
-    #Hash: 58d4d929aeeafa40cc049f032035784fb085e8e0d0c5a51ea067341a93d6d286
-    assert_equal Argon2::Engine.hash_argon2i(
-        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 20),
-        '58d4d929aeeafa40cc049f032035784fb085e8e0d0c5a51ea067341a93d6d286'
-
-    #./argon2 password somesalt -t 2 -m 18
-    #Hash: 55292398cce8fc78685e610d004ca9bda5c325a0a2e6285a0de5f816df139aa6
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 18),
-        '55292398cce8fc78685e610d004ca9bda5c325a0a2e6285a0de5f816df139aa6'
+        '5c6dfd2712110cf88f1426059b01d87f8210d5368da0e7ee68586e9d4af4954b'
 
-    #./argon2 password somesalt -t 2 -m 8
-    #Hash: e346b1e1aa7ca58c9bb862e223ba5604064398d4394e49e90972c6b54cef43ed
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8),
-        'e346b1e1aa7ca58c9bb862e223ba5604064398d4394e49e90972c6b54cef43ed'
+        'dfebf9d4eadd6859f4cc6a9bb20043fd9da7e1e36bdacdbb05ca569f463269f8'
 
-    #./argon2 password somesalt -t 1 -m 16
-    #Hash: b49199e4ecb0f6659e6947f945e391c940b17106e1d0b0a9888006c7f87a789b
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16),
-        'b49199e4ecb0f6659e6947f945e391c940b17106e1d0b0a9888006c7f87a789b'
+        'fabd1ddbd86a101d326ac2abe79660202b10192925d2fd2483085df94df0c91a'
 
-    #./argon2 password somesalt -t 4 -m 16
-    #Hash: 72207b3312d79995fbe7b30664837ae1246f9a98e07eac34835ca3498e705f85
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "somesalt\0\0\0\0\0\0\0\0", 4, 16),
-        '72207b3312d79995fbe7b30664837ae1246f9a98e07eac34835ca3498e705f85'
+        'b3b4cb3d6e2c1cb1e7bffdb966ab3ceafae701d6b7789c3f1e6c6b22d82d99d5'
 
-    #./argon2 differentpassword somesalt -t 2 -m 16 -p 1
-    #Hash: 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
     assert_equal Argon2::Engine.hash_argon2i(
         "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16),
-        '8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361'
+        'b2db9d7c0d1288951aec4b6e1cd3835ea29a7da2ac13e6f48554a26b127146f9'
 
-    #./argon2 password diffsalt -t 2 -m 16 -p 1
-    #Hash: 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16),
-        '8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311'
+        'bb6686865f2c1093f70f543c9535f807d5b42d5dc6d71f14a4a7a291913e05e0'
   end
 
   def test_encoded_hash
-    #./util.rb 894af4ff2e2d26f3ce15f77a7e1c25db45b4e20439e9961772ba199caddb001e
-    #iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4'
-
-    #./util.rb 58d4d929aeeafa40cc049f032035784fb085e8e0d0c5a51ea067341a93d6d286
-    #WNTZKa7q+kDMBJ8DIDV4T7CF6ODQxaUeoGc0GpPW0oY
-    assert_equal Argon2::Engine.hash_argon2i_encode(
-        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 20, nil),
-        '$argon2i$m=1048576,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$WNTZKa7q+kDMBJ8DIDV4T7CF6ODQxaUeoGc0GpPW0oY'
+        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 20, "secretkey"),
-        '$argon2i$m=1048576,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$jeQsDsHmEllAkvTonKB5qrMPYnHLNqlKBP/j8zU6g+w'
+        '$argon2i$m=1048576,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$g4zEnkxFGFYY8LlY9ZT7H3uxo1/7tazYDZkCdLJz/Is'
 
-    #./util.rb e346b1e1aa7ca58c9bb862e223ba5604064398d4394e49e90972c6b54cef43ed
-    #40ax4ap8pYybuGLiI7pWBAZDmNQ5TknpCXLGtUzvQ+0
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8, nil),
-        '$argon2i$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$40ax4ap8pYybuGLiI7pWBAZDmNQ5TknpCXLGtUzvQ+0'
+        '$argon2i$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg'
 
-    #./util.rb b49199e4ecb0f6659e6947f945e391c940b17106e1d0b0a9888006c7f87a789b
-    #tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16, nil),
-        '$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$tJGZ5Oyw9mWeaUf5ReORyUCxcQbh0LCpiIAGx/h6eJs'
+        '$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo'
 
-    #./util.rb 8e286f605ed7383987a4aac25a28a04808593b6e17613bc31457146c4f3f4361
-    #jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$jihvYF7XODmHpKrCWiigSAhZO24XYTvDFFcUbE8/Q2E'
+        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk'
 
-    #./util.rb 8f65b47d902fb2aee5e0b2bdc9041b249fc11f06f35551e0bee52716b41e8311
-    #j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$j2W0fZAvsq7l4LK9yQQbJJ/BHwbzVVHgvuUnFrQegxE'
+        '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$u2aGhl8sEJP3D1Q8lTX4B9W0LV3G1x8UpKeikZE+BeA'
   end
 
   def test_encode
-    assert Argon2::Engine.argon2i_verify("password", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", nil)
-    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", nil)
+    assert Argon2::Engine.argon2i_verify("password", "$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo", nil)
+    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo", nil)
   end
 end
