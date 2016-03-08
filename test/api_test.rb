@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module Argon2
-  #Simple stub to facilitate testing these variables
+  # Simple stub to facilitate testing these variables
   class Password
     attr_accessor :t_cost, :m_cost, :secret
   end

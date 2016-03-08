@@ -22,7 +22,7 @@ module Argon2
               pass, @salt, @t_cost, @m_cost, @secret)
     end
 
-    #Helper class, just creates defaults and calls hash()
+    # Helper class, just creates defaults and calls hash()
     def self.create(pass)
       argon2 = Argon2::Password.new
       argon2.create(pass)

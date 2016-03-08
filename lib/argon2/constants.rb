@@ -4,7 +4,7 @@ module Argon2
   # SALT_LEN is a standard recommendation from the Argon2 spec.
   module Constants
     SALT_LEN = 16
-    OUT_LEN = 32 #Binary, unencoded output
-    ENCODE_LEN = 108 #Encoded output
+    OUT_LEN = 32 # Binary, unencoded output
+    ENCODE_LEN = 108 # Encoded output
   end
 end

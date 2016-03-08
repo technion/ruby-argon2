@@ -2,12 +2,12 @@ require 'ffi'
 require 'ffi-compiler/loader'
 
 module Argon2
-  #Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
+  # Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
   module Ext
     extend FFI::Library
     ffi_lib FFI::Compiler::Loader.find('argon2_wrap')
 
-    #int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
+    # int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
     #   const uint32_t parallelism, const void *pwd,
     #   const size_t pwdlen, const void *salt,
     #   const size_t saltlen, void *hash, const size_t hashlen);
@@ -16,16 +16,16 @@ module Argon2
       :uint, :uint, :uint, :pointer,
       :size_t, :pointer, :size_t, :pointer, :size_t], :int, :blocking => true
 
-    #void argon2_wrap(uint8_t *out, char *pwd, size_it pwdlen,
-    #uint8_t *salt, uint32_t t_cost,
+    # void argon2_wrap(uint8_t *out, char *pwd, size_it pwdlen,
+    # uint8_t *salt, uint32_t t_cost,
     #    uint32_t m_cost, uint32_t lanes,
     #    uint8_t *secret, uint32_t secretlen)
     attach_function :argon2_wrap, [
       :pointer, :pointer, :size_t, :pointer, :uint,
       :uint, :uint, :pointer, :size_t], :uint, :blocking => true
 
-    #int argon2i_verify(const char *encoded, const void *pwd,
-    #const size_t pwdlen);
+    # int argon2i_verify(const char *encoded, const void *pwd,
+    # const size_t pwdlen);
     attach_function :wrap_argon2_verify, [:pointer, :pointer, :size_t,
       :pointer, :size_t], :int, :blocking => true
   end
