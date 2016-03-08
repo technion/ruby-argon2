@@ -36,7 +36,7 @@ To generate a hash using specific time and memory cost:
 ```ruby
 hasher = Argon2::Password.new(t_cost: 2, m_cost: 16)
 hasher.create("password")
-     => "$argon2i$m=65536,t=2,p=1$mLa9JT3Y9P2XhB5Mtuj+yQ$rojObVNKe/ehgd9SWQBB+8nJ8L34Aj3Kiz+aNrWvrx4"
+     => "$argon2i$m=65536,t=2,p=1$6ua7khmHLZwIHnjV2A6nSw$Kak8CTBN/yUYAESSxJKO/jfWH+40c0JQtc7EXhLm0SU"
 ```
 
 To utilise default costs:
@@ -50,7 +50,7 @@ Alternatively, use this shotcut:
 
 ```ruby
 Argon2::Password.create("password")
-     => "$argon2i$m=65536,t=2,p=1$AZwVlHIbgRC7yQhkPKa4tA$F5eM2Zzt4GhIVnR8SNOh3ysyMvGxAO6omsw8kzjbcs4"
+     => "$argon2i$m=65536,t=2,p=1$VYXqHZe+5OpNzhbU0LvMZA$XGmkk9tzjYtjatmS5VvuovLvUCfijevwgDzvIkOF+bs"
 ```
 
 You can then use this function to verify a password against a given hash. Will return either true or false.
@@ -71,7 +71,7 @@ Argon2::Password.verify_password("A password", myhash, KEY)
 ## Important notes regarding version 1.0 upgrade
 Version 1.0.0 included a major version bump over 0.1.4 due to several breaking changes. The first of these was an API change, which you can read the background on [here](https://github.com/technion/ruby-argon2/issues/9).
 
-The second of these is that the reference Argon2 implementation introduced an algorithm change, which is not backwards compatible. This is documented on [this PR on the C library](https://github.com/P-H-C/phc-winner-argon2/pull/115).
+The second of these is that the reference Argon2 implementation introduced an algorithm change, which produces a hash which is not backwards compatible. This is documented on [this PR on the C library](https://github.com/P-H-C/phc-winner-argon2/pull/115). This was a regrettable requirement to address a security concern in the algorithm itself.
 
 As the crypt format did not change, there is no simple way to identify an original, or improved hash. To support existing users, I'll be maintaining the 0.1.x branch with patches and bugfixes for the immediate future.
 

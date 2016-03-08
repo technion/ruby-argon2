@@ -14,13 +14,15 @@ OBJ = $(SRC:.c=.o)
 
 CFLAGS = -pthread -O3 -Wall -g -I../phc-winner-argon2/include -I../phc-winner-argon2/src
 
-OPT=TRUE
-ifeq ($(OPT), TRUE)
+OPTTEST := $(shell $(CC) -Iinclude -Isrc -march=native src/opt.c -c 2>/dev/null; echo $$?)
+# Detect compatible platform
+ifneq ($(OPTTEST), 0)
+	SRC += $(DIST_SRC)/ref.c
+else
 	CFLAGS += -march=native
 	SRC += $(DIST_SRC)/opt.c
-else
-	SRC += $(DIST_SRC)/ref.c
 endif
+
 
 BUILD_PATH := $(shell pwd)
 KERNEL_NAME := $(shell uname -s)

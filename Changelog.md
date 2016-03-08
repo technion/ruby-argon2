@@ -1,3 +1,7 @@
+## v1.0.0: 2015-03-07
+- API change - 'new' becomes 'create'
+- Version 1.3 of the Argon2 algorithm pulled in
+
 ## v0.1.3: 2015-11-30
 - Fix bug on verifying binary password
 
