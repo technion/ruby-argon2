@@ -88,20 +88,20 @@ int main()
 
     memcpy(salt, "somesalt", 8);
     WRAP_TEST(2, 16, "password", 
-            "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54");
+            "$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54");
 
     WRAP_TEST(2, 8, "password", 
-            "$argon2i$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg");
+            "$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg");
 
     WRAP_TEST(2, 16, "differentpassword", 
-            "$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk");
+            "$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk");
 
-    ret = wrap_argon2_verify("$argon2i$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg", "password",
+    ret = wrap_argon2_verify("$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg", "password",
             strlen("password"), NULL, 0);
     assert(ret == ARGON2_OK);
     printf("Verify OK test: PASS\n");
 
-    ret = wrap_argon2_verify("$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "notpassword",
+    ret = wrap_argon2_verify("$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "notpassword",
             strlen("notpassword"), NULL, 0);
     assert(ret == ARGON2_DECODING_FAIL);
     printf("Verify FAIL test: PASS\n");

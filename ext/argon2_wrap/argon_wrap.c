@@ -20,7 +20,7 @@
 #define THREADS_DEF 1
 #define OUT_LEN 32
 #define SALT_LEN 16
-#define ENCODE_LEN 108
+#define ENCODE_LEN 112
 
 /* Workaround for https://github.com/technion/ruby-argon2/issues/8. Hopefully temporary */
 static int wrap_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
@@ -65,6 +65,7 @@ unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
     context.allocate_cbk = NULL;
     context.free_cbk = NULL;
     context.flags = 0;
+    context.version = ARGON2_VERSION_13;
 
     int result = argon2i_ctx(&context);
     if (result != ARGON2_OK)
