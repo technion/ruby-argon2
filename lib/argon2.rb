@@ -35,6 +35,5 @@ module Argon2
       hash.gsub! "argon2$", "argon2$v=19$"
       Argon2::Engine.argon2i_verify(pass, hash, secret)
     end
-
   end
 end
