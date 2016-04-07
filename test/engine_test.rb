@@ -1,3 +1,4 @@
+require 'test_helper'
 
 class EngineTest < Minitest::Test
   def test_saltgen

@@ -40,31 +40,27 @@ class LowLevelArgon2Test < Minitest::Test
   def test_encoded_hash
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54'
-
-    assert_equal Argon2::Engine.hash_argon2i_encode(
-        "password", "somesalt\0\0\0\0\0\0\0\0", 2, 20, "secretkey"),
-        '$argon2i$m=1048576,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$g4zEnkxFGFYY8LlY9ZT7H3uxo1/7tazYDZkCdLJz/Is'
+        '$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8, nil),
-        '$argon2i$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg'
+        '$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16, nil),
-        '$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo'
+        '$argon2i$v=19$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk'
+        '$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$u2aGhl8sEJP3D1Q8lTX4B9W0LV3G1x8UpKeikZE+BeA'
+        '$argon2i$v=19$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$u2aGhl8sEJP3D1Q8lTX4B9W0LV3G1x8UpKeikZE+BeA'
   end
 
   def test_encode
-    assert Argon2::Engine.argon2i_verify("password", "$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo", nil)
-    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo", nil)
+    assert Argon2::Engine.argon2i_verify("password", "$argon2i$v=19$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo", nil)
+    refute Argon2::Engine.argon2i_verify("notword", "$argon2i$v=19$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo", nil)
   end
 end

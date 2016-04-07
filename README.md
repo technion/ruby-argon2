@@ -34,7 +34,7 @@ To generate a hash using specific time and memory cost:
 ```ruby
 hasher = Argon2::Password.new(t_cost: 2, m_cost: 16)
 hasher.create("password")
-     => "$argon2i$m=65536,t=2,p=1$6ua7khmHLZwIHnjV2A6nSw$Kak8CTBN/yUYAESSxJKO/jfWH+40c0JQtc7EXhLm0SU"
+    => "$argon2i$v=19$m=65536,t=2,p=1$jL7lLEAjDN+pY2cG1N8D2g$iwj1ueduCvm6B9YVjBSnAHu+6mKzqGmDW745ALR38Uo"
 ```
 
 To utilise default costs:
@@ -48,7 +48,7 @@ Alternatively, use this shotcut:
 
 ```ruby
 Argon2::Password.create("password")
-     => "$argon2i$m=65536,t=2,p=1$VYXqHZe+5OpNzhbU0LvMZA$XGmkk9tzjYtjatmS5VvuovLvUCfijevwgDzvIkOF+bs"
+    => "$argon2i$v=19$m=65536,t=2,p=1$61qkSyYNbUgf3kZH3GtHRw$4CQff9AZ0lWd7uF24RKMzqEiGpzhte1Hp8SO7X8bAew"
 ```
 
 You can then use this function to verify a password against a given hash. Will return either true or false.
