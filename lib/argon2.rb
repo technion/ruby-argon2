@@ -32,7 +32,9 @@ module Argon2
       raise ArgonHashFail, "Invalid hash" unless
         /^\$argon2i\$.{,112}/ =~ hash
 
-      hash.gsub! "argon2$", "argon2$v=19$"
+      hash.gsub! "argon2$", "argon2$v=19$" unless
+        /^\$argon2i\$v=/ =~ hash
+
       Argon2::Engine.argon2i_verify(pass, hash, secret)
     end
   end
