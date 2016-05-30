@@ -16,4 +16,11 @@ class UnicodeTest < Minitest::Test
     refute Argon2::Password.verify_password("String has a", hash),
       "Does not NULL truncate"
   end
+
+  def test_emoji
+    rawstr = "😀 😬 😁 😂 😃 😄 💩 😈 👿"
+    hash = Argon2::Password.create(rawstr)
+    assert Argon2::Password.verify_password(rawstr, hash)
+    refute Argon2::Password.verify_password("", hash)
+  end
 end
