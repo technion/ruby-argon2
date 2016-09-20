@@ -37,8 +37,8 @@ int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
 */
 
 unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
-    uint8_t *salt, uint32_t t_cost, uint32_t m_cost, uint32_t lanes,
-    uint8_t *secret, size_t secretlen);
+    uint8_t *salt, uint32_t saltlen, uint32_t t_cost, uint32_t m_cost, 
+    uint32_t lanes, uint8_t *secret, size_t secretlen);
 
 int wrap_argon2_verify(const char *encoded, const char *pwd,
     const size_t pwdlen,
@@ -81,7 +81,7 @@ int main()
 
 #define WRAP_TEST(T, M, PWD, REF) \
     pwd = strdup(PWD); \
-    argon2_wrap(out2, pwd, strlen(PWD), salt, T, 1<<M, 1, NULL, 0); \
+    argon2_wrap(out2, pwd, strlen(PWD), salt, sizeof(salt),T, 1<<M, 1, NULL, 0); \
     free(pwd); \
     assert(memcmp(out2, REF, strlen(REF)) == 0); \
     printf( "Ref test: %s: PASS\n", REF);

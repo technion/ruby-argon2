@@ -16,12 +16,12 @@ module Argon2
       :uint, :uint, :uint, :pointer,
       :size_t, :pointer, :size_t, :pointer, :size_t], :int, :blocking => true
 
-    # void argon2_wrap(uint8_t *out, char *pwd, size_it pwdlen,
-    # uint8_t *salt, uint32_t t_cost,
+    # void argon2_wrap(uint8_t *out, char *pwd, size_t pwdlen,
+    # uint8_t *salt, uint32_t saltlen, uint32_t t_cost,
     #    uint32_t m_cost, uint32_t lanes,
     #    uint8_t *secret, uint32_t secretlen)
     attach_function :argon2_wrap, [
-      :pointer, :pointer, :size_t, :pointer, :uint,
+      :pointer, :pointer, :size_t, :pointer, :uint, :uint,
       :uint, :uint, :pointer, :size_t], :uint, :blocking => true
 
     # int argon2i_verify(const char *encoded, const void *pwd,
@@ -54,7 +54,7 @@ module Argon2
       end
       FFI::MemoryPointer.new(:char, Constants::ENCODE_LEN) do |buffer|
         ret = Ext.argon2_wrap(buffer, password, passwordlen,
-            salt, t_cost, (1 << m_cost),
+            salt, salt.length, t_cost, (1 << m_cost),
             1, secret, secretlen)
         raise ArgonHashFail, ERRORS[ret.abs] unless ret == 0
         result = buffer.read_string(Constants::ENCODE_LEN)
