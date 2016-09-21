@@ -1,4 +1,10 @@
-## v1.0.0: 2015-03-07
+## v1.1.1: 2016-09-21
+- Fix verify against externally created hashes with different salt lengths
+
+## v1.1.0: ?
+- Backward compat with version 1.0 hashes
+
+## v1.0.0: 2016-03-07
 - API change - 'new' becomes 'create'
 - Version 1.3 of the Argon2 algorithm pulled in
 
