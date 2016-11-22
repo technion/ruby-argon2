@@ -80,6 +80,8 @@ The default installation workflow has caused issues with a number of gems under 
 
 Windows is not. Nobody anywhere has the resources to support Ruby FFI code on Windows.
 
+grsrc introduces certain challenges. Please see [documentation here](https://github.com/technion/ruby-argon2/issues/15).
+
 ## RubyDocs documentation
 
 [The usual URL](http://www.rubydoc.info/gems/argon2) will provide detailed documentation.
