@@ -87,22 +87,18 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
     
     encoded_len = strlen(encoded);
     /* larger than max possible values */
-    ctx.adlen = encoded_len;
     ctx.saltlen = encoded_len;
     ctx.outlen = encoded_len;
 
-    ctx.ad = malloc(ctx.adlen);
     ctx.salt = malloc(ctx.saltlen);
     ctx.out = malloc(ctx.outlen);
-    if (!ctx.out || !ctx.salt || !ctx.ad) {
-        free(ctx.ad);
+    if (!ctx.out || !ctx.salt) {
         free(ctx.salt);
         free(ctx.out);
         return ARGON2_MEMORY_ALLOCATION_ERROR;
     }
 
     if(decode_string(&ctx, encoded, Argon2_i) != ARGON2_OK) {
-        free(ctx.ad);
         free(ctx.salt);
         free(ctx.out);
         return ARGON2_DECODING_FAIL;
@@ -110,7 +106,6 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
 
     out = malloc(ENCODE_LEN + ctx.saltlen);
     if(!out) {
-        free(ctx.ad);
         free(ctx.salt);
         free(ctx.out);
         return ARGON2_DECODING_FAIL;
@@ -119,7 +114,6 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
     ret = argon2_wrap(out, pwd, pwdlen, ctx.salt, ctx.saltlen, ctx.t_cost, 
            ctx.m_cost, ctx.lanes, secret, secretlen);
 
-    free(ctx.ad);
     free(ctx.salt);
 
     if (ret != ARGON2_OK || wrap_compare((uint8_t*)out, (uint8_t*)encoded, 
