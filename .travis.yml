@@ -10,4 +10,4 @@ install: bin/setup
 script:
   - cd ext/argon2_wrap/ && make test && cd ../..
   - bundle exec rake test
-  - CODECLIMATE_REPO_TOKEN=28e3d5d04f4ec87d0899784e6aecc13d7787343b2634b3c94fc1216993d443c2 bundle exec codeclimate-test-reporter
+  - CODECLIMATE_REPO_TOKEN=2b619b81040453ecbcf1cf0869e1238c4bbaab666a42e7dd94d762c747c0f51a bundle exec codeclimate-test-reporter
