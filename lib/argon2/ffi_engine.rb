@@ -39,7 +39,7 @@ module Argon2
         ret = Ext.argon2i_hash_raw(t_cost, 1 << m_cost, 1, password,
            password.length, salt, salt.length,
             buffer, Constants::OUT_LEN)
-        raise ArgonHashFail, ERRORS[ret.abs] unless ret == 0
+        raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
         result = buffer.read_string(Constants::OUT_LEN)
       end
       result.unpack('H*').join
@@ -56,7 +56,7 @@ module Argon2
         ret = Ext.argon2_wrap(buffer, password, passwordlen,
             salt, salt.length, t_cost, (1 << m_cost),
             1, secret, secretlen)
-        raise ArgonHashFail, ERRORS[ret.abs] unless ret == 0
+        raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
         result = buffer.read_string(Constants::ENCODE_LEN)
       end
       result.delete "\0"
@@ -68,7 +68,7 @@ module Argon2
 
       ret = Ext.wrap_argon2_verify(hash, pwd, passwordlen, secret, secretlen)
       return false if ERRORS[ret.abs] == 'ARGON2_DECODING_FAIL'
-      raise ArgonHashFail, ERRORS[ret.abs] unless ret == 0
+      raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
       true
     end
   end
