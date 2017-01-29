@@ -27,6 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", '~> 10.4', '>= 10.4.2'
   spec.add_development_dependency "minitest", '~> 5.8'
   spec.add_development_dependency "rubocop", '~> 0.35'
-  spec.add_development_dependency "codeclimate-test-reporter", '~> 0.4'
+  spec.add_development_dependency "codeclimate-test-reporter", '~> 1.0'
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
 end
