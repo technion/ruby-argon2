@@ -18,6 +18,9 @@ module Argon2
     end
 
     def create(pass)
+      raise ArgonHashFail, "Invalid password (expected string)" unless
+        pass.is_a?(String)
+
       Argon2::Engine.hash_argon2i_encode(
               pass, @salt, @t_cost, @m_cost, @secret)
     end
