@@ -1,3 +1,6 @@
+## v1.1.2: 2017-02-25
+- Fix build on SmartOS
+
 ## v1.1.1: 2016-09-21
 - Fix verify against externally created hashes with different salt lengths
 
