@@ -22,7 +22,7 @@ module Argon2
     #    uint8_t *secret, uint32_t secretlen)
     attach_function :argon2_wrap, [
       :pointer, :pointer, :size_t, :pointer, :uint, :uint,
-      :uint, :uint, :pointer, :size_t], :uint, :blocking => true
+      :uint, :uint, :pointer, :size_t], :int, :blocking => true
 
     # int argon2i_verify(const char *encoded, const void *pwd,
     # const size_t pwdlen);

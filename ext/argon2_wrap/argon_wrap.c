@@ -33,7 +33,7 @@ static int wrap_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
     return (int)((1 & ((d - 1) >> 8)) - 1);
 }
 
-unsigned int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
+int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
         uint8_t *salt,  uint32_t saltlen, uint32_t t_cost, uint32_t m_cost, 
         uint32_t lanes, uint8_t *secret, size_t secretlen)
 {
