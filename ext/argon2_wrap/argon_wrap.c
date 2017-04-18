@@ -33,9 +33,9 @@ static int wrap_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
     return (int)((1 & ((d - 1) >> 8)) - 1);
 }
 
-int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
+int argon2_wrap_version(char *out, const char *pwd, size_t pwd_length,
         uint8_t *salt,  uint32_t saltlen, uint32_t t_cost, uint32_t m_cost, 
-        uint32_t lanes, uint8_t *secret, size_t secretlen)
+        uint32_t lanes, uint8_t *secret, size_t secretlen, uint32_t version)
 {
     uint8_t hash[OUT_LEN];
     argon2_context context;
@@ -65,7 +65,7 @@ int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
     context.allocate_cbk = NULL;
     context.free_cbk = NULL;
     context.flags = 0;
-    context.version = ARGON2_VERSION_13;
+    context.version = version;
 
     int result = argon2i_ctx(&context);
     if (result != ARGON2_OK)
@@ -75,6 +75,17 @@ int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
     return ARGON2_OK;
 }
  
+/* Since all new hashes will use latest version, this wraps the 
+   * function including the version
+   */
+int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
+        uint8_t *salt,  uint32_t saltlen, uint32_t t_cost, uint32_t m_cost, 
+        uint32_t lanes, uint8_t *secret, size_t secretlen)
+{
+    return argon2_wrap_version(out, pwd, pwd_length, salt, saltlen,
+            t_cost, m_cost, lanes, secret, secretlen, ARGON2_VERSION_13);
+}
+
 int wrap_argon2_verify(const char *encoded, const char *pwd,
     const size_t pwdlen,
     uint8_t *secret, size_t secretlen)
@@ -111,8 +122,9 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
         return ARGON2_DECODING_FAIL;
     }
 
-    ret = argon2_wrap(out, pwd, pwdlen, ctx.salt, ctx.saltlen, ctx.t_cost, 
-           ctx.m_cost, ctx.lanes, secret, secretlen);
+    ret = argon2_wrap_version(out, pwd, pwdlen, ctx.salt, ctx.saltlen,
+            ctx.t_cost, ctx.m_cost, ctx.lanes, secret, secretlen,
+            ctx.version);
 
     free(ctx.salt);
 
