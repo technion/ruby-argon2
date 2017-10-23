@@ -10,7 +10,7 @@ module Argon2
   class Password
     def initialize(options = {})
       @t_cost = options[:t_cost] || 2
-      raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 10
+      raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 750
       @m_cost = options[:m_cost] || 16
       raise ArgonHashFail, "Invalid m_cost" if @m_cost < 1 || @m_cost > 31
       @salt = options[:salt_do_not_supply] || Engine.saltgen
