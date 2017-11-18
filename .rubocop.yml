@@ -5,20 +5,16 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
-#Style/MutableConstant:
-#  Exclude:
-#    - 'test/key_test.rb'
-
 Metrics/LineLength:
   Max: 160
 
 Metrics/MethodLength:
   Max: 24
 
-Style/AlignParameters:
+Layout/AlignParameters:
   Enabled: false
 
-Style/AlignArray:
+Layout/AlignArray:
   Enabled: false
 
 # Configuration parameters: Exclude.
@@ -30,7 +26,7 @@ Style/Documentation:
 # Offense count: 16
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/FirstParameterIndentation:
+Layout/FirstParameterIndentation:
   Exclude:
     - 'lib/argon2.rb'
     - 'test/low_level_test.rb'
@@ -41,13 +37,13 @@ Style/HashSyntax:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/IndentArray:
+Layout/IndentArray:
   Exclude:
     - 'lib/argon2/errors.rb'
 
 # Offense count: 44
 # Cop supports --auto-correct.
-Style/LeadingCommentSpace:
+Layout/LeadingCommentSpace:
   Exclude:
     - 'ext/argon2_wrap/extconf.rb'
 
@@ -60,7 +56,7 @@ Style/StringLiterals:
 Style/WordArray:
   MinSize: 33
 
-Style/MultilineMethodCallBraceLayout:
+Layout/MultilineMethodCallBraceLayout:
   Exclude:
     - 'lib/argon2.rb'
     - 'test/low_level_test.rb'

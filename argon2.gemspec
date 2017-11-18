@@ -1,5 +1,5 @@
-# coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
+
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'argon2/version'
 
@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ffi-compiler', '~> 0.1'
 
   spec.add_development_dependency "bundler", '~> 1.10', '>= 1.10.5'
-  spec.add_development_dependency "rake", '~> 10.4', '>= 10.4.2'
-  spec.add_development_dependency "minitest", '~> 5.8'
-  spec.add_development_dependency "rubocop", '~> 0.49'
   spec.add_development_dependency "codeclimate-test-reporter", '~> 1.0'
+  spec.add_development_dependency "minitest", '~> 5.8'
+  spec.add_development_dependency "rake", '~> 10.4', '>= 10.4.2'
+  spec.add_development_dependency "rubocop", '~> 0.49'
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
 end

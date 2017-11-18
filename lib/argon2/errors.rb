@@ -1,9 +1,11 @@
 # frozen_string_literal: true
+
 # Defines an array of errors that matches the enum list of errors from
 # argon2.h. This allows return values to propagate errors through the FFI.
+
 module Argon2
   class ArgonHashFail < StandardError; end
-  ERRORS = %w(
+  ERRORS = %w[
     ARGON2_OK
     ARGON2_OUTPUT_PTR_NULL
     ARGON2_OUTPUT_TOO_SHORT
@@ -38,5 +40,5 @@ module Argon2
     ARGON2_ENCODING_FAIL
     ARGON2_DECODING_FAIL
     ARGON2_THREAD_FAIL
-    ).freeze
+    ].freeze
 end
