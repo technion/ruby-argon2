@@ -1,3 +1,7 @@
+## v1.1.5: 2018-04-30
+- Documentation updates
+- Pulled latest reference
+
 ## v1.1.2: 2017-02-25
 - Fix build on SmartOS
 
