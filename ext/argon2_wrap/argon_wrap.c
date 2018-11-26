@@ -35,7 +35,8 @@ static int wrap_compare(const uint8_t *b1, const uint8_t *b2, size_t len) {
 
 int argon2_wrap_version(char *out, const char *pwd, size_t pwd_length,
         uint8_t *salt,  uint32_t saltlen, uint32_t t_cost, uint32_t m_cost, 
-        uint32_t lanes, uint8_t *secret, size_t secretlen, uint32_t version)
+        uint32_t lanes, uint8_t *secret, size_t secretlen, uint32_t version,
+        argon2_type type)
 {
     uint8_t hash[OUT_LEN];
     argon2_context context;
@@ -67,11 +68,20 @@ int argon2_wrap_version(char *out, const char *pwd, size_t pwd_length,
     context.flags = 0;
     context.version = version;
 
-    int result = argon2i_ctx(&context);
+    int result;
+    if (type == Argon2_i) {
+        result = argon2i_ctx(&context);
+    }  else if (type == Argon2_id) {
+        result = argon2id_ctx(&context);
+    } else {
+        // Unsupported type
+        return ARGON2_ENCODING_FAIL;
+    }
+
     if (result != ARGON2_OK)
         return result;
 
-    encode_string(out, ENCODE_LEN + saltlen, &context, Argon2_i);
+    encode_string(out, ENCODE_LEN + saltlen, &context, type);
     return ARGON2_OK;
 }
  
@@ -83,7 +93,7 @@ int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
         uint32_t lanes, uint8_t *secret, size_t secretlen)
 {
     return argon2_wrap_version(out, pwd, pwd_length, salt, saltlen,
-            t_cost, m_cost, lanes, secret, secretlen, ARGON2_VERSION_13);
+            t_cost, m_cost, lanes, secret, secretlen, ARGON2_VERSION_13, Argon2_i);
 }
 
 int wrap_argon2_verify(const char *encoded, const char *pwd,
@@ -95,6 +105,7 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
     char *out;
     memset(&ctx, 0, sizeof(argon2_context));
     size_t encoded_len;
+    argon2_type type;
     
     encoded_len = strlen(encoded);
     /* larger than max possible values */
@@ -109,7 +120,16 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
         return ARGON2_MEMORY_ALLOCATION_ERROR;
     }
 
-    if(decode_string(&ctx, encoded, Argon2_i) != ARGON2_OK) {
+    if (memcmp(encoded, "$argon2id", strlen("$argon2id")) == 0) {
+        type = Argon2_id;
+    } else if (memcmp(encoded, "$argon2i", strlen("$argon2i")) == 0) {
+        type = Argon2_i;
+    } else {
+        // Other types not yet supported
+        return ARGON2_DECODING_FAIL;
+    }
+
+    if (decode_string(&ctx, encoded, type) != ARGON2_OK) {
         free(ctx.salt);
         free(ctx.out);
         return ARGON2_DECODING_FAIL;
@@ -124,7 +144,7 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
 
     ret = argon2_wrap_version(out, pwd, pwdlen, ctx.salt, ctx.saltlen,
             ctx.t_cost, ctx.m_cost, ctx.lanes, secret, secretlen,
-            ctx.version);
+            ctx.version, type);
 
     free(ctx.salt);
 

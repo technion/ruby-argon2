@@ -99,7 +99,12 @@ int main()
     ret = wrap_argon2_verify("$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg", "password",
             strlen("password"), NULL, 0);
     assert(ret == ARGON2_OK);
-    printf("Verify OK test: PASS\n");
+    printf("Verify OK test i variant: PASS\n");
+
+    ret = wrap_argon2_verify("$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$CTFhFdXPJO1aFaMaO6Mm5c8y7cJHAph8ArZWb2GRPPc", "password",
+            strlen("password"), NULL, 0);
+    assert(ret == ARGON2_OK);
+    printf("Verify OK test id variant: PASS\n");
 
     ret = wrap_argon2_verify("$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$iUr0/y4tJvPOFfd6fhwl20W04gQ56ZYXcroZnK3bAB4", "notpassword",
             strlen("notpassword"), NULL, 0);
