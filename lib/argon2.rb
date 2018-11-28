@@ -37,7 +37,7 @@ module Argon2
       raise ArgonHashFail, "Invalid hash" unless
         /^\$argon2i.{,113}/ =~ hash
 
-      Argon2::Engine.argon2i_verify(pass, hash, secret)
+      Argon2::Engine.argon2_verify(pass, hash, secret)
     end
   end
 end

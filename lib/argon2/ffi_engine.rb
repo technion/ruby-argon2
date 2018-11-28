@@ -62,7 +62,7 @@ module Argon2
       result.delete "\0"
     end
 
-    def self.argon2i_verify(pwd, hash, secret)
+    def self.argon2_verify(pwd, hash, secret)
       secretlen = secret.nil? ? 0 : secret.bytesize
       passwordlen = pwd.nil? ? 0 : pwd.bytesize
 
