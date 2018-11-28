@@ -58,6 +58,13 @@ You can then use this function to verify a password against a given hash. Will r
 Argon2::Password.verify_password("password", secure_password)
 ```
 
+Version 1.2.x will now allow verifying an Argon2id password:
+
+```ruby
+Argon2::Password.verify_password("password", "$argon2id$v=19$m=262144,t=2,p=1$c29tZXNhbHQ$eP4eyR+zqlZX1y5xCFTkw9m5GYx0L5YWwvCFvtlbLow")
+  => true
+```
+
 Argon2 supports an optional key value. This should be stored securely on your server, such as alongside your database credentials. Hashes generated with a key will only validate when presented that key.
 
 ```ruby

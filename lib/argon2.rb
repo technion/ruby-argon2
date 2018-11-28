@@ -33,8 +33,9 @@ module Argon2
     end
 
     def self.verify_password(pass, hash, secret = nil)
+      # Supports argon2i and argon2id formats.
       raise ArgonHashFail, "Invalid hash" unless
-        /^\$argon2i\$.{,112}/ =~ hash
+        /^\$argon2i.{,113}/ =~ hash
 
       Argon2::Engine.argon2i_verify(pass, hash, secret)
     end
