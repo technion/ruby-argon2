@@ -1,3 +1,6 @@
+## v1.2.0: 2018-11-29
+- Support for verifying Argon2id format
+
 ## v1.1.5: 2018-04-30
 - Documentation updates
 - Pulled latest reference
