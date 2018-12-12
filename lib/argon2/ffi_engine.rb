@@ -33,14 +33,16 @@ module Argon2
   # The engine class shields users from the FFI interface.
   # It is generally not advised to directly use this class.
   class Engine
-    def self.hash_argon2i(password, salt, t_cost, m_cost)
+    def self.hash_argon2i(password, salt, t_cost, m_cost, out_len = nil)
+      out_len = (out_len || Constants::OUT_LEN).to_i
+      raise ArgonHashFail, "Invalid output length" if out_len < 1
       result = ''
-      FFI::MemoryPointer.new(:char, Constants::OUT_LEN) do |buffer|
+      FFI::MemoryPointer.new(:char, out_len) do |buffer|
         ret = Ext.argon2i_hash_raw(t_cost, 1 << m_cost, 1, password,
            password.length, salt, salt.length,
-            buffer, Constants::OUT_LEN)
+            buffer, out_len)
         raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
-        result = buffer.read_string(Constants::OUT_LEN)
+        result = buffer.read_string(out_len)
       end
       result.unpack('H*').join
     end

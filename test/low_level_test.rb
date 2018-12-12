@@ -35,6 +35,10 @@ class LowLevelArgon2Test < Minitest::Test
     assert_equal Argon2::Engine.hash_argon2i(
         "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16),
         'bb6686865f2c1093f70f543c9535f807d5b42d5dc6d71f14a4a7a291913e05e0'
+
+    assert_equal Argon2::Engine.hash_argon2i(
+        "password", "somesaltsomesalt", 2, 16, 16),
+        '85d58a069b81f7606dc772810d00496d'
   end
 
   def test_encoded_hash
