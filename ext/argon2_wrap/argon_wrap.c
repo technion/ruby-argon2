@@ -93,7 +93,7 @@ int argon2_wrap(char *out, const char *pwd, size_t pwd_length,
         uint32_t lanes, uint8_t *secret, size_t secretlen)
 {
     return argon2_wrap_version(out, pwd, pwd_length, salt, saltlen,
-            t_cost, m_cost, lanes, secret, secretlen, ARGON2_VERSION_13, Argon2_i);
+            t_cost, m_cost, lanes, secret, secretlen, ARGON2_VERSION_13, Argon2_id);
 }
 
 int wrap_argon2_verify(const char *encoded, const char *pwd,

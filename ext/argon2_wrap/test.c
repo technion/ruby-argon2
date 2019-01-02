@@ -81,20 +81,21 @@ int main()
 
 #define WRAP_TEST(T, M, PWD, REF) \
     pwd = strdup(PWD); \
-    argon2_wrap(out2, pwd, strlen(PWD), salt, sizeof(salt),T, 1<<M, 1, NULL, 0); \
+    argon2_wrap(out2, pwd, strlen(PWD), salt, strlen((const char *)salt),T, 1<<M, 1, NULL, 0); \
     free(pwd); \
+    fprintf(stderr,out2); \
     assert(memcmp(out2, REF, strlen(REF)) == 0); \
     printf( "Ref test: %s: PASS\n", REF);
 
     memcpy(salt, "somesalt", 8);
     WRAP_TEST(2, 16, "password", 
-            "$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54");
+            "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$CTFhFdXPJO1aFaMaO6Mm5c8y7cJHAph8ArZWb2GRPPc");
 
     WRAP_TEST(2, 8, "password", 
-            "$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg");
+            "$argon2id$v=19$m=256,t=2,p=1$c29tZXNhbHQ$nf65EOgLrQMR/uIPnA4rEsF5h7TKyQwu9U1bMCHGi/4");
 
     WRAP_TEST(2, 16, "differentpassword", 
-            "$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk");
+            "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$C4TWUs9rDEvq7w3+J4umqA32aWKB1+DSiRuBfYxFj94");
 
     ret = wrap_argon2_verify("$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg", "password",
             strlen("password"), NULL, 0);
