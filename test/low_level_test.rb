@@ -44,23 +44,23 @@ class LowLevelArgon2Test < Minitest::Test
   def test_encoded_hash
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$HH7u+eDpabMCRyL8hkocqfbKINpz+b8/FzGIG+riA54'
+        '$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$syf8TzB9pvMIGtFhvRATHW1nX43iP+FLaaTXnqpyMrY'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8, nil),
-        '$argon2i$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$3+v51OrdaFn0zGqbsgBD/Z2n4eNr2s27BcpWn0Yyafg'
+        '$argon2id$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$TCsNUutWgv3lowstIasFJbdiamKiq8qPUdz2wSvQ4rw'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16, nil),
-        '$argon2i$v=19$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$+r0d29hqEB0yasKr55ZgICsQGSkl0v0kgwhd+U3wyRo'
+        '$argon2id$v=19$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$b7sLmBJ4YGj/yOjMnUDWC1dvrtZr7EPdMT6zB9Fq0pk'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$studfA0SiJUa7EtuHNODXqKafaKsE+b0hVSiaxJxRvk'
+        '$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$0bDR2fpiZutijzxlxrjLnqnCSmtG1/reR4QNcavfKLk'
 
     assert_equal Argon2::Engine.hash_argon2i_encode(
         "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16, nil),
-        '$argon2i$v=19$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$u2aGhl8sEJP3D1Q8lTX4B9W0LV3G1x8UpKeikZE+BeA'
+        '$argon2id$v=19$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$vm1qQXZQ+/MgT2Y+Go7XnxtA9dJz3wotjfg0itOgKlY'
   end
 
   def test_verify
