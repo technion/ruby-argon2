@@ -22,7 +22,7 @@ module Argon2
       raise ArgonHashFail, "Invalid password (expected string)" unless
         pass.is_a?(String)
 
-      Argon2::Engine.hash_argon2i_encode(
+      Argon2::Engine.hash_argon2id_encode(
               pass, @salt, @t_cost, @m_cost, @secret)
     end
 

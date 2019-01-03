@@ -73,6 +73,8 @@ argon = Argon2::Password.new(t_cost: 2, m_cost: 16, secret: KEY)
 myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
+## Version 2.0 - Argon 2id
+Version 2.x upwards will now default to the Argon2id hash format. This is consistent with current recommendations regarding Argon2 usage. It remains capable of verifying existing hashes.
 
 ## Important notes regarding version 1.0 upgrade
 Version 1.0.0 included a major version bump over 0.1.4 due to several breaking changes. The first of these was an API change, which you can read the background on [here](https://github.com/technion/ruby-argon2/issues/9).

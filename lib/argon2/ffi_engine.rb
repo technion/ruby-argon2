@@ -47,7 +47,7 @@ module Argon2
       result.unpack('H*').join
     end
 
-    def self.hash_argon2i_encode(password, salt, t_cost, m_cost, secret)
+    def self.hash_argon2id_encode(password, salt, t_cost, m_cost, secret)
       result = ''
       secretlen = secret.nil? ? 0 : secret.bytesize
       passwordlen = password.nil? ? 0 : password.bytesize
