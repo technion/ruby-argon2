@@ -83,7 +83,6 @@ int main()
     pwd = strdup(PWD); \
     argon2_wrap(out2, pwd, strlen(PWD), salt, strlen((const char *)salt),T, 1<<M, 1, NULL, 0); \
     free(pwd); \
-    fprintf(stderr,out2); \
     assert(memcmp(out2, REF, strlen(REF)) == 0); \
     printf( "Ref test: %s: PASS\n", REF);
 
