@@ -1,3 +1,6 @@
+## v2.0.0: 2019-01-06
+- Defaults to Argon2id for new hashes
+
 ## v1.2.0: 2018-11-29
 - Support for verifying Argon2id format
 
