@@ -6,8 +6,7 @@ rvm:
   - 2.3.3
   - jruby-9000
 before_install:
-  - gem install bundler
-  - gem update --system
+  - gem install bundler -v "~>1.0"
 install: bin/setup
 script:
   - cd ext/argon2_wrap/ && make test && cd ../..
