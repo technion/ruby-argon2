@@ -16,6 +16,14 @@ module Argon2
       :uint, :uint, :uint, :pointer,
       :size_t, :pointer, :size_t, :pointer, :size_t], :int, :blocking => true
 
+    # int argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
+    #   const uint32_t parallelism, const void *pwd,
+    #   const size_t pwdlen, const void *salt,
+    #   const size_t saltlen, void *hash, const size_t hashlen)
+    attach_function :argon2id_hash_raw, [
+      :uint, :uint, :uint, :pointer,
+      :size_t, :pointer, :size_t, :pointer, :size_t], :int, :blocking => true
+
     # void argon2_wrap(uint8_t *out, char *pwd, size_t pwdlen,
     # uint8_t *salt, uint32_t saltlen, uint32_t t_cost,
     #    uint32_t m_cost, uint32_t lanes,
@@ -39,6 +47,20 @@ module Argon2
       result = ''
       FFI::MemoryPointer.new(:char, out_len) do |buffer|
         ret = Ext.argon2i_hash_raw(t_cost, 1 << m_cost, 1, password,
+           password.length, salt, salt.length,
+            buffer, out_len)
+        raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
+        result = buffer.read_string(out_len)
+      end
+      result.unpack('H*').join
+    end
+
+    def self.hash_argon2id(password, salt, t_cost, m_cost, out_len = nil)
+      out_len = (out_len || Constants::OUT_LEN).to_i
+      raise ArgonHashFail, "Invalid output length" if out_len < 1
+      result = ''
+      FFI::MemoryPointer.new(:char, out_len) do |buffer|
+        ret = Ext.argon2id_hash_raw(t_cost, 1 << m_cost, 1, password,
            password.length, salt, salt.length,
             buffer, out_len)
         raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
