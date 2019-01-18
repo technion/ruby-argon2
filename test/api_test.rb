@@ -33,4 +33,9 @@ class Argon2APITest < Minitest::Test
     assert pass = Argon2::Password.new
     assert pass.create('mypassword')
   end
+
+  def test_valid_hash
+    secure_pass = Argon2::Password.create('A secret')
+    assert Argon2::Password.valid_hash?(secure_pass)
+  end
 end

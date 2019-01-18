@@ -11,4 +11,11 @@ class Legacy < Minitest::Test
     assert Argon2::Password.verify_password(PASS, HASH_1_1)
     assert Argon2::Password.verify_password(PASS, HASH_0)
   end
+
+  def test_valid_hash_legacy_hashes
+    # These are the hash formats for 1.0 and 1.1 of this gem.
+    assert Argon2::Password.valid_hash?(PASS, HASH_1_0)
+    assert Argon2::Password.valid_hash?(PASS, HASH_1_1)
+    assert Argon2::Password.valid_hash?(PASS, HASH_0)
+  end
 end
