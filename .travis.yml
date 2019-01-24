@@ -7,7 +7,7 @@ rvm:
   - jruby-9000
 before_install:
   - gem install bundler -v "~>1.0"
-install: bundle exec bin/setup
+install: bin/setup
 script:
   - cd ext/argon2_wrap/ && make test && cd ../..
   - bundle exec rake test
