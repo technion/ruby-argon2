@@ -34,7 +34,7 @@ module Argon2
 
     # Supports 1 and argon2id formats.
     def self.valid_hash?(hash)
-      /^\$argon2i.{,113}/ =~ hash
+      /^\$argon2(id?|d).{,113}/ =~ hash
     end
 
     def self.verify_password(pass, hash, secret = nil)

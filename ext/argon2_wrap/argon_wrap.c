@@ -73,6 +73,8 @@ int argon2_wrap_version(char *out, const char *pwd, size_t pwd_length,
         result = argon2i_ctx(&context);
     }  else if (type == Argon2_id) {
         result = argon2id_ctx(&context);
+    } else if (type == Argon2_d) {
+        result = argon2d_ctx(&context);
     } else {
         // Unsupported type
         return ARGON2_ENCODING_FAIL;
@@ -124,6 +126,8 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
         type = Argon2_id;
     } else if (memcmp(encoded, "$argon2i", strlen("$argon2i")) == 0) {
         type = Argon2_i;
+    } else if (memcmp(encoded, "$argon2d", strlen("$argon2d")) == 0) {
+        type = Argon2_d;
     } else {
         // Other types not yet supported
         return ARGON2_DECODING_FAIL;

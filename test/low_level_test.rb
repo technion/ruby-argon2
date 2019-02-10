@@ -74,5 +74,7 @@ class LowLevelArgon2Test < Minitest::Test
     refute Argon2::Engine.argon2_verify("password", "$argon2id$v=19$m=262144,t=2,p=1$c29tZXNhbHQ$eP4eyR+zqlZX1y5xCFTkw9m5GYx0L5YWwvCFvtlbLok", nil)
     assert Argon2::Engine.argon2_verify("password", "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$CTFhFdXPJO1aFaMaO6Mm5c8y7cJHAph8ArZWb2GRPPc", nil)
     refute Argon2::Engine.argon2_verify("notword", "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$CTFhFdXPJO1aFaMaO6Mm5c8y7cJHAph8ArZWb2GRPPc", nil)
+    assert Argon2::Engine.argon2_verify("password", "$argon2d$v=19$m=65536,t=2,p=1$YzI5dFpYTmhiSFFBQUFBQUFBQUFBQQ$Jxy74cswY2mq9y+u+iJcJy8EqOp4t/C7DWDzGwGB3IM", nil)
+    refute Argon2::Engine.argon2_verify("notword", "$argon2d$v=19$m=65536,t=2,p=1$YzI5dFpYTmhiSFFBQUFBQUFBQUFBQQ$Jxy74cswY2mq9y+u+iJcJy8EqOp4t/C7DWDzGwGB3IM", nil)
   end
 end
