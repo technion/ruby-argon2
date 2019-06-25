@@ -5,7 +5,7 @@ module Argon2
   # Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
   module Ext
     extend FFI::Library
-    ffi_lib FFI::Compiler::Loader.find('argon2_wrap')
+    ffi_lib FFI::Compiler::Loader.find(FFI::Platform.windows? ? 'libargon2_wrap' : 'argon2_wrap')
 
     # int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
     #   const uint32_t parallelism, const void *pwd,
