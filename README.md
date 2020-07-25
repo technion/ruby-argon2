@@ -9,14 +9,14 @@ This Ruby Gem provides FFI bindings, and a simplified interface, to the Argon2 a
 
 ## Design
 
-This project has several key tenants to its design:
+This project has several key tenets to its design:
 
 * The reference Argon2 implementation is to be used "unaltered". To ensure compliance with this goal, and encourage regular updates from upstream, the upstream library is implemented as a git submodule, and is intended to stay that way.
 * The FFI interface is kept as slim as possible, with wrapper classes preferred to implementing context structs in FFI
 * Security and maintainability take top priority. This can have an impact on platform support. A PR that contains platform specific code paths is unlikely to be accepted.
 * Tested platforms are MRI Ruby 2.2, 2.3 and JRuby 9000. No assertions are made on other platforms.
 * Errors from the C interface are raised as Exceptions. There are a lot of exception classes, but they tend to relate to things like very broken input, and code bugs. Calls to this library should generally not require a rescue.
-* Test suits should aim for 100% code coverage.
+* Test suites should aim for 100% code coverage.
 * Default work values should not be considered constants. I will increase them from time to time.
 * Not exposing the threads parameter is a design choice. I believe there is significant risk, and minimal gain in using a value other than '1'. Four threads on a four core box completely ties up the entire server to process one user logon. If you want more security, increase m_cost.
 * Many Rubocop errors have been disabled, but any commit should avoid new alerts or demonstrate their necessity.
@@ -45,7 +45,7 @@ hasher.create("password")
 ```
 
 If you follow this pattern, it is important to create a new `Argon2::Password` every time you generate a hash, in order to ensure a unique salt. See [issue 23](https://github.com/technion/ruby-argon2/issues/23) for more information.
-Alternatively, use this shotcut:
+Alternatively, use this shortcut:
 
 ```ruby
 Argon2::Password.create("password")
@@ -81,7 +81,7 @@ Version 1.0.0 included a major version bump over 0.1.4 due to several breaking c
 
 The second of these is that the reference Argon2 implementation introduced an algorithm change, which produces a hash which is not backwards compatible. This is documented on [this PR on the C library](https://github.com/P-H-C/phc-winner-argon2/pull/115). This was a regrettable requirement to address a security concern in the algorithm itself. The two versions of the Argon2 algorithm are numbered 1.0 and 1.3 respectively.
 
-Shortly after this, version 1.0.0 of this gem was released with this breaking change, supporting only Argon2 v1.3. Further time later, the official encoding format was updated, with a spec that included the version number, and the library introduced backward compatibility. This should remove the likelyhood of such breaking changes in future. Version 1.1.0 will silently introduce the current version number in hashes, in order to avoid a further compatibility break.
+Shortly after this, version 1.0.0 of this gem was released with this breaking change, supporting only Argon2 v1.3. Further time later, the official encoding format was updated, with a spec that included the version number, and the library introduced backward compatibility. This should remove the likelihood of such breaking changes in future. Version 1.1.0 will silently introduce the current version number in hashes, in order to avoid a further compatibility break.
 
 
 ## Platform Issues
@@ -109,7 +109,7 @@ Although the low level C contains support for "secure memory wipe", any code hit
 
 ### Work maximums may be tighter than reference
 
-The reference implementation is aimed to provide secure hashing for many years. This implementation doesn't want you to DoS yourself in the meantime. Accordingly, some limits artificial limits exist on work powers. This gem can be much more agile in raising these as technology progresses.
+The reference implementation is aimed to provide secure hashing for many years. This implementation doesn't want you to DoS yourself in the meantime. Accordingly, some artificial limits exist on work powers. This gem can be much more agile in raising these as technology progresses.
 
 ### Salts in general
 
