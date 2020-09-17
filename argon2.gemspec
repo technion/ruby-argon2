@@ -1,4 +1,6 @@
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'argon2/version'
@@ -27,6 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "coveralls", '~> 0.8'
   spec.add_development_dependency "minitest", '~> 5.8'
   spec.add_development_dependency "rake", '~> 10.4', '>= 10.4.2'
-  spec.add_development_dependency "rubocop", '~> 0.49'
+  spec.add_development_dependency "rubocop", '>= 0.91'
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
 end

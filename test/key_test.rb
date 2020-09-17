@@ -3,8 +3,8 @@
 require 'test_helper'
 
 class LowLevelArgon2Test < Minitest::Test
-  KEY = "a magic key".freeze
-  PASS = "random password".freeze
+  KEY = "a magic key"
+  PASS = "random password"
   def test_key_hash
     # Default hash
     argon = Argon2::Password.new(t_cost: 2, m_cost: 16)

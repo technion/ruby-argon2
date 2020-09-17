@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UnicodeTest < Minitest::Test
@@ -14,7 +16,7 @@ class UnicodeTest < Minitest::Test
     assert Argon2::Password.verify_password(rawstr, hash)
     # Asserts that no NULL byte truncation occurs
     refute Argon2::Password.verify_password("String has a", hash),
-      "Does not NULL truncate"
+           "Does not NULL truncate"
   end
 
   def test_emoji

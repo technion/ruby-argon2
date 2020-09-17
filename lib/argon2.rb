@@ -12,8 +12,10 @@ module Argon2
     def initialize(options = {})
       @t_cost = options[:t_cost] || 2
       raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 750
+
       @m_cost = options[:m_cost] || 16
       raise ArgonHashFail, "Invalid m_cost" if @m_cost < 1 || @m_cost > 31
+
       @salt = options[:salt_do_not_supply] || Engine.saltgen
       @secret = options[:secret]
     end
@@ -23,7 +25,7 @@ module Argon2
         pass.is_a?(String)
 
       Argon2::Engine.hash_argon2id_encode(
-              pass, @salt, @t_cost, @m_cost, @secret)
+        pass, @salt, @t_cost, @m_cost, @secret)
     end
 
     # Helper class, just creates defaults and calls hash()
