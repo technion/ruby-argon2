@@ -4,7 +4,7 @@ require 'argon2/constants'
 require 'argon2/ffi_engine'
 require 'argon2/version'
 require 'argon2/errors'
-require 'argon2/engine.rb'
+require 'argon2/engine'
 
 module Argon2
   # Front-end API for the Argon2 module.
