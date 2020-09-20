@@ -1,9 +1,9 @@
 language: ruby
 sudo: required
 rvm:
+  - 2.7.1
   - 2.6.0
-  - 2.4.0
-  - 2.3.3
+  - 2.5.8
   - jruby-9000
 before_install:
   - gem install bundler
