@@ -92,6 +92,8 @@ Windows is not. Nobody anywhere has the resources to support Ruby FFI code on Wi
 
 grsec introduces certain challenges. Please see [documentation here](https://github.com/technion/ruby-argon2/issues/15).
 
+See the .travis.yml file to see currently tested and supported Ruby versions.
+
 ## RubyDocs documentation
 
 [The usual URL](http://www.rubydoc.info/gems/argon2) will provide detailed documentation.
