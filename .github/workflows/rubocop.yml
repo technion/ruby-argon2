@@ -4,9 +4,11 @@ name: Rubocop
 on: push
 
 jobs:
-  # Set the job key. The key is displayed as the job name
-  # when a job name is not provided
+
   rubocop:
-    - name: Rubocop_checks
-      uses: gimenete/rubocop-action@1.0
+    name: Rubocopchecks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Rubocop
+        uses: gimenete/rubocop-action@1.0
 
