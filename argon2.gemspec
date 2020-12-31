@@ -26,9 +26,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ffi-compiler', '>= 0.1'
 
   spec.add_development_dependency "bundler", '~> 2.0'
-  spec.add_development_dependency "coveralls", '~> 0.8'
   spec.add_development_dependency "minitest", '~> 5.8'
   spec.add_development_dependency "rake", '~> 13.0.1'
   spec.add_development_dependency "rubocop", '>= 0.91'
+  spec.add_development_dependency "simplecov", '~> 0.20'
+  spec.add_development_dependency "simplecov-lcov", '~> 0.8'
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
 end
