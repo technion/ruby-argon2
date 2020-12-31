@@ -130,6 +130,8 @@ int wrap_argon2_verify(const char *encoded, const char *pwd,
         type = Argon2_d;
     } else {
         // Other types not yet supported
+        free(ctx.salt);
+        free(ctx.out);
         return ARGON2_DECODING_FAIL;
     }
 
