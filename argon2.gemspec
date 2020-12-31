@@ -22,13 +22,13 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.add_dependency 'ffi', '~> 1.9'
-  spec.add_dependency 'ffi-compiler', '>= 0.1'
+  spec.add_dependency 'ffi', '~> 1.14'
+  spec.add_dependency 'ffi-compiler', '~> 1.0'
 
   spec.add_development_dependency "bundler", '~> 2.0'
   spec.add_development_dependency "minitest", '~> 5.8'
   spec.add_development_dependency "rake", '~> 13.0.1'
-  spec.add_development_dependency "rubocop", '>= 0.91'
+  spec.add_development_dependency "rubocop", '~> 1.7'
   spec.add_development_dependency "simplecov", '~> 0.20'
   spec.add_development_dependency "simplecov-lcov", '~> 0.8'
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
