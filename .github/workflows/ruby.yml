@@ -1,0 +1,23 @@
+name: Ruby
+
+on: push
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6
+    - name: Install dependencies
+      run: bundle install
+    - name: Build C library
+      run: bin/setup
+    - name: Test C library
+      run: cd ext/argon2_wrap/ && make test && cd ../..
+    - name: Run tests
+      run: bundle exec rake
