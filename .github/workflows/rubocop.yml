@@ -7,6 +7,6 @@ jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
   rubocop:
-    - name: Rubocop checks
+    - name: Rubocop_checks
       uses: gimenete/rubocop-action@1.0
 
