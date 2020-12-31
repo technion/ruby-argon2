@@ -1,4 +1,4 @@
-name: Ruby
+name: Test Suite
 
 on: push
 
@@ -26,7 +26,3 @@ jobs:
       run: cd ext/argon2_wrap/ && make test && cd ../..
     - name: Run tests
       run: bundle exec rake
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
