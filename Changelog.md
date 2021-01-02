@@ -1,3 +1,6 @@
+## v2.0.3: 2021-01-02
+- Address potential memory leak. Unlikely to be exploitable.
+
 ## v2.0.0: 2019-01-06
 - Defaults to Argon2id for new hashes
 
