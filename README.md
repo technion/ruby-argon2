@@ -116,14 +116,30 @@ Argon2::Error
 
 The following new Errors have been added for capturing specific exceptions:
 
-* Argon2::Errors::InvalidHash
-* Argon2::Errors::InvalidCost
-  * Argon2::Errors::InvalidTCost
-  * Argon2::Errors::InvalidMCost
-* Argon2::Errors::InvalidPassword
-* Argon2::Errors::InvalidSaltSize
-* Argon2::Errors::InvalidOutputLength
-* Argon2::Errors::ExtError
+* ```ruby
+  Argon2::Errors::InvalidHash
+  ```
+* ```ruby
+  Argon2::Errors::InvalidCost
+  ```
+  * ```ruby
+    Argon2::Errors::InvalidTCost
+    ```
+  * ```ruby
+    Argon2::Errors::InvalidMCost
+    ```
+* ```ruby
+  Argon2::Errors::InvalidPassword
+  ```
+* ```ruby
+  Argon2::Errors::InvalidSaltSize
+  ```
+* ```ruby
+  Argon2::Errors::InvalidOutputLength
+  ```
+* ```ruby
+  Argon2::Errors::ExtError
+  ```
 
 ### Argon2::Engine and Argon2::Password refactored
 
