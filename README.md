@@ -102,44 +102,34 @@ Argon2::Password.verify_password("A password", myhash, KEY)
 
 ### Errors restructured
 
-**Root level error renamed** (find/replace all instances in your application):
+**The root level error for Argon2 has been renamed.**
+
+Find and replace all instances of:
 
 ```ruby
 Argon2::ArgonHashFail
 ```
 
-Has been renamed to:
+With:
 
 ```ruby
 Argon2::Error
 ```
 
-The following new Errors have been added for capturing specific exceptions:
+Additionally, the following new Errors have been added for capturing specific
+exceptions. You aren't required to use them; they are provided purely as a way
+to catch more specific exceptions as needed.
 
-* ```ruby
-  Argon2::Errors::InvalidHash
-  ```
-* ```ruby
-  Argon2::Errors::InvalidCost
-  ```
-  * ```ruby
-    Argon2::Errors::InvalidTCost
-    ```
-  * ```ruby
-    Argon2::Errors::InvalidMCost
-    ```
-* ```ruby
-  Argon2::Errors::InvalidPassword
-  ```
-* ```ruby
-  Argon2::Errors::InvalidSaltSize
-  ```
-* ```ruby
-  Argon2::Errors::InvalidOutputLength
-  ```
-* ```ruby
-  Argon2::Errors::ExtError
-  ```
+```ruby
+Argon2::Errors::InvalidHash
+Argon2::Errors::InvalidCost
+Argon2::Errors::InvalidTCost # Inherits from Argon2::Errors::InvalidCost
+Argon2::Errors::InvalidMCost # Inherits from Argon2::Errors::InvalidCost
+Argon2::Errors::InvalidPassword
+Argon2::Errors::InvalidSaltSize
+Argon2::Errors::InvalidOutputLength
+Argon2::Errors::ExtError
+```
 
 ### Argon2::Engine and Argon2::Password refactored
 
