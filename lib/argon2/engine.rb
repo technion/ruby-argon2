@@ -3,8 +3,13 @@
 require 'securerandom'
 
 module Argon2
-  # Generates a random, binary string for use as a salt.
+  ##
+  # TODO: Document Engine class, and how it differs from the ffi_engine class.
+  #
   class Engine
+    ##
+    # Generates a random, binary string for use as a salt.
+    #
     def self.saltgen
       SecureRandom.random_bytes(Argon2::Constants::SALT_LEN)
     end

@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
-# Defines an array of errors that matches the enum list of errors from
-# argon2.h. This allows return values to propagate errors through the FFI.
-
 module Argon2
+  ##
+  # Generic error for applications to catch when using Argon2::Engine and
+  # Argon2::Password
+  #
   class ArgonHashFail < StandardError; end
+
+  ##
+  # Defines an array of errors that matches the enum list of errors from
+  # argon2.h. This allows return values to propagate errors through the FFI.
+  #
   ERRORS = %w[
     ARGON2_OK
     ARGON2_OUTPUT_PTR_NULL
@@ -40,5 +46,5 @@ module Argon2
     ARGON2_ENCODING_FAIL
     ARGON2_DECODING_FAIL
     ARGON2_THREAD_FAIL
-    ].freeze
+  ].freeze
 end

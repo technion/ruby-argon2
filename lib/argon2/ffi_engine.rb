@@ -4,7 +4,10 @@ require 'ffi'
 require 'ffi-compiler/loader'
 
 module Argon2
-  # Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
+  ##
+  # Direct external bindings. Call these methods via the Engine class to ensure
+  # points are dealt with.
+  #
   module Ext
     extend FFI::Library
     ffi_lib FFI::Compiler::Loader.find(FFI::Platform.windows? ? 'libargon2_wrap' : 'argon2_wrap')
@@ -43,8 +46,10 @@ module Argon2
       pointer size_t], :int, :blocking => true
   end
 
+  ##
   # The engine class shields users from the FFI interface.
   # It is generally not advised to directly use this class.
+  #
   class Engine
     def self.hash_argon2i(password, salt, t_cost, m_cost, out_len = nil)
       out_len = (out_len || Constants::OUT_LEN).to_i
