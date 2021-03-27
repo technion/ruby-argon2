@@ -5,27 +5,27 @@ module Argon2
   class Password
     def initialize(options = {})
       @t_cost = options[:t_cost] || 2
-      raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 750
+      raise ::Argon2::Errors::InvalidTCost if @t_cost < 1 || @t_cost > 750
 
       @m_cost = options[:m_cost] || 16
-      raise ArgonHashFail, "Invalid m_cost" if @m_cost < 1 || @m_cost > 31
+      raise ::Argon2::Errors::InvalidMCost if @m_cost < 1 || @m_cost > 31
 
       @salt = options[:salt_do_not_supply] || Engine.saltgen
       @secret = options[:secret]
     end
 
-    def create(pass)
-      raise ArgonHashFail, "Invalid password (expected string)" unless
-        pass.is_a?(String)
+    def create(password)
+      raise ::Argon2::Errors::InvalidPassword unless password.is_a?(String)
 
-      Argon2::Engine.hash_argon2id_encode(
-        pass, @salt, @t_cost, @m_cost, @secret)
+      ::Argon2::Engine.hash_argon2id_encode(
+        password, @salt, @t_cost, @m_cost, @secret
+      )
     end
 
     # Helper class, just creates defaults and calls hash()
-    def self.create(pass)
+    def self.create(password)
       argon2 = Argon2::Password.new
-      argon2.create(pass)
+      argon2.create(password)
     end
 
     # Supports 1 and argon2id formats.
@@ -33,10 +33,10 @@ module Argon2
       /^\$argon2(id?|d).{,113}/ =~ hash
     end
 
-    def self.verify_password(pass, hash, secret = nil)
+    def self.verify_password(password, hash, secret = nil)
       raise ArgonHashFail, "Invalid hash" unless valid_hash?(hash)
 
-      Argon2::Engine.argon2_verify(pass, hash, secret)
+      ::Argon2::Engine.argon2_verify(password, hash, secret)
     end
   end
 end

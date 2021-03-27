@@ -2,10 +2,40 @@
 
 module Argon2
   ##
-  # Generic error for applications to catch when using Argon2::Engine and
-  # Argon2::Password
+  # Generic error to catch anything the Argon2 ruby library throws.
   #
-  class ArgonHashFail < StandardError; end
+  class Error < StandardError; end
+
+  ##
+  # Various errors for invalid parameters passed to the library.
+  #
+  # WIP
+  #
+  module Errors
+    class InvalidHash < Argon2::Error; end
+
+    ##
+    # Not used directly, but allows developers to catch any cost exception
+    # regardless of which cost is invalid.
+    #
+    class InvalidCost < Argon2::Error; end
+
+    class InvalidTCost < InvalidCost; end
+
+    class InvalidMCost < InvalidCost; end
+
+    class InvalidPassword < Argon2::Error
+      def initialize(msg="Invalid password (expected a String)")
+        super
+      end
+    end
+
+    class InvalidSaltSize < Argon2::Error; end
+
+    class InvalidOutputLength < Argon2::Error; end
+
+    class ExtError < Argon2::Error; end
+  end
 
   ##
   # Defines an array of errors that matches the enum list of errors from

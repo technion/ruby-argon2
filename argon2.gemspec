@@ -16,6 +16,13 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/technion/ruby-argon2'
   spec.license       = 'MIT'
 
+  # TODO: Remove post install message after `v3.0.0` is released.
+  spec.post_install_message =
+    'Version 3.0 of the Argon2 ruby wrapper includes breaking changes on the '\
+    'usage/generation of passwords. If you use Argon2 directly, you will need '\
+    'to follow the "migrating to v3" guide in the project README. Otherwise '\
+    'you can safely ignore this message.'
+
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.files << `find ext`.split
 

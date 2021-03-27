@@ -1,3 +1,9 @@
+# Changelog
+
+## v3.0.0: TBD
+- Exceptions reworked, top level exception is now Argon2::Error (was
+  Argon2::ArgonHashFail). Now supports specific errors as well, see: errors.rb
+
 ## v2.0.3: 2021-01-02
 - Address potential memory leak. Unlikely to be exploitable.
 

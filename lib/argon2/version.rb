@@ -4,5 +4,5 @@ module Argon2
   ##
   # Standard Gem version constant.
   #
-  VERSION = "2.0.3"
+  VERSION = "3.0.0"
 end

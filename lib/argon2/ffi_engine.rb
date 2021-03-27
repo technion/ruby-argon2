@@ -53,14 +53,14 @@ module Argon2
   class Engine
     def self.hash_argon2i(password, salt, t_cost, m_cost, out_len = nil)
       out_len = (out_len || Constants::OUT_LEN).to_i
-      raise ArgonHashFail, "Invalid output length" if out_len < 1
+      raise ::Argon2::Errors::InvalidOutputLength if out_len < 1
 
       result = ''
       FFI::MemoryPointer.new(:char, out_len) do |buffer|
         ret = Ext.argon2i_hash_raw(t_cost, 1 << m_cost, 1, password,
                                    password.length, salt, salt.length,
                                    buffer, out_len)
-        raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
+        raise ::Argon2::Errors::ExtError, ERRORS[ret.abs] unless ret.zero?
 
         result = buffer.read_string(out_len)
       end
@@ -69,14 +69,14 @@ module Argon2
 
     def self.hash_argon2id(password, salt, t_cost, m_cost, out_len = nil)
       out_len = (out_len || Constants::OUT_LEN).to_i
-      raise ArgonHashFail, "Invalid output length" if out_len < 1
+      raise ::Argon2::Errors::InvalidOutputLength if out_len < 1
 
       result = ''
       FFI::MemoryPointer.new(:char, out_len) do |buffer|
         ret = Ext.argon2id_hash_raw(t_cost, 1 << m_cost, 1, password,
                                     password.length, salt, salt.length,
                                     buffer, out_len)
-        raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
+        raise ::Argon2::Errors::ExtError, ERRORS[ret.abs] unless ret.zero?
 
         result = buffer.read_string(out_len)
       end
@@ -87,13 +87,13 @@ module Argon2
       result = ''
       secretlen = secret.nil? ? 0 : secret.bytesize
       passwordlen = password.nil? ? 0 : password.bytesize
-      raise ArgonHashFail, "Invalid salt size" if salt.length != Constants::SALT_LEN
+      raise ::Argon2::Errors::InvalidSaltSize if salt.length != Constants::SALT_LEN
 
       FFI::MemoryPointer.new(:char, Constants::ENCODE_LEN) do |buffer|
         ret = Ext.argon2_wrap(buffer, password, passwordlen,
                               salt, salt.length, t_cost, (1 << m_cost),
                               1, secret, secretlen)
-        raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
+        raise ::Argon2::Errors::ExtError, ERRORS[ret.abs] unless ret.zero?
 
         result = buffer.read_string(Constants::ENCODE_LEN)
       end
@@ -106,7 +106,7 @@ module Argon2
 
       ret = Ext.wrap_argon2_verify(hash, pwd, passwordlen, secret, secretlen)
       return false if ERRORS[ret.abs] == 'ARGON2_DECODING_FAIL'
-      raise ArgonHashFail, ERRORS[ret.abs] unless ret.zero?
+      raise ::Argon2::Errors::ExtError, ERRORS[ret.abs] unless ret.zero?
 
       true
     end

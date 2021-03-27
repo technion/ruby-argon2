@@ -98,6 +98,11 @@ myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
+## Version 3.0 - Migrating to the new helpers
+
+TODO: Write this guide once the helpers are agreed upon and finalized. Include
+      a note about the updated error classes as well.
+
 ## Version 2.0 - Argon 2id
 
 Version 2.x upwards will now default to the Argon2id hash format. This is
