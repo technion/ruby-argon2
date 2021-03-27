@@ -98,10 +98,36 @@ myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
-## Version 3.0 - Migrating to the new helpers
+## Migrating to v3.0
 
-TODO: Write this guide once the helpers are agreed upon and finalized. Include
-      a note about the updated error classes as well.
+### Errors restructured
+
+**Root level error renamed** (find/replace all instances in your application):
+
+```ruby
+Argon2::ArgonHashFail
+```
+
+Has been renamed to:
+
+```ruby
+Argon2::Error
+```
+
+The following new Errors have been added for capturing specific exceptions:
+
+* Argon2::Errors::InvalidHash
+* Argon2::Errors::InvalidCost
+  * Argon2::Errors::InvalidTCost
+  * Argon2::Errors::InvalidMCost
+* Argon2::Errors::InvalidPassword
+* Argon2::Errors::InvalidSaltSize
+* Argon2::Errors::InvalidOutputLength
+* Argon2::Errors::ExtError
+
+### Argon2::Engine and Argon2::Password refactored
+
+TODO: Write this guide once the helpers are agreed upon and finalized.
 
 ## Version 2.0 - Argon 2id
 
