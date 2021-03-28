@@ -3,11 +3,11 @@ module Argon2
   # Front-end API for the Argon2 module.
   #
   class Password
-    # Time Cost defaults
+    # Time Cost constants
     DEFAULT_T_COST = 2
     MIN_T_COST = 1
     MAX_T_COST = 750
-    # Memory Cost Defaults
+    # Memory Cost constants
     DEFAULT_M_COST = 16
     MIN_M_COST = 1
     MAX_M_COST = 31
