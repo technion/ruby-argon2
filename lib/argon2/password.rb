@@ -15,7 +15,7 @@ module Argon2
     attr_reader :digest
     # The hash portion of the stored password hash.
     attr_reader :checksum
-    # The salt of the store password hash.
+    # The salt of the stored password hash.
     attr_reader :salt
     # Variant used (argon2[i|d|id])
     attr_reader :variant
