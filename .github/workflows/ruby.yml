@@ -15,7 +15,7 @@ jobs:
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby-version }}
+        ruby-version: ${{ matrix.ruby-version }} 
     - name: Install dependencies
       run: bundle install
     - name: Init submodules
