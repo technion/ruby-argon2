@@ -23,7 +23,7 @@ module Argon2
     attr_reader :checksum
     # The salt of the stored password hash.
     attr_reader :salt
-    # Variant used (argon2[i|d|id])
+    # Variant used (argon2i / argon2d / argon2id)
     attr_reader :variant
     # The version of the argon2 algorithm used to create the hash.
     attr_reader :version
