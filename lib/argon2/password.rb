@@ -91,6 +91,7 @@ module Argon2
     # Initialize an Argon2::Password instance using any valid Argon2 digest.
     #
     def initialize(digest)
+      digest = digest.to_s
       if valid_hash?(digest)
         # Split the digest into its component pieces
         split_digest = split_hash(digest)
@@ -121,6 +122,7 @@ module Argon2
     # digest/hash.
     #
     def ==(password)
+      # TODO: Should this return false instead of raising an error?
       unless password.is_a?(Argon2::Password)
         raise ArgumentError,
           'Can only compare an Argon2::Password against another Argon2::Password'
