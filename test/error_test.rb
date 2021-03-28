@@ -1,31 +1,31 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'test_helper'
 
-describe 'Argon2ErrorTest' do
-  it 'ffi fail' do
-    expect{
+class Argon2ErrorTest < Minitest::Test
+  def test_ffi_fail
+    assert_raises Argon2::ArgonHashFail do
       Argon2::Engine.hash_argon2i("password", "somesalt\0\0\0\0\0\0\0\0", 2, 1)
-    }.to raise_error Argon2::Error
+    end
   end
 
-  it 'memory too small' do
-    expect{
+  def test_memory_too_small
+    assert_raises Argon2::ArgonHashFail do
       Argon2::Engine.hash_argon2id_encode("password",
                                           "somesalt\0\0\0\0\0\0\0\0", 2, 1, nil)
-    }.to raise_error Argon2::Error
+    end
   end
 
-  it 'salt size' do
-    expect{
+  def test_salt_size
+    assert_raises Argon2::ArgonHashFail do
       Argon2::Engine.hash_argon2id_encode("password", "somesalt", 2, 16, nil)
-    }.to raise_error Argon2::Error
+    end
   end
 
-  it 'password null' do
-    expect{
+  def test_passwd_null
+    assert_raises Argon2::ArgonHashFail do
       Argon2::Engine.hash_argon2id_encode(nil, "somesalt\0\0\0\0\0\0\0\0", 2,
                                           16, nil)
-    }.to raise_error Argon2::Error
+    end
   end
 end
