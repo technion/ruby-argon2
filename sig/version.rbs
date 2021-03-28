@@ -1,0 +1,4 @@
+# Classes
+module Argon2
+  VERSION: String
+end

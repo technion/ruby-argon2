@@ -1,0 +1,8 @@
+# Classes
+module Argon2
+  module Constants
+    SALT_LEN: Integer
+    OUT_LEN: Integer
+    ENCODE_LEN: Integer
+  end
+end

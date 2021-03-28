@@ -72,6 +72,17 @@ argon = Argon2::Password.new(t_cost: 2, m_cost: 16, secret: KEY)
 myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
+## Ruby 3 Types
+I am now shipping signatures in sig/. The following command sets up a testing interface.
+```sh
+RBS_TEST_TARGET="Argon2::*" bundle exec ruby -r rbs/test/setup bin/console
+```
+You should also be able to pass Steep checks:
+```sh
+steep check
+```
+These tools will need to be installed manually at this time and will be added to Gemfiles after much further testing.
+
 ## Version 2.0 - Argon 2id
 Version 2.x upwards will now default to the Argon2id hash format. This is consistent with current recommendations regarding Argon2 usage. It remains capable of verifying existing hashes.
 
