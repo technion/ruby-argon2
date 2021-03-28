@@ -9,35 +9,71 @@ module Argon2
   ##
   # Various errors for invalid parameters passed to the library.
   #
-  # WIP
-  #
   module Errors
+    ##
+    # Raised when an invalid Argon2 hash has been passed to Argon2::Password.new
+    #
     class InvalidHash < Argon2::Error; end
 
+    ##
+    # Raised when a valid Argon2 hash was passed to Argon2::Password, but the
+    # version information is missing or corrupted.
+    #
     class InvalidVersion < InvalidHash; end
 
     ##
-    # Not used directly, but allows developers to catch any cost exception
-    # regardless of which cost is invalid.
+    # Abstract error class that isn't raised directly, but allows you to catch
+    # any cost error, regardless of which value was invalid.
     #
     class InvalidCost < InvalidHash; end
 
+    ##
+    # Raised when an invalid time cost has been passed to
+    # Argon2::Password.create, or the hash passed to Argon2::Password.new
+    # was valid but the time cost information is missing or corrupted.
+    #
     class InvalidTCost < InvalidCost; end
 
+    ##
+    # Raised when an invalid memory cost has been passed to
+    # Argon2::Password.create, or the hash passed to Argon2::Password.new
+    # was valid but the memory cost information is missing or corrupted.
+    #
     class InvalidMCost < InvalidCost; end
 
+    ##
+    # Raised when an invalid parallelism cost has been passed to
+    # Argon2::Password.create, or the hash passed to Argon2::Password.new
+    # was valid but the parallelism cost information is missing or corrupted.
+    #
     class InvalidPCost < InvalidCost; end
 
+    ##
+    # Raised when a non-string object is passed to Argon2::Password.create
+    #
     class InvalidPassword < Argon2::Error
       def initialize(msg="Invalid password (expected a String)")
         super
       end
     end
 
+    ##
+    # Raised when an invalid salt length was passed to
+    # Argon2::Engine.hash_argon2id_encode
+    #
     class InvalidSaltSize < Argon2::Error; end
 
+    ##
+    # Raised when the output length passed to Argon2::Engine.hash_argon2i or
+    # Argon2::Engine.hash_argon2id is invalid.
+    #
     class InvalidOutputLength < Argon2::Error; end
 
+    ##
+    # Error raised by/caught from the Argon2 C Library.
+    #
+    # See Argon2::ERRORS for a full list of related error codes.
+    #
     class ExtError < Argon2::Error; end
   end
 
