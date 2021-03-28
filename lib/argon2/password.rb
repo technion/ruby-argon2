@@ -3,13 +3,19 @@ module Argon2
   # Front-end API for the Argon2 module.
   #
   class Password
-    # Time Cost constants
+    # Used as the default time cost if one isn't provided when calling
+    # Argon2::Password.create
     DEFAULT_T_COST = 2
+    # Used to validate the minimum acceptable time cost
     MIN_T_COST = 1
+    # Used to validate the maximum acceptable time cost
     MAX_T_COST = 750
-    # Memory Cost constants
+    # Used as the default memory cost if one isn't provided when calling
+    # Argon2::Password.create
     DEFAULT_M_COST = 16
+    # Used to validate the minimum acceptable memory cost
     MIN_M_COST = 1
+    # Used to validate the maximum acceptable memory cost
     MAX_M_COST = 31
     # The complete Argon2 digest string (not to be confused with the checksum).
     attr_reader :digest
@@ -32,6 +38,23 @@ module Argon2
     # Class methods
     #
     class << self
+      ##
+      # Takes a user provided password and returns an Argon2::Password instance
+      # with the resulting Argon2 hash.
+      #
+      # Usage:
+      #
+      #    Argon2::Password.create(password)
+      #    Argon2::Password.create(password, t_cost: 4, m_cost: 20)
+      #    Argon2::Password.create(password, secret: pepper)
+      #    Argon2::Password.create(password, m_cost: 17, secret: pepper)
+      #
+      # Currently available options:
+      #
+      # * :t_cost
+      # * :m_cost
+      # * :secret
+      #
       def create(password, options = {})
         raise Argon2::Errors::InvalidPassword unless password.is_a?(String)
 
@@ -59,6 +82,8 @@ module Argon2
       end
 
       ##
+      # Regex to validate if the provided String is a valid Argon2 hash output.
+      #
       # Supports 1 and argon2id formats.
       #
       def valid_hash?(digest)
@@ -66,6 +91,13 @@ module Argon2
       end
 
       ##
+      # Takes a password, Argon2 hash, and optionally a secret, then uses the
+      # Argon2 C Library to verify if they match.
+      #
+      # Also accepts passing another Argon2::Password instance as the password,
+      # in which case it will compare the final Argon2 hash for each against
+      # each other.
+      #
       # Usage:
       #
       #    Argon2::Password.verify_password(password, argon2_hash)
