@@ -3,9 +3,6 @@
 require 'securerandom'
 
 module Argon2
-  ##
-  # TODO: Document Engine class, and how it differs from the ffi_engine class.
-  #
   class Engine
     ##
     # Generates a random, binary string for use as a salt.

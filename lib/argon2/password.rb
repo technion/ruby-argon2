@@ -2,36 +2,20 @@ module Argon2
   ##
   # Front-end API for the Argon2 module.
   #
-  # TODO: Find a good place to document the following knowledge, it's a PITA to
-  #       google atm.
-  #
-  # 1) Variant used
-  # 2) Version used
-  # 3) Config used
-  #   a) m - m_cost (memory)
-  #   b) t - t_cost (time/stretches)
-  #   c) p - p_cost (parallelism/cores)
-  # 4) Salt
-  # 5) Checksum
-  #
-  # |   1   | 2  |       3       |           4           |      5    (truncated)
-  # $argon2i$v=19$m=65536,t=2,p=1$VG9vTG9uZ1NhbGVMZW5ndGg$mYleBHsG6N0+H4JGJ0xXoI
-  #
   class Password
-    #
+    # Time Cost defaults
     DEFAULT_T_COST = 2
-    DEFAULT_M_COST = 16
-    #
     MIN_T_COST = 1
     MAX_T_COST = 750
-    #
+    # Memory Cost Defaults
+    DEFAULT_M_COST = 16
     MIN_M_COST = 1
     MAX_M_COST = 31
     # The complete Argon2 digest string (not to be confused with the checksum).
     attr_reader :digest
     # The hash portion of the stored password hash.
     attr_reader :checksum
-    # The salt of the store password hash (including version and cost).
+    # The salt of the store password hash.
     attr_reader :salt
     # Variant used (argon2[i|d|id])
     attr_reader :variant
@@ -44,6 +28,9 @@ module Argon2
     # The parallelism cost factor used to create the hash.
     attr_reader :p_cost
 
+    ##
+    # Class methods
+    #
     class << self
       def create(password, options = {})
         raise Argon2::Errors::InvalidPassword unless password.is_a?(String)
@@ -71,12 +58,19 @@ module Argon2
         )
       end
 
+      ##
       # Supports 1 and argon2id formats.
+      #
       def valid_hash?(digest)
         /^\$argon2(id?|d).{,113}/ =~ digest
       end
 
-      # Provided for those who prefer the previous method of password comparison
+      ##
+      # Usage:
+      #
+      #    Argon2::Password.verify_password(password, argon2_hash)
+      #    Argon2::Password.verify_password(password, argon2_hash, secret)
+      #
       def verify_password(password, digest, secret = nil)
         digest = digest.to_s
         if password.is_a?(Argon2::Password)
@@ -86,6 +80,10 @@ module Argon2
         end
       end
     end
+
+    ######################
+    ## Instance Methods ##
+    ######################
 
     ##
     # Initialize an Argon2::Password instance using any valid Argon2 digest.
