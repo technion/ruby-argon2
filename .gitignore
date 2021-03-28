@@ -12,3 +12,6 @@
 /ext/argon2_wrap/tests
 /ext/argon2_wrap/libargon2_wrap.bundle*
 argon2-0.0.2.gem
+
+# Ignore Byebug command history file.
+.byebug_history

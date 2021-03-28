@@ -14,15 +14,19 @@ module Argon2
   module Errors
     class InvalidHash < Argon2::Error; end
 
+    class InvalidVersion < InvalidHash; end
+
     ##
     # Not used directly, but allows developers to catch any cost exception
     # regardless of which cost is invalid.
     #
-    class InvalidCost < Argon2::Error; end
+    class InvalidCost < InvalidHash; end
 
     class InvalidTCost < InvalidCost; end
 
     class InvalidMCost < InvalidCost; end
+
+    class InvalidPCost < InvalidCost; end
 
     class InvalidPassword < Argon2::Error
       def initialize(msg="Invalid password (expected a String)")
@@ -39,7 +43,8 @@ module Argon2
 
   ##
   # Defines an array of errors that matches the enum list of errors from
-  # argon2.h. This allows return values to propagate errors through the FFI.
+  # argon2.h. This allows return values to propagate errors through the FFI. Any
+  # error from this list will be thrown as an Argon2::Errors::ExtError
   #
   ERRORS = %w[
     ARGON2_OK

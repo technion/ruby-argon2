@@ -122,9 +122,11 @@ to catch more specific exceptions as needed.
 
 ```ruby
 Argon2::Errors::InvalidHash
-Argon2::Errors::InvalidCost
-Argon2::Errors::InvalidTCost # Inherits from Argon2::Errors::InvalidCost
-Argon2::Errors::InvalidMCost # Inherits from Argon2::Errors::InvalidCost
+Argon2::Errors::InvalidVersion # Inherits from Argon2::Errors::InvalidHash
+Argon2::Errors::InvalidCost    # Inherits from Argon2::Errors::InvalidHash
+Argon2::Errors::InvalidTCost   # Inherits from Argon2::Errors::InvalidCost
+Argon2::Errors::InvalidMCost   # Inherits from Argon2::Errors::InvalidCost
+Argon2::Errors::InvalidPCost   # Inherits from Argon2::Errors::InvalidCost
 Argon2::Errors::InvalidPassword
 Argon2::Errors::InvalidSaltSize
 Argon2::Errors::InvalidOutputLength
