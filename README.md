@@ -91,7 +91,7 @@ Version 1.0.0 included a major version bump over 0.1.4 due to several breaking c
 
 The second of these is that the reference Argon2 implementation introduced an algorithm change, which produces a hash which is not backwards compatible. This is documented on [this PR on the C library](https://github.com/P-H-C/phc-winner-argon2/pull/115). This was a regrettable requirement to address a security concern in the algorithm itself. The two versions of the Argon2 algorithm are numbered 1.0 and 1.3 respectively.
 
-Shortly after this, version 1.0.0 of this gem was released with this breaking change, supporting only Argon2 v1.3. Further time later, the official encoding format was updated, with a spec that included the version number, and the library introduced backward compatibility. This should remove the likelihood of such breaking changes in future. Version 1.1.0 will silently introduce the current version number in hashes, in order to avoid a further compatibility break.
+Shortly after this, version 1.0.0 of this gem was released with this breaking change, supporting only Argon2 v1.3. Further time later, the official encoding format was updated, with a spec that included the version number, and the library introduced backward compatibility. This should remove the likelihood of such breaking changes in future. 
 
 
 ## Platform Issues
