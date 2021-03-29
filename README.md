@@ -73,6 +73,18 @@ myhash = argon.create("A password")
 Argon2::Password.verify_password("A password", myhash, KEY)
 ```
 
+## Ruby 3 Types
+
+I am now shipping signatures in sig/. The following command sets up a testing interface.
+```sh
+RBS_TEST_TARGET="Argon2::*" bundle exec ruby -r rbs/test/setup bin/console
+```
+You should also be able to pass Steep checks:
+```sh
+steep check
+```
+These tools will need to be installed manually at this time and will be added to Gemfiles after much further testing.
+
 ## Version 3.0 - Breaking API changes, addition of new helper functions
 
 ### Argon2::Password API refactored
@@ -120,7 +132,7 @@ Version 1.0.0 included a major version bump over 0.1.4 due to several breaking c
 
 The second of these is that the reference Argon2 implementation introduced an algorithm change, which produces a hash which is not backwards compatible. This is documented on [this PR on the C library](https://github.com/P-H-C/phc-winner-argon2/pull/115). This was a regrettable requirement to address a security concern in the algorithm itself. The two versions of the Argon2 algorithm are numbered 1.0 and 1.3 respectively.
 
-Shortly after this, version 1.0.0 of this gem was released with this breaking change, supporting only Argon2 v1.3. Further time later, the official encoding format was updated, with a spec that included the version number, and the library introduced backward compatibility. This should remove the likelihood of such breaking changes in future. Version 1.1.0 will silently introduce the current version number in hashes, in order to avoid a further compatibility break.
+Shortly after this, version 1.0.0 of this gem was released with this breaking change, supporting only Argon2 v1.3. Further time later, the official encoding format was updated, with a spec that included the version number, and the library introduced backward compatibility. This should remove the likelihood of such breaking changes in future. 
 
 
 ## Platform Issues
