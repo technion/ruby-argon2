@@ -1,0 +1,6 @@
+# Classes
+module Argon2
+  class Engine
+    def self.saltgen: () -> String
+  end
+end

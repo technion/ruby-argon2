@@ -134,6 +134,9 @@ module Argon2
         @p_cost   = split_digest[:p_cost]
         @salt     = split_digest[:salt]
         @checksum = split_digest[:checksum]
+        # The return type is ignored by Object.new, this is provided purely for
+        # return type safety (rbs).
+        self
       else
         raise Argon2::Errors::InvalidHash
       end

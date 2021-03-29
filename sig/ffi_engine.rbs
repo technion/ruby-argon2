@@ -1,0 +1,9 @@
+# Classes
+module Argon2
+  class Engine
+    def self.hash_argon2i: (String password, String salt, Integer t_cost, Integer m_cost, ?Integer? out_len) -> String
+    def self.hash_argon2id: (String password, String salt, Integer t_cost, Integer m_cost, ?Integer? out_len) -> String
+    def self.hash_argon2id_encode: (String password, String salt, Integer t_cost, Integer m_cost, String? secret) -> String
+    def self.argon2_verify: (String? pwd, String? hash, String? secret) -> bool
+  end
+end
