@@ -2,7 +2,8 @@
 
 require 'test_helper'
 
-TIMES = (ENV['TEST_CHECKS'] || 100).to_i
+# The Github action sets this to 100, the value used to find the NULL hash bug.
+TIMES = (ENV['TEST_CHECKS'] || 1).to_i
 
 # This was supposed to use Rubycheck, however the current version doesn't run
 # These property tests identified the NULL hash bug

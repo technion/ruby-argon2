@@ -10,12 +10,15 @@ jobs:
       matrix:
         ruby-version: ['3.0', 2.7, 2.5]
 
+    env:
+      TEST_CHECKS: 100
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby ${{ matrix.ruby-version }}
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby-version }} 
+        ruby-version: ${{ matrix.ruby-version }}
     - name: Install dependencies
       run: bundle install
     - name: Init submodules
