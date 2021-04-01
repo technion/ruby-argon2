@@ -10,12 +10,16 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  test_matrix:
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.0', 2.7, 2.5]
+        ruby-version:
+          - 2.5
+          - 2.6
+          - 2.7
+          - 3.0
 
     env:
       TEST_CHECKS: 100
@@ -40,3 +44,25 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  rubocop:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0
+    - name: Install dependencies
+      run: bundle install
+    - name: Run rubocop
+      run: bundle exec rubocop
+
+  test:
+    runs-on: ubuntu-latest
+    needs: [test_matrix, rubocop]
+    steps:
+      - name: Wait for status checks
+        run: echo "All Green!"
