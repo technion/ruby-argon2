@@ -155,8 +155,6 @@ module Argon2
               'Can only compare an Argon2::Password against another Argon2::Password'
       end
 
-      # TODO: Use secure compare to protect against timing attacks? Also, should
-      #       this comparison be more strict?
       digest == other.digest
     end
 
