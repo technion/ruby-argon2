@@ -42,4 +42,9 @@ class Argon2ErrorTest < Minitest::Test
     assert Argon2::Errors::InvalidOutputLength < Argon2::Error
     assert Argon2::Errors::ExtError            < Argon2::Error
   end
+
+  def test_invalid_password_msg
+    assert_equal Argon2::Errors::InvalidPassword.new.message,
+                 "Invalid password (expected a String)"
+  end
 end
