@@ -1,13 +1,7 @@
 name: Test Suite
 
-# Run every time a commit is pushed to master, or a pull request opened against
-# master.
-
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+# Run against all commits and pull requests.
+on: [push, pull_request]
 
 jobs:
   test_matrix:
