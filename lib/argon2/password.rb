@@ -14,7 +14,7 @@ module Argon2
     # Argon2::Password.create
     DEFAULT_M_COST = 16
     # Used to validate the minimum acceptable memory cost
-    MIN_M_COST = 1
+    MIN_M_COST = 3
     # Used to validate the maximum acceptable memory cost
     MAX_M_COST = 31
     # The complete Argon2 digest string (not to be confused with the checksum).

@@ -56,8 +56,6 @@ class PasswordCreateTest < Minitest::Test
     assert_equal DEFAULT_M_COST, pass.m_cost
   end
 
-  # FIXME: Failing due to:
-  #        Argon2::Errors::ExtError: ARGON2_MEMORY_TOO_LITTLE
   def test_min_m_cost
     assert pass = Argon2::Password.create(SECRET, m_cost: MIN_M_COST)
 
