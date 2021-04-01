@@ -1,7 +1,13 @@
 name: Rubocop
 
-# Run this workflow every time a new commit pushed to your repository
-on: push
+# Run every time a commit is pushed to master, or a pull request opened against
+# master.
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
 
@@ -13,4 +19,3 @@ jobs:
         uses: gimenete/rubocop-action@1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
