@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class PasswordCreate < Minitest::Test
+class PasswordCreateTest < Minitest::Test
   # TODO: Randomly generate a new password with Faker
   # SECRET = Faker::Internet.unique.password
   SECRET = 'mysecretpassword'
