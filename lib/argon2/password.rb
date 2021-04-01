@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Argon2
   ##
   # Front-end API for the Argon2 module.
@@ -61,13 +63,9 @@ module Argon2
         t_cost = options[:t_cost] || DEFAULT_T_COST
         m_cost = options[:m_cost] || DEFAULT_M_COST
 
-        if t_cost < MIN_T_COST || t_cost > MAX_T_COST
-          raise Argon2::Errors::InvalidTCost
-        end
+        raise Argon2::Errors::InvalidTCost if t_cost < MIN_T_COST || t_cost > MAX_T_COST
 
-        if m_cost < MIN_M_COST || m_cost > MAX_M_COST
-          raise Argon2::Errors::InvalidMCost
-        end
+        raise Argon2::Errors::InvalidMCost if m_cost < MIN_M_COST || m_cost > MAX_M_COST
 
         # TODO: Add support for changing the p_cost
 
@@ -122,24 +120,20 @@ module Argon2
     #
     def initialize(digest)
       digest = digest.to_s
-      if valid_hash?(digest)
-        # Split the digest into its component pieces
-        split_digest = split_hash(digest)
-        # Assign each piece to the Argon2::Password instance
-        @digest   = digest
-        @variant  = split_digest[:variant]
-        @version  = split_digest[:version]
-        @t_cost   = split_digest[:t_cost]
-        @m_cost   = split_digest[:m_cost]
-        @p_cost   = split_digest[:p_cost]
-        @salt     = split_digest[:salt]
-        @checksum = split_digest[:checksum]
-        # The return type is ignored by Object.new, this is provided purely for
-        # return type safety (rbs).
-        self
-      else
-        raise Argon2::Errors::InvalidHash
-      end
+
+      raise Argon2::Errors::InvalidHash unless valid_hash?(digest)
+
+      # Split the digest into its component pieces
+      split_digest = split_hash(digest)
+      # Assign each piece to the Argon2::Password instance
+      @digest   = digest
+      @variant  = split_digest[:variant]
+      @version  = split_digest[:version]
+      @t_cost   = split_digest[:t_cost]
+      @m_cost   = split_digest[:m_cost]
+      @p_cost   = split_digest[:p_cost]
+      @salt     = split_digest[:salt]
+      @checksum = split_digest[:checksum]
     end
 
     ##
@@ -154,16 +148,16 @@ module Argon2
     # Compares two Argon2::Password instances to see if they come from the same
     # digest/hash.
     #
-    def ==(password)
+    def ==(other)
       # TODO: Should this return false instead of raising an error?
-      unless password.is_a?(Argon2::Password)
+      unless other.is_a?(Argon2::Password)
         raise ArgumentError,
-          'Can only compare an Argon2::Password against another Argon2::Password'
+              'Can only compare an Argon2::Password against another Argon2::Password'
       end
 
       # TODO: Use secure compare to protect against timing attacks? Also, should
       #       this comparison be more strict?
-      self.digest == password.digest
+      digest == other.digest
     end
 
     ##
@@ -189,6 +183,9 @@ module Argon2
       self.class.valid_hash?(digest)
     end
 
+    # FIXME: Reduce complexity/AbcSize
+    # rubocop:disable Metrics/AbcSize
+
     ##
     # Helper method to extract the various values from a digest into attributes.
     #
@@ -206,6 +203,7 @@ module Argon2
       raise Argon2::Errors::InvalidTCost   if t_cost.nil?
       raise Argon2::Errors::InvalidMCost   if m_cost.nil?
       raise Argon2::Errors::InvalidPCost   if p_cost.nil?
+
       # Undo the 2^m_cost operation when encoding the hash to get the original
       # m_cost input back.
       m_cost = Math.log2(m_cost[1].to_i).to_i
@@ -220,5 +218,6 @@ module Argon2
         checksum: checksum.to_str
       }
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

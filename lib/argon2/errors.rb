@@ -52,7 +52,7 @@ module Argon2
     # Raised when a non-string object is passed to Argon2::Password.create
     #
     class InvalidPassword < Argon2::Error
-      def initialize(msg="Invalid password (expected a String)")
+      def initialize(msg = "Invalid password (expected a String)")
         super
       end
     end

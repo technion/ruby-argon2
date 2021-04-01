@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
     'to follow the "migrating to v3" guide in the project README. Otherwise '\
     'you can safely ignore this message.'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.files << `find ext`.split
 
   spec.bindir        = "exe"
