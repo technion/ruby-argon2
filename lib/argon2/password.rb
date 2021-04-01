@@ -64,7 +64,6 @@ module Argon2
         m_cost = options[:m_cost] || DEFAULT_M_COST
 
         raise Argon2::Errors::InvalidTCost if t_cost < MIN_T_COST || t_cost > MAX_T_COST
-
         raise Argon2::Errors::InvalidMCost if m_cost < MIN_M_COST || m_cost > MAX_M_COST
 
         # TODO: Add support for changing the p_cost
