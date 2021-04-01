@@ -34,10 +34,12 @@ jobs:
       run: cd ext/argon2_wrap/ && make test && cd ../..
     - name: Run tests
       run: bundle exec rake
-    - name: Coveralls
+    - name: Coveralls Parallel
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: run-${{ matrix.ruby-version }}
+        parallel: true
 
   rubocop:
 
@@ -54,9 +56,14 @@ jobs:
     - name: Run rubocop
       run: bundle exec rubocop
 
-  test:
+  finish:
     runs-on: ubuntu-latest
     needs: [test_matrix, rubocop]
     steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
       - name: Wait for status checks
         run: echo "All Green!"
