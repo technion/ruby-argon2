@@ -28,4 +28,18 @@ class Argon2ErrorTest < Minitest::Test
                                           16, nil)
     end
   end
+
+  def test_error_inheritance
+    assert Argon2::Error                       < StandardError
+    assert Argon2::Errors::InvalidHash         < Argon2::Error
+    assert Argon2::Errors::InvalidVersion      < Argon2::Errors::InvalidHash
+    assert Argon2::Errors::InvalidCost         < Argon2::Errors::InvalidHash
+    assert Argon2::Errors::InvalidTCost        < Argon2::Errors::InvalidCost
+    assert Argon2::Errors::InvalidMCost        < Argon2::Errors::InvalidCost
+    assert Argon2::Errors::InvalidPCost        < Argon2::Errors::InvalidCost
+    assert Argon2::Errors::InvalidPassword     < Argon2::Error
+    assert Argon2::Errors::InvalidSaltSize     < Argon2::Error
+    assert Argon2::Errors::InvalidOutputLength < Argon2::Error
+    assert Argon2::Errors::ExtError            < Argon2::Error
+  end
 end
