@@ -33,7 +33,7 @@ jobs:
     - name: Test C library
       run: cd ext/argon2_wrap/ && make test && cd ../..
     - name: Run tests
-      run: bundle exec rake
+      run: bundle exec rake test
     - name: Coveralls Parallel
       uses: coverallsapp/github-action@master
       with:
@@ -54,7 +54,7 @@ jobs:
     - name: Install dependencies
       run: bundle install
     - name: Run rubocop
-      run: bundle exec rubocop
+      run: bundle exec rake rubocop
 
   finish:
     runs-on: ubuntu-latest

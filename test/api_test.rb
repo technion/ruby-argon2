@@ -41,4 +41,40 @@ class Argon2APITest < Minitest::Test
     secure_pass = Argon2::Password.create('A secret')
     assert Argon2::Password.valid_hash?(secure_pass)
   end
+
+  ###############
+  ## New Tests ##
+  ###############
+  ORIGINAL_PASSWORD = 'mypassword'
+  PEPPER = 'A secret'
+
+  def test_create_password_without_parameters
+    assert argon2 = Argon2::Password.create(ORIGINAL_PASSWORD)
+
+    assert argon2.is_a?(Argon2::Password)
+    assert_equal argon2.m_cost, 16
+    assert_equal argon2.t_cost, 2
+    assert argon2.matches?(ORIGINAL_PASSWORD)
+    assert Argon2::Password.verify_password(ORIGINAL_PASSWORD, argon2)
+  end
+
+  def test_create_password_with_parameters
+    assert argon2 = Argon2::Password.create(ORIGINAL_PASSWORD, t_cost: 4, m_cost: 12)
+
+    assert argon2.is_a?(Argon2::Password)
+    assert_equal argon2.m_cost, 12
+    assert_equal argon2.t_cost, 4
+    assert argon2.matches?(ORIGINAL_PASSWORD)
+    assert Argon2::Password.verify_password(ORIGINAL_PASSWORD, argon2)
+  end
+
+  def test_create_password_with_secret
+    assert argon2 = Argon2::Password.create(ORIGINAL_PASSWORD, secret: PEPPER)
+
+    assert argon2.is_a?(Argon2::Password)
+    assert_equal argon2.m_cost, 16
+    assert_equal argon2.t_cost, 2
+    assert argon2.matches?(ORIGINAL_PASSWORD, PEPPER)
+    assert Argon2::Password.verify_password(ORIGINAL_PASSWORD, argon2, PEPPER)
+  end
 end

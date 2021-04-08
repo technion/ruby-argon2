@@ -7,6 +7,7 @@ require 'test_helper'
 class LowLevelArgon2Test < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::Argon2::VERSION
+    assert ::Argon2::VERSION.is_a?(String)
   end
 
   def test_ffi_vector

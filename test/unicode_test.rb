@@ -24,5 +24,7 @@ class UnicodeTest < Minitest::Test
     hash = Argon2::Password.create(rawstr)
     assert Argon2::Password.verify_password(rawstr, hash)
     refute Argon2::Password.verify_password("", hash)
+    # Also test if emoji are stripped but spaces remained.
+    refute Argon2::Password.verify_password("        ", hash)
   end
 end

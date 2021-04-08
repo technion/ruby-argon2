@@ -11,7 +11,10 @@ SimpleCov::Formatter::LcovFormatter.config do |c|
   c.single_report_path = 'coverage/lcov.info'
 end
 SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
-SimpleCov.start
+SimpleCov.start do
+  # Don't test the coverage of the test suite itself...
+  add_filter '/test'
+end
 
 require 'argon2'
 
