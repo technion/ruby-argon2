@@ -3,6 +3,7 @@ module Argon2
   class Password
     @t_cost: Integer
     @m_cost: Integer
+    @p_cost: Integer
     @salt: nil | String
     @secret: nil | String
 
