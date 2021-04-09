@@ -33,4 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov-lcov", '~> 0.8'
   spec.add_development_dependency "steep"
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
+
+  spec.cert_chain  = ['certs/technion.pem']
+  spec.signing_key = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
 end
