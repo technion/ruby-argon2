@@ -17,7 +17,6 @@ This project has several key tenets to its design:
 * Errors from the C interface are raised as Exceptions. There are a lot of exception classes, but they tend to relate to things like very broken input, and code bugs. Calls to this library should generally not require a rescue.
 * Test suites should aim for 100% code coverage.
 * Default work values should not be considered constants. I will increase them from time to time.
-* Not exposing the threads parameter is a design choice. I believe there is significant risk, and minimal gain in using a value other than '1'. Four threads on a four core box completely ties up the entire server to process one user logon. If you want more security, increase m_cost.
 * Many Rubocop errors have been disabled, but any commit should avoid new alerts or demonstrate their necessity.
 
 ## Usage
@@ -31,7 +30,7 @@ require 'argon2'
 To generate a hash using specific time and memory cost:
 
 ```ruby
-hasher = Argon2::Password.new(t_cost: 2, m_cost: 16)
+hasher = Argon2::Password.new(t_cost: 2, m_cost: 16, p_cost: 1)
 hasher.create("password")
     => "$argon2i$v=19$m=65536,t=2,p=1$jL7lLEAjDN+pY2cG1N8D2g$iwj1ueduCvm6B9YVjBSnAHu+6mKzqGmDW745ALR38Uo"
 ```

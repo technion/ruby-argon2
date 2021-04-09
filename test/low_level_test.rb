@@ -43,30 +43,34 @@ class LowLevelArgon2Test < Minitest::Test
                  '85d58a069b81f7606dc772810d00496d'
 
     assert_equal Argon2::Engine.hash_argon2id(
-      "password", "somesaltsomesalt", 2, 16),
+      "password", "somesaltsomesalt", 2, 16, 1),
                  'fc33b78139231d34b71626bd6245c1d72efa190ad605c3d8166a72adcedfa2c2'
   end
 
   def test_encoded_hash
     assert_equal Argon2::Engine.hash_argon2id_encode(
-      "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
+      "password", "somesalt\0\0\0\0\0\0\0\0", 2, 16, 1, nil),
                  '$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$syf8TzB9pvMIGtFhvRATHW1nX43iP+FLaaTXnqpyMrY'
 
     assert_equal Argon2::Engine.hash_argon2id_encode(
-      "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8, nil),
+      "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8, 1, nil),
                  '$argon2id$v=19$m=256,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$TCsNUutWgv3lowstIasFJbdiamKiq8qPUdz2wSvQ4rw'
 
     assert_equal Argon2::Engine.hash_argon2id_encode(
-      "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16, nil),
+      "password", "somesalt\0\0\0\0\0\0\0\0", 1, 16, 1, nil),
                  '$argon2id$v=19$m=65536,t=1,p=1$c29tZXNhbHQAAAAAAAAAAA$b7sLmBJ4YGj/yOjMnUDWC1dvrtZr7EPdMT6zB9Fq0pk'
 
     assert_equal Argon2::Engine.hash_argon2id_encode(
-      "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16, nil),
+      "differentpassword", "somesalt\0\0\0\0\0\0\0\0", 2, 16, 1, nil),
                  '$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQAAAAAAAAAAA$0bDR2fpiZutijzxlxrjLnqnCSmtG1/reR4QNcavfKLk'
 
     assert_equal Argon2::Engine.hash_argon2id_encode(
-      "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16, nil),
+      "password", "diffsalt\0\0\0\0\0\0\0\0", 2, 16, 1, nil),
                  '$argon2id$v=19$m=65536,t=2,p=1$ZGlmZnNhbHQAAAAAAAAAAA$vm1qQXZQ+/MgT2Y+Go7XnxtA9dJz3wotjfg0itOgKlY'
+
+    assert_equal Argon2::Engine.hash_argon2id_encode(
+      "password", "somesalt\0\0\0\0\0\0\0\0", 2, 8, 2, nil),
+                 '$argon2id$v=19$m=256,t=2,p=2$c29tZXNhbHQAAAAAAAAAAA$Q221Riroi3JIY9jaA0mEj0Pwmm2N02LSpV8jbkU35vQ'
   end
 
   def test_verify
@@ -78,5 +82,7 @@ class LowLevelArgon2Test < Minitest::Test
     refute Argon2::Engine.argon2_verify("notword", "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$CTFhFdXPJO1aFaMaO6Mm5c8y7cJHAph8ArZWb2GRPPc", nil)
     assert Argon2::Engine.argon2_verify("password", "$argon2d$v=19$m=65536,t=2,p=1$YzI5dFpYTmhiSFFBQUFBQUFBQUFBQQ$Jxy74cswY2mq9y+u+iJcJy8EqOp4t/C7DWDzGwGB3IM", nil)
     refute Argon2::Engine.argon2_verify("notword", "$argon2d$v=19$m=65536,t=2,p=1$YzI5dFpYTmhiSFFBQUFBQUFBQUFBQQ$Jxy74cswY2mq9y+u+iJcJy8EqOp4t/C7DWDzGwGB3IM", nil)
+    assert Argon2::Engine.argon2_verify("password", "$argon2id$v=19$m=65536,t=2,p=2$xTwU4uxw28aTQPi9f8Cx6Q$9VoZS0TrgUmnBtkcHk0klTywH1NUPn2vbrLfiDpyY4M", nil)
+    refute Argon2::Engine.argon2_verify("notword", "$argon2id$v=19$m=65536,t=2,p=2$xTwU4uxw28aTQPi9f8Cx6Q$9VoZS0TrgUmnBtkcHk0klTywH1NUPn2vbrLfiDpyY4M", nil)
   end
 end

@@ -5,7 +5,7 @@ require 'test_helper'
 module Argon2
   # Simple stub to facilitate testing these variables
   class Password
-    attr_accessor :t_cost, :m_cost, :secret
+    attr_accessor :t_cost, :m_cost, :p_cost, :secret
   end
 end
 
@@ -15,14 +15,16 @@ class Argon2APITest < Minitest::Test
     assert_instance_of Argon2::Password, pass
     assert_equal 16, pass.m_cost
     assert_equal 2, pass.t_cost
+    assert_equal 1, pass.p_cost
     assert_nil pass.secret
   end
 
   def test_create_args
-    assert pass = Argon2::Password.new(t_cost: 4, m_cost: 12)
+    assert pass = Argon2::Password.new(t_cost: 4, m_cost: 12, p_cost: 4)
     assert_instance_of Argon2::Password, pass
     assert_equal 12, pass.m_cost
     assert_equal 4, pass.t_cost
+    assert_equal 4, pass.p_cost
     assert_nil pass.secret
   end
 
