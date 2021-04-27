@@ -5,6 +5,7 @@ require 'argon2/ffi_engine'
 require 'argon2/version'
 require 'argon2/errors'
 require 'argon2/engine'
+require 'argon2/hash_format'
 
 module Argon2
   # Front-end API for the Argon2 module.
@@ -37,9 +38,8 @@ module Argon2
       argon2.create(pass)
     end
 
-    # Supports 1 and argon2id formats.
     def self.valid_hash?(hash)
-      /^\$argon2(id?|d).{,113}/ =~ hash
+      Argon2::HashFormat.valid_hash?(hash)
     end
 
     def self.verify_password(pass, hash, secret = nil)
