@@ -12,6 +12,8 @@ module Argon2
     def initialize(digest)
       digest = digest.to_s unless digest.is_a?(String)
 
+      raise Argon2::ArgonHashFail, 'Invalid Argon2 hash' unless self.class.valid_hash?(digest)
+
       _, variant, version, config, salt, checksum = digest.split('$')
       # Regex magic to extract the values for each setting
       version = /v=(\d+)/.match(version)
