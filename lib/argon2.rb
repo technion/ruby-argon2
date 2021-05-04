@@ -15,17 +15,17 @@ module Argon2
     # settings
     #
     def self.create(pass, options = {})
-      raise ArgonHashFail, "Invalid password (expected string)" unless
+      raise Argon2::Error, "Invalid password (expected string)" unless
         pass.is_a?(String)
 
       t_cost = options[:t_cost] || 2
-      raise ArgonHashFail, "Invalid t_cost" if t_cost < 1 || t_cost > 750
+      raise Argon2::Error, "Invalid t_cost" if t_cost < 1 || t_cost > 750
 
       m_cost = options[:m_cost] || 16
-      raise ArgonHashFail, "Invalid m_cost" if m_cost < 1 || m_cost > 31
+      raise Argon2::Error, "Invalid m_cost" if m_cost < 1 || m_cost > 31
 
       p_cost = options[:p_cost] || 1
-      raise ArgonHashFail, "Invalid p_cost" if p_cost < 1 || p_cost > 8
+      raise Argon2::Error, "Invalid p_cost" if p_cost < 1 || p_cost > 8
 
       salt = options[:salt_do_not_supply] || Engine.saltgen
       secret = options[:secret]
@@ -39,7 +39,7 @@ module Argon2
     end
 
     def self.verify_password(pass, hash, secret = nil)
-      raise ArgonHashFail, "Invalid hash" unless valid_hash?(hash)
+      raise Argon2::Error, "Invalid hash" unless valid_hash?(hash)
 
       Argon2::Engine.argon2_verify(pass, hash, secret)
     end

@@ -4,7 +4,7 @@
 # argon2.h. This allows return values to propagate errors through the FFI.
 
 module Argon2
-  class ArgonHashFail < StandardError; end
+  class Error < StandardError; end
   ERRORS = %w[
     ARGON2_OK
     ARGON2_OUTPUT_PTR_NULL

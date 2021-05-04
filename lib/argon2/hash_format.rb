@@ -12,7 +12,7 @@ module Argon2
     def initialize(digest)
       digest = digest.to_s unless digest.is_a?(String)
 
-      raise Argon2::ArgonHashFail, 'Invalid Argon2 hash' unless self.class.valid_hash?(digest)
+      raise Argon2::Error, 'Invalid Argon2 hash' unless self.class.valid_hash?(digest)
 
       _, variant, version, config, salt, checksum = digest.split('$')
       # Regex magic to extract the values for each setting
@@ -22,10 +22,10 @@ module Argon2
       p_cost  = /p=(\d+)/.match(config)
 
       # Make sure none of the values are missing
-      raise Argon2::ArgonHashFail, 'Invalid Argon2 version' if version.nil?
-      raise Argon2::ArgonHashFail, 'Invalid Argon2 time cost' if t_cost.nil?
-      raise Argon2::ArgonHashFail, 'Invalid Argon2 memory cost' if m_cost.nil?
-      raise Argon2::ArgonHashFail, 'Invalid Argon2 parallelism cost' if p_cost.nil?
+      raise Argon2::Error, 'Invalid Argon2 version' if version.nil?
+      raise Argon2::Error, 'Invalid Argon2 time cost' if t_cost.nil?
+      raise Argon2::Error, 'Invalid Argon2 memory cost' if m_cost.nil?
+      raise Argon2::Error, 'Invalid Argon2 parallelism cost' if p_cost.nil?
 
       @variant  = variant.to_str
       @version  = version[1].to_i
