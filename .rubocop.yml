@@ -1,5 +1,7 @@
 Metrics/AbcSize:
   Max: 20
+  Exclude:
+    - 'lib/argon2.rb'
 
 Metrics/CyclomaticComplexity:
   Enabled: false
