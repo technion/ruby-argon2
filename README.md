@@ -133,17 +133,19 @@ Any form of contribution is appreciated, however, please review [CONTRIBUTING.md
 
 ## Building locally/Tests
 
-To build the gem locally, you will need to checkout the submodule and build it manually:
+To build the gem locally, you will need to run the setup script:
 
 ```shell
-git submodule update --init --recursive
-bundle install
-cd ext/argon2_wrap/
-make
-cd ../..
+./bin/setup
 ```
 
-The test harness includes a property based test. To more strenuously perform this test, you can tune the iterations parameter:
+You can test that the Argon2 C library was properly imported by running the C test suite:
+
+```shell
+./bin/test
+```
+
+The ruby wrapper test suite includes a property based test. To more strenuously perform this test, you can tune the iterations parameter:
 
 ```shell
 TEST_CHECKS=10000 bundle exec rake test

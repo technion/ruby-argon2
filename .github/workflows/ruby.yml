@@ -1,32 +1,70 @@
 name: Test Suite
 
-on: push
+# Run against all commits and pull requests.
+on: [ push, pull_request ]
 
 jobs:
-  test:
+  test_matrix:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu
+          - macos
+        ruby:
+          - 2.6
+          - 2.7
+          - 3.0
+          - head
+
+    runs-on: ${{ matrix.os }}-latest
+
+    env:
+      TEST_CHECKS: 100
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Build Argon2 C library
+        run: bin/setup
+      - name: Test Argon2 C library
+        run: bin/test
+      - name: Run tests
+        run: bundle exec rake test
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: run-${{ matrix.ruby-version }}
+          parallel: true
+
+  rubocop:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['3.0', 2.7]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Ruby ${{ matrix.ruby-version }}
+    - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby-version }} 
-    - name: Install dependencies
-      run: bundle install
-    - name: Init submodules
-      run: git submodule update --init --recursive
-    - name: Build C library
-      run: bin/setup
-    - name: Test C library
-      run: cd ext/argon2_wrap/ && make test && cd ../..
-    - name: Run tests
-      run: bundle exec rake
-    - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        ruby-version: 3.0
+        bundler-cache: true
+    - name: Run rubocop
+      run: bundle exec rake rubocop
+
+  finish:
+    runs-on: ubuntu-latest
+    needs: [ test_matrix, rubocop ]
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+      - name: Wait for status checks
+        run: echo "All Green!"
