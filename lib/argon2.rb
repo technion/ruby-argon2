@@ -33,8 +33,8 @@ module Argon2
     end
 
     # Helper class, just creates defaults and calls hash()
-    def self.create(pass)
-      argon2 = Argon2::Password.new
+    def self.create(pass, options = {})
+      argon2 = Argon2::Password.new(options)
       argon2.create(pass)
     end
 
