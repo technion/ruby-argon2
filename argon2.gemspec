@@ -11,6 +11,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Technion"]
   spec.email         = ["technion@lolware.net"]
 
+  spec.required_ruby_version = '>= 2.6.0'
+
   spec.summary       = 'Argon2 Password hashing binding'
   spec.description   = 'Argon2 FFI binding'
   spec.homepage      = 'https://github.com/technion/ruby-argon2'
