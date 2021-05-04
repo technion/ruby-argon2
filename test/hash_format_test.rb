@@ -10,8 +10,7 @@ class Argon2HashFormatTest < Minitest::Test
     p_cost: 3
   }.freeze
 
-  TEMP = Argon2::Password.new(OPTIONS)
-  DIGEST = TEMP.create(PASSWORD)
+  DIGEST = Argon2::Password.create(PASSWORD, OPTIONS)
 
   def test_hash_format_variant
     assert argon2 = Argon2::HashFormat.new(DIGEST)

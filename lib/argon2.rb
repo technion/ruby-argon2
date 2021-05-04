@@ -10,32 +10,28 @@ require 'argon2/hash_format'
 module Argon2
   # Front-end API for the Argon2 module.
   class Password
-    def initialize(options = {})
-      @t_cost = options[:t_cost] || 2
-      raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 750
-
-      @m_cost = options[:m_cost] || 16
-      raise ArgonHashFail, "Invalid m_cost" if @m_cost < 1 || @m_cost > 31
-
-      @p_cost = options[:p_cost] || 1
-      raise ArgonHashFail, "Invalid p_cost" if @p_cost < 1 || @p_cost > 8
-
-      @salt = options[:salt_do_not_supply] || Engine.saltgen
-      @secret = options[:secret]
-    end
-
-    def create(pass)
+    ##
+    # Takes the input password and creates an Argon2 hash using the provided
+    # settings
+    #
+    def self.create(pass, options = {})
       raise ArgonHashFail, "Invalid password (expected string)" unless
         pass.is_a?(String)
 
-      Argon2::Engine.hash_argon2id_encode(
-        pass, @salt, @t_cost, @m_cost, @p_cost, @secret)
-    end
+      t_cost = options[:t_cost] || 2
+      raise ArgonHashFail, "Invalid t_cost" if t_cost < 1 || t_cost > 750
 
-    # Helper class, just creates defaults and calls hash()
-    def self.create(pass, options = {})
-      argon2 = Argon2::Password.new(options)
-      argon2.create(pass)
+      m_cost = options[:m_cost] || 16
+      raise ArgonHashFail, "Invalid m_cost" if m_cost < 1 || m_cost > 31
+
+      p_cost = options[:p_cost] || 1
+      raise ArgonHashFail, "Invalid p_cost" if p_cost < 1 || p_cost > 8
+
+      salt = options[:salt_do_not_supply] || Engine.saltgen
+      secret = options[:secret]
+
+      Argon2::Engine.hash_argon2id_encode(
+        pass, salt, t_cost, m_cost, p_cost, secret)
     end
 
     def self.valid_hash?(hash)

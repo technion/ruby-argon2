@@ -4,9 +4,8 @@ require 'test_helper'
 
 class Argon2SaltReuseTest < Minitest::Test
   def test_salt_reuse
-    assert temp = Argon2::Password.new
-    assert pass1 = temp.create('any password here 1')
-    assert pass2 = temp.create('any password here 2')
+    assert pass1 = Argon2::Password.create('any password here 1')
+    assert pass2 = Argon2::Password.create('any password here 2')
 
     refute_equal pass1, pass2
 
