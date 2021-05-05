@@ -16,4 +16,3 @@ class Argon2SaltReuseTest < Minitest::Test
     refute_equal salt1, salt2
   end
 end
-
