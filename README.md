@@ -42,7 +42,6 @@ hasher = Argon2::Password.new
 hasher.create("password")
 ```
 
-If you follow this pattern, it is important to create a new `Argon2::Password` every time you generate a hash, in order to ensure a unique salt. See [issue 23](https://github.com/technion/ruby-argon2/issues/23) for more information.
 Alternatively, use this shortcut:
 
 ```ruby

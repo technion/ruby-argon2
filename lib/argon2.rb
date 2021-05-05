@@ -20,7 +20,7 @@ module Argon2
       @p_cost = options[:p_cost] || 1
       raise ArgonHashFail, "Invalid p_cost" if @p_cost < 1 || @p_cost > 8
 
-      @salt = options[:salt_do_not_supply] || Engine.saltgen
+      @salt_do_not_supply = options[:salt_do_not_supply]
       @secret = options[:secret]
     end
 
@@ -28,8 +28,11 @@ module Argon2
       raise ArgonHashFail, "Invalid password (expected string)" unless
         pass.is_a?(String)
 
+      # Ensure salt is freshly generated unless it was intentionally supplied.
+      salt = @salt_do_not_supply || Engine.saltgen
+
       Argon2::Engine.hash_argon2id_encode(
-        pass, @salt, @t_cost, @m_cost, @p_cost, @secret)
+        pass, salt, @t_cost, @m_cost, @p_cost, @secret)
     end
 
     # Helper class, just creates defaults and calls hash()
