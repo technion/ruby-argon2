@@ -20,7 +20,7 @@ module Argon2
       @p_cost = options[:p_cost] || 1
       raise ArgonHashFail, "Invalid p_cost" if @p_cost < 1 || @p_cost > 8
 
-      @salt_do_not_supply = options[:salt_do_not_supply]
+      @insecure_salt = options[:salt_for_testing_purposes_only]
       @secret = options[:secret]
     end
 
@@ -29,7 +29,7 @@ module Argon2
         pass.is_a?(String)
 
       # Ensure salt is freshly generated unless it was intentionally supplied.
-      salt = @salt_do_not_supply || Engine.saltgen
+      salt = @insecure_salt || Engine.saltgen
 
       Argon2::Engine.hash_argon2id_encode(
         pass, salt, @t_cost, @m_cost, @p_cost, @secret)
