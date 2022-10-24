@@ -1,0 +1,18 @@
+module Argon2
+  # Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
+  module Ext
+    extend FFI::Library
+  end
+
+  # The engine class shields users from the FFI interface.
+  # It is generally not advised to directly use this class.
+  class Engine
+    def self.hash_argon2i: (untyped password, untyped salt, untyped t_cost, untyped m_cost, ?untyped? out_len) -> untyped
+
+    def self.hash_argon2id: (untyped password, untyped salt, untyped t_cost, untyped m_cost, untyped p_cost, ?untyped? out_len) -> untyped
+
+    def self.hash_argon2id_encode: (untyped password, untyped salt, untyped t_cost, untyped m_cost, untyped p_cost, untyped secret) -> untyped
+
+    def self.argon2_verify: (untyped pwd, untyped hash, untyped secret) -> (false | true)
+  end
+end

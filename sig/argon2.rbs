@@ -7,10 +7,15 @@ module Argon2
     @salt: nil | String
     @secret: nil | String
 
-    def initialize: (?Hash[Symbol, Integer] options) -> (nil | String)
+    def initialize: (?::Hash[untyped, untyped] options) -> void
     def create: (String pass) -> untyped
     def self.create: (String pass) -> untyped
     def self.valid_hash?: (string hash) -> Integer?
     def self.verify_password: (untyped pass, untyped hash, ?nil secret) -> untyped
+  end
+  class Engine
+    def self.saltgen: () -> String
+  end
+  class ArgonHashFail < StandardError
   end
 end
