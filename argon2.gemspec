@@ -17,8 +17,11 @@ Gem::Specification.new do |spec|
   spec.description   = 'Argon2 FFI binding'
   spec.homepage      = 'https://github.com/technion/ruby-argon2'
   spec.license       = 'MIT'
+  spec.metadata      = {
+    'rubygems_mfa_required' => 'true'
+  }
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.files << `find ext`.split
 
   spec.bindir        = "exe"
