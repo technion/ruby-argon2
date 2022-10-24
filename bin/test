@@ -1,0 +1,10 @@
+#!/bin/bash
+# Exit the script immediately if a command fails
+set -euo pipefail
+# Internal Field Separator
+IFS=$'\n\t'
+
+# Run the Argon2 C Library tests
+cd ext/argon2_wrap/
+make test
+cd ../..

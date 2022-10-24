@@ -11,6 +11,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Technion"]
   spec.email         = ["technion@lolware.net"]
 
+  spec.required_ruby_version = '>= 2.6.0'
+
   spec.summary       = 'Argon2 Password hashing binding'
   spec.description   = 'Argon2 FFI binding'
   spec.homepage      = 'https://github.com/technion/ruby-argon2'
@@ -33,7 +35,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov-lcov", '~> 0.8'
   spec.add_development_dependency "steep", "~> 1.2.1"
   spec.extensions << 'ext/argon2_wrap/extconf.rb'
-
-  spec.cert_chain  = ['certs/technion.pem']
-  spec.signing_key = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
 end

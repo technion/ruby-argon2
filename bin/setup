@@ -1,10 +1,14 @@
 #!/bin/bash
+# Exit the script immediately if a command fails
 set -euo pipefail
+# Internal Field Separator
 IFS=$'\n\t'
 
+# Initialize Git Submodules
+git submodule update --init --recursive
+
+# Build the Argon2 C Library. Git submodules must be initialized first!
 bundle install
 cd ext/argon2_wrap/
 make
 cd ../..
-
-# Do any other automated setup that you need to do here

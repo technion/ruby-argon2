@@ -42,7 +42,6 @@ hasher = Argon2::Password.new
 hasher.create("password")
 ```
 
-If you follow this pattern, it is important to create a new `Argon2::Password` every time you generate a hash, in order to ensure a unique salt. See [issue 23](https://github.com/technion/ruby-argon2/issues/23) for more information.
 Alternatively, use this shortcut:
 
 ```ruby
@@ -84,15 +83,6 @@ These tools will need to be installed manually at this time and will be added to
 
 ## Version 2.0 - Argon 2id
 Version 2.x upwards will now default to the Argon2id hash format. This is consistent with current recommendations regarding Argon2 usage. It remains capable of verifying existing hashes.
-
-## Gem signing
-Given the unsigned dependencies and key distribution difficulties, signing on this gem adds little security value. If you'd like to use the signed version however, import the key like this:
-
-```sh
-gem cert --add <(curl -Ls https://raw.githubusercontent.com/technion/ruby-argon2/master/certs/technion.pem)
-gem install argon2 -P MediumSecurity
-```
-You will not be able to use HighSecurity.
 
 ## Important notes regarding version 1.0 upgrade
 Version 1.0.0 included a major version bump over 0.1.4 due to several breaking changes. The first of these was an API change, which you can read the background on [here](https://github.com/technion/ruby-argon2/issues/9).
@@ -142,17 +132,19 @@ Any form of contribution is appreciated, however, please review [CONTRIBUTING.md
 
 ## Building locally/Tests
 
-To build the gem locally, you will need to checkout the submodule and build it manually:
+To build the gem locally, you will need to run the setup script:
 
 ```shell
-git submodule update --init --recursive
-bundle install
-cd ext/argon2_wrap/
-make
-cd ../..
+./bin/setup
 ```
 
-The test harness includes a property based test. To more strenuously perform this test, you can tune the iterations parameter:
+You can test that the Argon2 C library was properly imported by running the C test suite:
+
+```shell
+./bin/test
+```
+
+The ruby wrapper test suite includes a property based test. To more strenuously perform this test, you can tune the iterations parameter:
 
 ```shell
 TEST_CHECKS=10000 bundle exec rake test
