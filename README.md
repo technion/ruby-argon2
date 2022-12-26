@@ -13,7 +13,7 @@ This project has several key tenets to its design:
 * The reference Argon2 implementation is to be used "unaltered". To ensure compliance with this goal, and encourage regular updates from upstream, the upstream library is implemented as a git submodule, and is intended to stay that way.
 * The FFI interface is kept as slim as possible, with wrapper classes preferred to implementing context structs in FFI
 * Security and maintainability take top priority. This can have an impact on platform support. A PR that contains platform specific code paths is unlikely to be accepted.
-* Tested platforms are MRI Ruby 2.2, 2.3 and JRuby 9000. No assertions are made on other platforms.
+* Tested platforms are MRI Ruby 2.7 and 3.0. No assertions are made on other platforms.
 * Errors from the C interface are raised as Exceptions. There are a lot of exception classes, but they tend to relate to things like very broken input, and code bugs. Calls to this library should generally not require a rescue.
 * Test suites should aim for 100% code coverage.
 * Default work values should not be considered constants. I will increase them from time to time.
