@@ -60,6 +60,7 @@ LIB_SH := lib$(LIB_NAME).$(LIB_EXT)
 all: libs 
 libs: $(SRC)
 		$(CC) $(CFLAGS) $(LIB_CFLAGS) $^ -o libargon2_wrap.$(LIB_EXT)
+		cp libargon2_wrap.$(LIB_EXT) ../../lib
 
 #Deliberately avoiding the CFLAGS for our test cases - disable optimise and
 #C89

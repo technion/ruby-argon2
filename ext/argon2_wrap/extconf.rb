@@ -3,4 +3,3 @@
 require 'mkmf'
 
 File.rename('Makefile.real', 'Makefile')
-system "make"
