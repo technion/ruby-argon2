@@ -19,7 +19,7 @@ $srcs = %w( ../phc-winner-argon2/src/argon2.c
   ../phc-winner-argon2/src/opt.c
   argon_wrap.c)
 $objs = $srcs.map { |x| x.gsub /\.c/, '.o' }
-
+puts $CFLAGS
 create_makefile('libargon2_wrap')
 
 File.open("Makefile", "at") do |mk|
