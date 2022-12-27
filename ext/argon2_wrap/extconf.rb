@@ -2,6 +2,13 @@
 require 'mkmf'
 $CFLAGS += " -march=native -lpthread"
 
+case RUBY_PLATFORM
+when /darwin/
+  $CFLAGS += " -bundle"
+else
+  $CFLAGS += " -shared -fPIC"
+end
+
 find_header("argon2.h", "../../../../ext/phc-winner-argon2/include", "../phc-winner-argon2/include")
 find_header("argon2.c", "../../../../ext/phc-winner-argon2/src", "../phc-winner-argon2/src")
 $srcs = %w( ../phc-winner-argon2/src/argon2.c
