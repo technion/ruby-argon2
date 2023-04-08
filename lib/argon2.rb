@@ -10,15 +10,26 @@ require 'argon2/hash_format'
 module Argon2
   # Front-end API for the Argon2 module.
   class Password
+    # Expose constants for the options supported and default used for passwords.
+    DEFAULT_T_COST = 2
+    DEFAULT_M_COST = 16
+    DEFAULT_P_COST = 1
+    MIN_T_COST = 1
+    MAX_T_COST = 750
+    MIN_M_COST = 1
+    MAX_M_COST = 31
+    MIN_P_COST = 1
+    MAX_P_COST = 8
+
     def initialize(options = {})
-      @t_cost = options[:t_cost] || 2
-      raise ArgonHashFail, "Invalid t_cost" if @t_cost < 1 || @t_cost > 750
+      @t_cost = options[:t_cost] || DEFAULT_T_COST
+      raise ArgonHashFail, "Invalid t_cost" if @t_cost < MIN_T_COST || @t_cost >  MAX_T_COST
 
-      @m_cost = options[:m_cost] || 16
-      raise ArgonHashFail, "Invalid m_cost" if @m_cost < 1 || @m_cost > 31
+      @m_cost = options[:m_cost] || DEFAULT_M_COST
+      raise ArgonHashFail, "Invalid m_cost" if @m_cost < MIN_M_COST || @m_cost >  MAX_M_COST
 
-      @p_cost = options[:p_cost] || 1
-      raise ArgonHashFail, "Invalid p_cost" if @p_cost < 1 || @p_cost > 8
+      @p_cost = options[:p_cost] || DEFAULT_P_COST
+      raise ArgonHashFail, "Invalid p_cost" if @p_cost < MIN_P_COST || @p_cost >  MAX_P_COST
 
       @salt_do_not_supply = options[:salt_do_not_supply]
       @secret = options[:secret]
