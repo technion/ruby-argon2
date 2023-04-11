@@ -23,13 +23,13 @@ module Argon2
 
     def initialize(options = {})
       @t_cost = options[:t_cost] || DEFAULT_T_COST
-      raise ArgonHashFail, "Invalid t_cost" if @t_cost < MIN_T_COST || @t_cost >  MAX_T_COST
+      raise ArgonHashFail, "Invalid t_cost" if @t_cost < MIN_T_COST || @t_cost > MAX_T_COST
 
       @m_cost = options[:m_cost] || DEFAULT_M_COST
-      raise ArgonHashFail, "Invalid m_cost" if @m_cost < MIN_M_COST || @m_cost >  MAX_M_COST
+      raise ArgonHashFail, "Invalid m_cost" if @m_cost < MIN_M_COST || @m_cost > MAX_M_COST
 
       @p_cost = options[:p_cost] || DEFAULT_P_COST
-      raise ArgonHashFail, "Invalid p_cost" if @p_cost < MIN_P_COST || @p_cost >  MAX_P_COST
+      raise ArgonHashFail, "Invalid p_cost" if @p_cost < MIN_P_COST || @p_cost > MAX_P_COST
 
       @salt_do_not_supply = options[:salt_do_not_supply]
       @secret = options[:secret]
