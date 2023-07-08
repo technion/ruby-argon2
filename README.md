@@ -81,6 +81,9 @@ steep check
 ```
 These tools will need to be installed manually at this time and will be added to Gemfiles after much further testing.
 
+## Version 2.2.0
+This version changed the way the build system works to deal with a new version of Rubygems. See https://github.com/technion/ruby-argon2/issues/56.
+
 ## Version 2.0 - Argon 2id
 Version 2.x upwards will now default to the Argon2id hash format. This is consistent with current recommendations regarding Argon2 usage. It remains capable of verifying existing hashes.
 

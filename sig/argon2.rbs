@@ -1,21 +1,41 @@
-# Classes
 module Argon2
+  # Front-end API for the Argon2 module.
   class Password
     @t_cost: Integer
     @m_cost: Integer
     @p_cost: Integer
     @salt: nil | String
     @secret: nil | String
+    @salt_do_not_supply: nil | String
+
+    # Expose constants for the options supported and default used for passwords.
+    DEFAULT_T_COST: 2
+
+    DEFAULT_M_COST: 16
+
+    DEFAULT_P_COST: 1
+
+    MIN_T_COST: 1
+
+    MAX_T_COST: 750
+
+    MIN_M_COST: 1
+
+    MAX_M_COST: 31
+
+    MIN_P_COST: 1
+
+    MAX_P_COST: 8
 
     def initialize: (?::Hash[untyped, untyped] options) -> void
+
     def create: (String pass) -> untyped
-    def self.create: (String pass) -> untyped
-    def self.valid_hash?: (string hash) -> Integer?
-    def self.verify_password: (untyped pass, untyped hash, ?nil secret) -> untyped
-  end
-  class Engine
-    def self.saltgen: () -> String
-  end
-  class ArgonHashFail < StandardError
+
+    # Helper class, just creates defaults and calls hash()
+    def self.create: (String pass, ?::Hash[untyped, untyped] options) -> String
+
+    def self.valid_hash?: (String hash) -> bool
+
+    def self.verify_password: (String pass, String hash, ?String|nil secret) -> bool
   end
 end

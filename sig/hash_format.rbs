@@ -1,0 +1,31 @@
+module Argon2
+  #
+  # Get the values from an Argon2 compatible string.
+  #
+  class HashFormat
+    attr_reader variant: untyped
+
+    attr_reader version: untyped
+
+    attr_reader t_cost: untyped
+
+    attr_reader m_cost: untyped
+
+    attr_reader p_cost: untyped
+
+    attr_reader salt: untyped
+
+    attr_reader checksum: untyped
+
+    # FIXME: Reduce complexity/AbcSize
+    # rubocop:disable Metrics/AbcSize
+    def initialize: (untyped digest) -> void
+
+    #
+    # Checks whether a given digest is a valid Argon2 hash.
+    #
+    # Supports 1 and argon2id formats.
+    #
+    def self.valid_hash?: (untyped digest) -> untyped
+  end
+end

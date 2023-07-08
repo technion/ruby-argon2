@@ -1,8 +1,8 @@
 module Argon2
   # Direct external bindings. Call these methods via the Engine class to ensure points are dealt with
-  module Ext
-    extend FFI::Library
-  end
+#  module Ext
+#    extend FFI::Library
+#  end
 
   # The engine class shields users from the FFI interface.
   # It is generally not advised to directly use this class.

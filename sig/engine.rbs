@@ -1,0 +1,9 @@
+module Argon2
+  # SecureRandom is a Ruby module. I have no idea why steep now thinks it's an unknown constant, nor why rbs
+  # prototype has no interest in outputting this.
+  SecureRandom: untyped
+  # Generates a random, binary string for use as a salt.
+  class Engine
+    def self.saltgen: () -> untyped
+  end
+end
