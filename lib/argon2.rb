@@ -14,9 +14,9 @@ module Argon2
     DEFAULT_T_COST = 2
     DEFAULT_M_COST = 16
     DEFAULT_P_COST = 1
-    MIN_T_COST = 3
+    MIN_T_COST = 1
     MAX_T_COST = 750
-    MIN_M_COST = 1
+    MIN_M_COST = 3
     MAX_M_COST = 31
     MIN_P_COST = 1
     MAX_P_COST = 8
