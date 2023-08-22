@@ -14,8 +14,8 @@ class Argon2APITest < Minitest::Test
     assert pass = Argon2::Password.new
     assert_instance_of Argon2::Password, pass
     assert_equal 16, pass.m_cost
-    assert_equal 2, pass.t_cost
-    assert_equal 1, pass.p_cost
+    assert_equal 3, pass.t_cost
+    assert_equal 4, pass.p_cost
     assert_nil pass.secret
   end
 
@@ -24,6 +24,15 @@ class Argon2APITest < Minitest::Test
     assert_instance_of Argon2::Password, pass
     assert_equal 12, pass.m_cost
     assert_equal 4, pass.t_cost
+    assert_equal 4, pass.p_cost
+    assert_nil pass.secret
+  end
+
+  def test_create_profile_arg
+    assert pass = Argon2::Password.new(profile: :rfc_9106_high_memory)
+    assert_instance_of Argon2::Password, pass
+    assert_equal 21, pass.m_cost
+    assert_equal 1, pass.t_cost
     assert_equal 4, pass.p_cost
     assert_nil pass.secret
   end
