@@ -8,12 +8,14 @@ class ProfilesTest < Minitest::Test
   end
 
   def test_to_a
-    assert_equal %i{
+    # rubocop:disable Naming/VariableNumber
+    assert_equal %i[
       pre_rfc_9106
       rfc_9106_high_memory
       rfc_9106_low_memory
       unsafe_cheapest
-    }, Argon2::Profiles.to_a.sort
+    ], Argon2::Profiles.to_a.sort
+    # rubocop:enable Naming/VariableNumber
   end
 
   def test_to_h
@@ -23,8 +25,8 @@ class ProfilesTest < Minitest::Test
 
   def test_structure
     Argon2::Profiles.to_h.values do |profile|
-      assert_equal %i{t_cost m_cost p_cost}, profile.keys
-      assert profile.values.all? { |v| v.instance_of? Integer }
+      assert_equal %i[t_cost m_cost p_cost], profile.keys
+      assert(profile.values.all? { |v| v.instance_of?(Integer) })
     end
   end
 end
