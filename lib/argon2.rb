@@ -6,14 +6,15 @@ require 'argon2/version'
 require 'argon2/errors'
 require 'argon2/engine'
 require 'argon2/hash_format'
+require 'argon2/profiles'
 
 module Argon2
   # Front-end API for the Argon2 module.
   class Password
     # Expose constants for the options supported and default used for passwords.
-    DEFAULT_T_COST = 2
-    DEFAULT_M_COST = 16
-    DEFAULT_P_COST = 1
+    DEFAULT_T_COST = Argon2::Profiles::RFC_9106_LOW_MEMORY[:t_cost]
+    DEFAULT_M_COST = Argon2::Profiles::RFC_9106_LOW_MEMORY[:m_cost]
+    DEFAULT_P_COST = Argon2::Profiles::RFC_9106_LOW_MEMORY[:p_cost]
     MIN_T_COST = 1
     MAX_T_COST = 750
     MIN_M_COST = 3
@@ -22,14 +23,9 @@ module Argon2
     MAX_P_COST = 8
 
     def initialize(options = {})
-      @t_cost = options[:t_cost] || DEFAULT_T_COST
-      raise ArgonHashFail, "Invalid t_cost" if @t_cost < MIN_T_COST || @t_cost > MAX_T_COST
+      options.update(Profiles[options[:profile]]) if options.key?(:profile)
 
-      @m_cost = options[:m_cost] || DEFAULT_M_COST
-      raise ArgonHashFail, "Invalid m_cost" if @m_cost < MIN_M_COST || @m_cost > MAX_M_COST
-
-      @p_cost = options[:p_cost] || DEFAULT_P_COST
-      raise ArgonHashFail, "Invalid p_cost" if @p_cost < MIN_P_COST || @p_cost > MAX_P_COST
+      init_costs(options)
 
       @salt_do_not_supply = options[:salt_do_not_supply]
       @secret = options[:secret]
@@ -60,6 +56,19 @@ module Argon2
       raise ArgonHashFail, "Invalid hash" unless valid_hash?(hash)
 
       Argon2::Engine.argon2_verify(pass, hash, secret)
+    end
+
+    protected
+
+    def init_costs(options = {})
+      @t_cost = options[:t_cost] || DEFAULT_T_COST
+      raise ArgonHashFail, "Invalid t_cost" if @t_cost < MIN_T_COST || @t_cost > MAX_T_COST
+
+      @m_cost = options[:m_cost] || DEFAULT_M_COST
+      raise ArgonHashFail, "Invalid m_cost" if @m_cost < MIN_M_COST || @m_cost > MAX_M_COST
+
+      @p_cost = options[:p_cost] || DEFAULT_P_COST
+      raise ArgonHashFail, "Invalid p_cost" if @p_cost < MIN_P_COST || @p_cost > MAX_P_COST
     end
   end
 end

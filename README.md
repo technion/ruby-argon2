@@ -27,15 +27,7 @@ Require this in your Gemfile like a typical Ruby gem:
 require 'argon2'
 ```
 
-To generate a hash using specific time and memory cost:
-
-```ruby
-hasher = Argon2::Password.new(t_cost: 2, m_cost: 16, p_cost: 1)
-hasher.create("password")
-    => "$argon2i$v=19$m=65536,t=2,p=1$jL7lLEAjDN+pY2cG1N8D2g$iwj1ueduCvm6B9YVjBSnAHu+6mKzqGmDW745ALR38Uo"
-```
-
-To utilise default costs:
+To utilise default costs ([RFC 9106](https://www.rfc-editor.org/rfc/rfc9106#name-parameter-choice)'s lower-memory, second recommended parameters):
 
 ```ruby
 hasher = Argon2::Password.new
@@ -47,6 +39,38 @@ Alternatively, use this shortcut:
 ```ruby
 Argon2::Password.create("password")
     => "$argon2i$v=19$m=65536,t=2,p=1$61qkSyYNbUgf3kZH3GtHRw$4CQff9AZ0lWd7uF24RKMzqEiGpzhte1Hp8SO7X8bAew"
+```
+
+If your use case can afford the higher memory consumption/cost, you can/should specify to use RFC 9106's first recommended parameters:
+
+```ruby
+hasher = Argon2::Password.new(profile: :rfc_9106_high_memory)
+hasher.create("password")
+    => "$argon2id$v=19$m=2097152,t=1,p=4$LvHa74Yax7uCWPN7P6/oQQ$V1dMt4dfuYSmLpwUTpKUzg+RrXjWzWHlE6NLowBzsAg"
+```
+
+To generate a hash using one of the other `Argon::Profiles` names:
+
+```ruby
+# Only use this profile in testing env, it's unsafe!
+hasher = Argon2::Password.new(profile: :unsafe_cheapest)
+hasher.create("password")
+    => "$argon2id$v=19$m=8,t=1,p=1$HZZHG3oTqptqgrxWxFic5g$EUokHMU6m6w2AVIEk1MpZBhVwW9Nj+ESRjPwTBVtWpY"
+```
+
+The list of named cost profiles are:
+
+* `:rfc_9106_high_memory`: the first recommended option but is expensive
+* `:rfc_9106_low_memory`: the second recommended option (default)
+* `:pre_rfc_9106`: the previous default costs for `ruby-argon2` <= v2.2.0, before offering RFC 9106 named profiles
+* `:unsafe_cheapest`: Strictly for testing, the minimum costs allowed by Argon2 for the fastest hashing speed
+
+To generate a hash using specific time and memory cost:
+
+```ruby
+hasher = Argon2::Password.new(t_cost: 2, m_cost: 16, p_cost: 1)
+hasher.create("password")
+    => "$argon2i$v=19$m=65536,t=2,p=1$jL7lLEAjDN+pY2cG1N8D2g$iwj1ueduCvm6B9YVjBSnAHu+6mKzqGmDW745ALR38Uo"
 ```
 
 You can then use this function to verify a password against a given hash. Will return either true or false.
