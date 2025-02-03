@@ -13,7 +13,6 @@ jobs:
           - ubuntu
           - macos
         ruby:
-          - 2.7
           - 3.3
           - 3.4
 
