@@ -173,7 +173,8 @@ Style/SoleNestedConditional: # (new in 0.89)
   Enabled: true
 Style/StringConcatenation: # (new in 0.89)
   Enabled: true
-
+Style/RedundantParentheses:
+  Enabled: false
 Layout/SpaceBeforeBrackets: # (new in 1.7)
   Enabled: true
 Lint/AmbiguousAssignment: # (new in 1.7)
